@@ -23,7 +23,7 @@ namespace Infra.Repository
         /// 
 
         #region Disposed https://docs.microsoft.com/pt-br/dotnet/standard/garbage-collection/implementing-dispose
-     
+
         bool disposed = false;
 
         readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
@@ -71,7 +71,7 @@ namespace Infra.Repository
         public async Task<T> FindOneAsync(int id)
         {
             var obj = await DbSet.FindAsync(id);
-            if(context.Entry(obj).State == EntityState.Unchanged)
+            if (context.Entry(obj).State == EntityState.Unchanged)
             {
                 context.Entry(obj).State = EntityState.Detached;
                 obj = await DbSet.FindAsync(id);
@@ -95,7 +95,7 @@ namespace Infra.Repository
             DbSet.Remove(entity);
             context.SaveChanges();
 
-            
+
             // context.Set<T>().Remove(entity);
         }
     }
