@@ -1,0 +1,75 @@
+﻿@model Application.ViewModel.HomeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-primary">Criar Novo(a)</h1>
+
+<h4 class="text-success">Home</h4>
+<hr />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Inicialmente, oculte as colunas adicionais (exceto a primeira)
+        $('[id^="coluna_"]').not('#coluna_0').hide();
+
+        // Quando o botão for clicado, alternar a visibilidade das colunas adicionais
+        $('#toggleColumns').click(function () {
+            $('[id^="coluna_"]').not('#coluna_0').toggle();
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div>
+                <button id="toggleColumns" type="button" class="btn btn-secondary">Mostrar/Esconder Colunas Adicionais</button>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Nome" class="form-label text-info">Nome</label>
+                <input asp-for="Nome" class="form-control bg-light text-dark" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="coluna_0">
+                <label asp-for="Descricao_0" class="form-label text-info"></label>
+                <textarea asp-for="Descricao_0" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao_0" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="coluna_1">
+                <label asp-for="Descricao_1" class="form-label text-info"></label>
+                <textarea asp-for="Descricao_1" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao_1" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="coluna_2">
+                <label asp-for="Descricao_2" class="form-label text-info"></label>
+                <textarea asp-for="Descricao_2" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao_2" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="coluna_3">
+                <label asp-for="Descricao_3" class="form-label text-info"></label>
+                <textarea asp-for="Descricao_3" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao_3" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="coluna_4">
+                <label asp-for="Descricao_4" class="form-label text-info"></label>
+                <textarea asp-for="Descricao_4" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao_4" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

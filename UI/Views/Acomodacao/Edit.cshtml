@@ -1,0 +1,72 @@
+﻿@model Application.ViewModel.AcomodacaoViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-primary">Editar</h1>
+
+<h4 class="text-success">Acomodação: @Model.Nome</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="form-label text-info">Fotos</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" name="Fotos" asp-for="Fotos" class="custom-file-input" multiple />
+                        <label class="custom-file-label">Escolher arquivo(s)</label>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    @if (Model.RotaImagem != null)
+                    {
+                        foreach (var foto in Model.RotaImagem ?? null)
+                        {
+                            <img src="@foto" class="img-thumbnail" alt="Imagem do Produto" style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                        }
+                    }
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nome" class="form-label text-info">Nome</label>
+                <input asp-for="Nome" class="form-control bg-light text-dark" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Descricao" class="form-label text-info">Descrição</label>
+                <textarea asp-for="Descricao" class="form-control bg-light text-dark" rows="4"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="IdValor" class="form-label text-info">Valor: </label>
+                <select asp-for="IdValor" asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))" class="form-select bg-light text-dark"></select>
+                <span asp-validation-for="IdValor" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="IdHome" class="form-label text-info">Pertence a:</label>
+                <select asp-for="IdHome" class="form-select bg-light text-dark" asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))"></select>
+                <span asp-validation-for="IdHome" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-info">@Html.DisplayNameFor(model => model.Ativo)</label>
+                <input type="checkbox" asp-for="Ativo" class="form-check-input" />
+                <span asp-validation-for="Ativo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

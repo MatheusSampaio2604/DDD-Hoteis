@@ -1,0 +1,18 @@
+﻿
+
+
+ public class "Nome Arquivo" : Repository<'Nome do Arquivo Model'>, "nome do arquivo em DOMAIN/Interfaces"
+
+    {
+
+        public "Nome Arquivo"(DataContext context) : base(context)
+
+        {
+
+        }
+
+    }
+
+
+}
+

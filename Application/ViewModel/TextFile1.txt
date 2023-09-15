@@ -1,0 +1,24 @@
+﻿São os mesmos arquivos da Model mas com a personalização para a tela....
+
+exemplo:
+
+
+public class ProjetoViewModel
+    {
+        public ProjetoViewModel ()
+        {
+            HoraAbertura = DateTime.Now;
+        }
+
+        public DateTime HoraAbertura { get; set; }
+        public int Id { get; set; }
+        
+        [DisplayName("Código")]
+        [Required(ErrorMessage = "Necessário!")]
+        public string Codigo { get; set; }
+        
+        [DisplayName("Descrição do Projeto")]
+        [Required(ErrorMessage = "Insira um nome!")]
+        [StringLength(100, MinimumLength = 5)]
+        public string Nome { get; set; }
+    }

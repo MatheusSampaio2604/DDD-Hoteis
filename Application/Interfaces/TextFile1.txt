@@ -1,0 +1,22 @@
+﻿
+
+
+
+
+
+cada I'Arquivo'App deve conter:
+
+public interface I'Arquivo'App : IApp<'ViewModel', 'Model'>
+    {
+    }
+
+
+se for manipular com o override:
+
+    public interface I'Arquivo'App : IApp<arquivoViewModel, model>
+    {
+        Task<'model'> CreateAsync('ViewModel' 'ViewModel');
+        Task<'arquivo'ViewModel> EditAsync('ViewModel' 'ViewModel');
+
+      
+    }

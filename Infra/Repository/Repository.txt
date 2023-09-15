@@ -1,0 +1,42 @@
+﻿    
+    
+    
+    public class Repository<T> : IRepository<T> where T : class
+    {
+        protected readonly DataContext Db;
+        protected readonly DbSet<T> DbSet;
+
+
+
+        public Repository(DataContext context)
+        {
+            Db = context;
+            DbSet = context.Set<T>();
+        }
+
+
+
+        public virtual async Task<int> CreateAsync(T entity)
+        {
+            DbSet.Add(entity);
+            return await SaveChangesAsync();
+        }
+
+
+
+        public virtual async Task<int> EditAsync(T entity)
+        {
+            DbSet.Attach(entity);
+            Db.Entry(entity).State = EntityState.Modified;
+            return await SaveChangesAsync();
+        }
+
+        .........
+
+        public void Dispose()
+        {
+            Db?.Dispose();
+        }
+
+    }
+

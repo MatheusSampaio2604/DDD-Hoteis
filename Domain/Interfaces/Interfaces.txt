@@ -1,0 +1,21 @@
+﻿Aqui na Pasta INTERFACES:
+
+nome:		I'nomearquivo'Repository
+
+(aqui voce armazena os dados do arquivo INFRA/Repository)
+
+
+...
+Arquivo IREPOSITORY:
+
+
+
+-------------------------------------------------------------
+
+
+
+cada Interface do repositorio deve ter:
+ 
+ public interface I'nomearquivo'Repository : IRepository<"Nome Arquivo na Model">
+    {
+    }

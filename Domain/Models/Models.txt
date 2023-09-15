@@ -1,0 +1,24 @@
+﻿Aqui na Pasta MODELS:
+
+voce armazena os arquivos equivalentes ao banco de dados
+
+- Nome da tabela e colunas da mesma;
+
+        cada arquivo deve ter:
+
+[table("nome da tabela")]
+
+public class "nome do item referenciado"
+{
+    [Column("")] "<-Nome da coluna do banco de dados"
+    public int "..." { get; set; }
+
+    [Column("")] "<-Nome da coluna do banco de dados"
+    [MaxLength(255)]
+    public string Nome { get; set; }
+
+    [ForeignKey("")] "<-Nome da coluna do banco de dados a ser referenciada"
+    [Column(Order = 1)]
+    public string UserId { get; set; }
+
+}
