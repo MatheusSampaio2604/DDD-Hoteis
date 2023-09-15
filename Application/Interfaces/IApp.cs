@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces
@@ -24,12 +20,12 @@ namespace Application.Interfaces
 
     public interface IApp<TModel>
     where TModel : class
-    { 
+    {
         Task<TModel> CreateAsync(TModel viewModel);
         Task<TModel> EditAsync(TModel viewModel);
         Task<TModel> FindOneAsync(int id);
         Task<TModel> FindNoTrackinOneAsync(int id);
         Task<IEnumerable<TModel>> FindAllAsync();
-         void Remove(TModel model);
+        void Remove(TModel model);
     }
 }

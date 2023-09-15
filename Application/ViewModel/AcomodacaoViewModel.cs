@@ -1,18 +1,13 @@
 ﻿using Domain.Models;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.ViewModel
 {
     public class AcomodacaoViewModel
     {
-        
+
         public int Id { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
@@ -30,7 +25,7 @@ namespace Application.ViewModel
 
         [DisplayName("Valor")]
         public int IdValor { get; set; }
-        
+
         public string? Valor { get; set; }
 
         [DisplayName("Pertence a")]
@@ -45,7 +40,7 @@ namespace Application.ViewModel
         public virtual TarifasViewModel Tarifas { get; set; }
 
 
-        public string? val{ get; set; }
+        public string? val { get; set; }
         public string? hom { get; set; }
     }
 }

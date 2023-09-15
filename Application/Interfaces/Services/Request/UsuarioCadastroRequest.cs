@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Application.Interfaces.Services.Request
 {
@@ -17,7 +12,7 @@ namespace Application.Interfaces.Services.Request
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(50, ErrorMessage = "O campo {0} deve ter entre {2} e {1} caracteres", MinimumLength = 8)]
         public string Senha { get; set; }
-        
+
 
         [Compare(nameof(Senha), ErrorMessage = "As senhas devem ser iguais")]
         public string ConfirmaSenha { get; set; }
