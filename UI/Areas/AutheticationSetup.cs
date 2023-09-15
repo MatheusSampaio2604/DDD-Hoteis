@@ -5,10 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace UI.Areas
 {
@@ -17,7 +14,7 @@ namespace UI.Areas
         public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             IConfigurationSection jwtAppSettingOptions = configuration.GetSection(nameof(JwtOptions));
-            SymmetricSecurityKey securityKey = new (Encoding.ASCII.GetBytes(configuration.GetSection("JwtOptions:SecurityKey").Value));
+            SymmetricSecurityKey securityKey = new(Encoding.ASCII.GetBytes(configuration.GetSection("JwtOptions:SecurityKey").Value));
 
             services.Configure<JwtOptions>(options =>
             {

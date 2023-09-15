@@ -2,12 +2,8 @@
 using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -115,14 +111,14 @@ namespace UI.Controllers
 
             //    //acomodacaoViewModel.RotaImagem = oldProduto.RotaImagem ?? null;
 
-                var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
-                
-                if (edit is null)
-                {
-                    return View("Error");
-                }
+            var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
+
+            if (edit is null)
+            {
+                return View("Error");
+            }
             //}
-            
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -164,7 +160,7 @@ namespace UI.Controllers
 
         //            var stream = new FileStream(diretorioArquivoSalvar, FileMode.Create);
         //            await acomodacaoViewModel.Fotos.CopyToAsync(stream);
-                    
+
 
         //            acomodacaoViewModel.RotaImagem = $"https://localhost:5001/imgProdutos/{nomeArquivo}";
 

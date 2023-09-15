@@ -8,10 +8,6 @@ using Infra.Context;
 using Infra.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace UI.Areas
 {
@@ -23,8 +19,8 @@ namespace UI.Areas
             services.AddScoped<IAcomodacaoRepository, AcomodacaoRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<ITarifasRepository, TarifasRepository>();
-                     
-                     
+
+
             services.AddScoped<IAcomodacaoApp, AcomodacaoApp>();
             services.AddScoped<IHomeApp, HomeApp>();
             services.AddScoped<ITarifasApp, TarifasApp>();

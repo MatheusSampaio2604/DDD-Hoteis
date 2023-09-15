@@ -1,11 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.ViewModel;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -55,7 +52,7 @@ namespace UI.Controllers
                 return View("Error");
             }
             return RedirectToAction(nameof(Index));
-        
+
         }
 
         // GET: EstabelecimentoController/Edit/5

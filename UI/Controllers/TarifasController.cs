@@ -1,15 +1,9 @@
 ﻿using Application.Interfaces;
 using Application.ViewModel;
-using Domain.Interfaces;
 using Domain.Models;
-using Infra.Context;
-using Infra.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -83,7 +77,7 @@ namespace UI.Controllers
             }
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
-            
+
             var edit = await _iTarifasApp.EditAsync(tarifasViewModel);
 
             if (edit is null)
