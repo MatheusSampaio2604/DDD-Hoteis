@@ -7,7 +7,7 @@ namespace Application.ViewModel
 {
     public class AcomodacaoViewModel
     {
-
+        
         public int Id { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
@@ -23,24 +23,22 @@ namespace Application.ViewModel
         [DisplayName("Ativo")]
         public bool Ativo { get; set; }
 
+#nullable enable
         [DisplayName("Valor")]
-        public int IdValor { get; set; }
+        public int? IdValor { get; set; }
 
-        public string? Valor { get; set; }
 
         [DisplayName("Pertence a")]
-        public int IdHome { get; set; }
+        public int? IdHome { get; set; }
 
         [DisplayName("Destino Imagem")]
         public string? RotaImagem { get; set; }
 
         public IFormFile? Fotos { get; set; }
+#nullable disable
 
         public virtual Home Home { get; set; }
         public virtual TarifasViewModel Tarifas { get; set; }
 
-
-        public string? val { get; set; }
-        public string? hom { get; set; }
     }
 }

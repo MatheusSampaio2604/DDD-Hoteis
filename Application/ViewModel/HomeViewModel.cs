@@ -12,9 +12,10 @@ namespace Application.ViewModel
         [DisplayName("Nome do Estabelecimento")]
         public string Nome { get; set; }
 
-        [DisplayName("Fotos")]
-        public IFormFile Fotos { get; set; }
+        //[DisplayName("Fotos")]
+        //public IFormFile? Fotos { get; set; }
 
+#nullable enable
         [MaxLength(20000)]
         [DisplayName("Descrição Geral")]
         public string? Descricao_0 { get; set; }
@@ -34,8 +35,8 @@ namespace Application.ViewModel
         [MaxLength(20000)]
         [DisplayName("Descrição 4")]
         public string? Descricao_4 { get; set; }
+#nullable disable
 
-
-        public virtual ICollection<AcomodacaoViewModel>? Acomodacao { get; set; }
+        public virtual ICollection<AcomodacaoViewModel> Acomodacao { get; set; }
     }
 }
