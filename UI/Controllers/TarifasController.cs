@@ -48,7 +48,7 @@ namespace UI.Controllers
             }
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
-            tarifasViewModel.Valor = decimal.Parse(tarifasViewModel.Valor.ToString(), CultureInfo.InvariantCulture);
+            
 
             var create = await _iTarifasApp.CreateAsync(tarifasViewModel);
 

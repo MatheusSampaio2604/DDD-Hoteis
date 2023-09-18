@@ -7,11 +7,6 @@ namespace Application.ViewModel
 {
     public class TarifasViewModel
     {
-        public TarifasViewModel()
-        {
-            Valor = Convert.ToDecimal(Valor);
-        }
-
         public int Id { get; set; }
 
         [DisplayName("Valor")]
@@ -24,7 +19,7 @@ namespace Application.ViewModel
         public string Nome { get; set; }
 
 
-        [DisplayName("Valor Ativo?")]
+        [DisplayName("Ativo")]
         public bool Ativo { get; set; }
 
         public virtual ICollection<AcomodacaoViewModel> AcomodacaoViewModel { get; set; }
