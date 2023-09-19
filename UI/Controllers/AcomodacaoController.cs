@@ -33,8 +33,8 @@ namespace UI.Controllers
         // GET: AplicacaoasController
         public async Task<ActionResult> Index()
         {
-
             IEnumerable<AcomodacaoViewModel> item = await _IAcomodacaoApp.FindAllAsync();
+
             return View(item);
         }
 
