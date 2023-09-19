@@ -7,8 +7,7 @@ namespace Infra.Context
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
-            : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
@@ -36,7 +35,7 @@ namespace Infra.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.EnableDetailedErrors();
         }
     }

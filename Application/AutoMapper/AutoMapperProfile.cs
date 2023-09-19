@@ -8,23 +8,11 @@ namespace Application.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<Acomodacao, AcomodacaoViewModel>()
-                .ForMember(
-                dest => dest.Ativo,
-                opt => opt.MapFrom(
-                src => src.Ativo ? "true" : "false"))
-
-                .ReverseMap();
+            CreateMap<Acomodacao, AcomodacaoViewModel>().ReverseMap();
 
             CreateMap<Home, HomeViewModel>().ReverseMap();
 
-            CreateMap<Tarifas, TarifasViewModel>()
-                .ForMember(
-                dest => dest.Ativo,
-                opt => opt.MapFrom(
-                src => src.Ativo ? "true" : "false"))
-
-                .ReverseMap();
+            CreateMap<Tarifas, TarifasViewModel>().ReverseMap();
 
 
 

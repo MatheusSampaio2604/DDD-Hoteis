@@ -1,0 +1,30 @@
+﻿/*Acomodação*/
+
+.data {
+    border-radius: 10px; /* Bordas arredondadas */
+    overflow: hidden; /* Para garantir que as imagens não ultrapassem as bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.data:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Efeito de sombra mais pronunciado no hover */
+}
+
+.data img {
+    border-radius: 10px; /* Bordas arredondadas para as imagens */
+    max-width: 100%; /* Para garantir que as imagens não excedam o contêiner */
+    height: auto; /* Para manter a proporção da imagem */
+    transition: transform 0.3s ease; /* Transição de transformação */
+}
+
+.data:hover img {
+    transform: scale(1.1); /* Efeito de zoom no hover (1.1 é um exemplo, ajuste conforme desejado) */
+}
+
+.botoes a {
+    color: black; /* Define a cor do texto para preto */
+    /* Adicione estilos adicionais, como sublinhado ou outros, conforme necessário */
+}
+

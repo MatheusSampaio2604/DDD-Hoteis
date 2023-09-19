@@ -4,6 +4,7 @@ using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -32,7 +33,8 @@ namespace UI.Controllers
         // GET: AplicacaoasController
         public async Task<ActionResult> Index()
         {
-            var item = await _IAcomodacaoApp.FindAllAsync();
+
+            IEnumerable<AcomodacaoViewModel> item = await _IAcomodacaoApp.FindAllAsync();
             return View(item);
         }
 

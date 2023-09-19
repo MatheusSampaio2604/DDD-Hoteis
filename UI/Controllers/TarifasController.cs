@@ -48,7 +48,6 @@ namespace UI.Controllers
             }
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
-            
 
             var create = await _iTarifasApp.CreateAsync(tarifasViewModel);
 

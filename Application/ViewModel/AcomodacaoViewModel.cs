@@ -1,7 +1,8 @@
-﻿using Domain.Models;
+﻿
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.ViewModel
 {
@@ -29,6 +30,7 @@ namespace Application.ViewModel
 
 
         [DisplayName("Pertence a")]
+        [ForeignKey("Home")]
         public int? IdHome { get; set; }
 
         [DisplayName("Destino Imagem")]
@@ -37,7 +39,7 @@ namespace Application.ViewModel
         public IFormFile? Fotos { get; set; }
 #nullable disable
 
-        public virtual Home Home { get; set; }
+        public virtual HomeViewModel Home { get; set; }
         public virtual TarifasViewModel Tarifas { get; set; }
 
     }
