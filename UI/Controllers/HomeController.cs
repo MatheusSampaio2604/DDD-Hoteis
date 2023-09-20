@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using UI.Models;
 
 namespace UI.Controllers
@@ -8,14 +10,17 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAcomodacaoApp _IAcomodacaoApp;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAcomodacaoApp iAcomodacaoApp)
         {
             _logger = logger;
+            _IAcomodacaoApp = iAcomodacaoApp;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Acomodacoes = (await _IAcomodacaoApp.FindAllAsync()) ?? null;
             return View();
         }
 
