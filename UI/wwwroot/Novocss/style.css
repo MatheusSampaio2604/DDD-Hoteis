@@ -500,7 +500,8 @@ button:focus {
 }
 
 .banner_area .bg-parallax {
-  background: url("../image/banner_bg.jpg") no-repeat scroll center 0/cover;
+  /*background: url("../Novoimage/banner_bg.jpg") no-repeat scroll center 0/cover;*/
+  background: url("../img/BannerMoria.webp") no-repeat scroll center 0/cover;
   opacity: 0.50;
 }
 
@@ -673,7 +674,7 @@ button:focus {
 }
 
 .breadcrumb_area .bg-parallax {
-  background: url("../image/about_banner.jpg") no-repeat scroll center 0/cover;
+  background: url("../Novoimage/about_banner.jpg") no-repeat scroll center 0/cover;
   opacity: 0.50;
   z-index: -1;
 }
@@ -718,7 +719,7 @@ button:focus {
 }
 
 .blog_banner .bg-parallax {
-  background: url(../image/banner/banner-1.jpg) no-repeat scroll center center;
+  background: url(../Novoimage/banner/banner-1.jpg) no-repeat scroll center center;
 }
 
 .blog_banner .banner_content {
@@ -751,7 +752,7 @@ button:focus {
 }
 
 .blog_banner_two .bg-parallax {
-  background: url(../image/banner/banner-2.jpg) no-repeat scroll center top/cover;
+  background: url(../Novoimage/banner/banner-2.jpg) no-repeat scroll center top/cover;
 }
 
 /*=============End Blog Banner css =============*/
@@ -829,7 +830,7 @@ button:focus {
 }
 
 .facilities_area .bg-parallax {
-  background: url("../image/facilites_bg.jpg") no-repeat scroll center 0/cover;
+  background: url("../Novoimage/facilites_bg.jpg") no-repeat scroll center 0/cover;
   opacity: 0.15;
 }
 
@@ -3138,7 +3139,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .primary-checkbox input:checked + label {
-  background: url(../image/elements/primary-check.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/primary-check.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3176,7 +3177,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .confirm-checkbox input:checked + label {
-  background: url(../image/elements/success-check.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/success-check.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3219,7 +3220,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .disabled-checkbox input:checked + label {
-  background: url(../image/elements/disabled-check.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/disabled-check.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3257,7 +3258,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .primary-radio input:checked + label {
-  background: url(../image/elements/primary-radio.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/primary-radio.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3295,7 +3296,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .confirm-radio input:checked + label {
-  background: url(../image/elements/success-radio.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/success-radio.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3349,7 +3350,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .disabled-radio input:checked + label {
-  background: url(../image/elements/disabled-radio.png) no-repeat center center/cover;
+  background: url(../Novoimage/elements/disabled-radio.png) no-repeat center center/cover;
   border: none;
 }
 
@@ -3477,8 +3478,12 @@ h1, h2, h3, h4, h5, h6 {
 /*----------------------------------------------------*/
 /*============== footer-area css ===============*/
 .footer-area {
-  background: #04091e;
- 
+    background: #04091e;
+
+}
+
+.section-gap {
+    padding: 15px 0;
 }
 
 .single-footer-widget ul li a {

@@ -23,7 +23,7 @@ namespace Domain.Models
         public string? RotaImagem { get; set; }
 
         [NotMapped]
-        public ICollection<IFormFile>? Fotos { get; set; }
+        public IFormFile? Fotos { get; set; }
 #nullable disable
 
         public virtual Tarifas Tarifas { get; set; }

@@ -21,7 +21,7 @@
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color"  style="font-family: dancingscript-regular,dancing script,cursiv;">Nossas Suítes</h2>
+            <h2 class="title_color" style="font-family: dancingscript-regular,dancing script,cursiv;">Nossas Suítes</h2>
             <h4>
                 Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico, lareira a lenha, Tv a cabo, DVD, frigobar e varanda com rede.
                 <br />
@@ -29,7 +29,7 @@
             </h4>
         </div>
         <div class="row justify-content-center mb_30">
-            @foreach (var item in Model)
+            @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
             {
                 <div class="col-lg-3 col-sm-6">
                     <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
@@ -39,14 +39,18 @@
                                     <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
                                 else
                                 {
-                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" /> } }
+                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" />
+                                }
+                            }
                             <a href="#" class="btn theme_btn button_hover">Alugue</a>
                         </div>
                         <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
                         <h5>R$ @Html.DisplayFor(modelItem => item.Tarifas.Valor)<small>/noite</small></h5>
                     </div>
-                </div>}
+                </div>
+            }
         </div>
     </div>
 </section>
 <!--================ Accomodation Area  =================-->
+@await Html.PartialAsync("../Home/BookLibrary")

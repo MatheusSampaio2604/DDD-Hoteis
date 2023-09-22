@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -64,24 +66,24 @@ namespace UI.Controllers
             }
 
             acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
-
-            var create = await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
-
-            if (create is null)
+            if (acomodacaoViewModel.Fotos is not null)
             {
-                return View("Create", acomodacaoViewModel);
+                await CriarComImagem(acomodacaoViewModel);
             }
             else
             {
-                //if(acomodacaoViewModel.Fotos is not null)
-                //{
-                //    // await SalvarImagemProduto(acomodacaoViewModel);
-                //}
+                var create = await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
 
-                return RedirectToAction(nameof(Index));
+                if (create is null)
+                {
+                    return View("Create", acomodacaoViewModel);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-
-
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: AplicacaoasController/Edit/5
@@ -147,36 +149,31 @@ namespace UI.Controllers
             }
         }
 
-        //public async Task SalvarImagemProduto(AcomodacaoViewModel acomodacaoViewModel)
-        //{
-        //    if (acomodacaoViewModel.Fotos is not null)
-        //    {
-        //        try
-        //        {
-        //            var oldProduto = await _IAcomodacaoApp.FindOneAsync(acomodacaoViewModel.Id);
+        public async Task CriarComImagem(AcomodacaoViewModel acomodacaoViewModel)
+        {
+            try
+            {
 
-        //            var webRoot = _Environment.WebRootPath;
-        //            var extension = Path.GetExtension(acomodacaoViewModel.Fotos.FileName);
-        //            var nomeArquivo = string.Concat(acomodacaoViewModel.Nome.ToString(), extension);
-        //            var diretorioArquivoSalvar = Path.Combine(webRoot, "img", nomeArquivo);
+                var wwwroot = _Environment.WebRootPath;
+                var tipoArquivo = Path.GetExtension(acomodacaoViewModel.Fotos.FileName);
+                var nomeArquivo = string.Concat(acomodacaoViewModel.Nome.ToString(), "_", acomodacaoViewModel.Fotos.FileName.ToUpper(), tipoArquivo);
+                var diretorioArquivoSalvar = Path.Combine(wwwroot, "img", nomeArquivo);
 
-        //            var stream = new FileStream(diretorioArquivoSalvar, FileMode.Create);
-        //            await acomodacaoViewModel.Fotos.CopyToAsync(stream);
+                var stream = new FileStream(diretorioArquivoSalvar, FileMode.Create);
+                await acomodacaoViewModel.Fotos.CopyToAsync(stream);
 
-
-        //            acomodacaoViewModel.RotaImagem = $"https://localhost:5001/imgProdutos/{nomeArquivo}";
-
-        //            await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return;
-        //        }
-        //    }
+                acomodacaoViewModel.RotaImagem = $"https://localhost:5001/img/{nomeArquivo}";
 
 
-        //}
+                await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
+
+
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
 
     }
 }

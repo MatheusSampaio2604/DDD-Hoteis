@@ -24,7 +24,9 @@ namespace UI.Controllers
             string frase = "Chalé";
             IEnumerable<AcomodacaoViewModel> obj = await _IAcomodacaoApp.FindAcomodacoesWithPhrase(frase);
 
-            ViewBag.Acomodacoes = (await _IAcomodacaoApp.FindAllAsync()) ?? null;
+            var i = await _IAcomodacaoApp.FindAllAsync();
+            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
+            ViewBag.Acomodacoes = iActive ?? null;
 
             return View(obj);
         }

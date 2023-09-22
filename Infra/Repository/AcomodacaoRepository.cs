@@ -17,8 +17,7 @@ namespace Infra.Repository
 
         public async Task<IEnumerable<Acomodacao>> FindAcomodacoesWithPhrase(string phrase)
         {
-            var obj = await DbSet.Where(a => a.Nome.Contains(phrase) && a.Ativo == true).OrderBy(a => a.Nome).ToListAsync();
-            return obj;
+            return await DbSet.Where(a => a.Nome.Contains(phrase) && a.Ativo == true).ToListAsync();
         }
 
     }
