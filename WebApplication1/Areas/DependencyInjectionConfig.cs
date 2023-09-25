@@ -9,7 +9,7 @@ using Infra.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace UI.Areas
+namespace WebApi.Areas
 {
     public static class DependencyInjectionConfig
     {
