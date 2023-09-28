@@ -24,8 +24,6 @@ namespace Application
 
         public virtual async Task<IEnumerable<AcomodacaoViewModel>> FindAcomodacoesWithPhrase(string phrase)
         {
-           // return await _iAcomodacaoRepository.FindAcomodacoesWithPhrase(phrase);
-
 
             try
             {

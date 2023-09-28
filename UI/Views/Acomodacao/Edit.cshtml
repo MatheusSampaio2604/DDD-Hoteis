@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label class="form-label text-info">Fotos</label>
                 <div class="input-group">
-                    <div class="custom-file">
+                    <div class="custom-file mb-3">
                         <input type="file" name="Fotos" asp-for="Fotos" class="custom-file-input" multiple />
                         <label class="custom-file-label">Escolher arquivo(s)</label>
                     </div>
@@ -26,7 +26,9 @@
                     {
                         foreach (var foto in Model.RotaImagem ?? null)
                         {
-                            <img src="@foto" class="img-thumbnail" alt="Imagem do Produto" style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                            <div class="carousel">
+                                <img src="@foto" class="img-thumbnail" alt="Imagem do Produto" style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                            </div>
                         }
                     }
                 </div>

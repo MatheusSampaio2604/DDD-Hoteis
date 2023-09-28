@@ -36,10 +36,13 @@
                         <div class="hotel_img">
                             @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
                                 {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
+                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt="">
+                                }
                                 else
                                 {
-                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" /> } }
+                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" />
+                                }
+                            }
                             <a href="#" class="btn theme_btn button_hover">Alugue</a>
                         </div>
                         <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
