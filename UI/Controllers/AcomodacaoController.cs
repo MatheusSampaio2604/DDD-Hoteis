@@ -50,8 +50,9 @@ namespace UI.Controllers
         // GET: AplicacaoasController/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.Tarifas = (await _ITarifasApp.FindAllAsync()) ?? null;
-            ViewBag.Home = (await _IHomeApp.FindAllAsync()) ?? null;
+            var tarifas = await _ITarifasApp.FindAllAsync();
+            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
+            ViewBag.Home = await _IHomeApp.FindAllAsync() ?? null;
             return View();
         }
 
@@ -89,7 +90,8 @@ namespace UI.Controllers
         // GET: AplicacaoasController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Tarifas = (await _ITarifasApp.FindAllAsync()) ?? null;
+            var tarifas = await _ITarifasApp.FindAllAsync();
+            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
             ViewBag.Home = (await _IHomeApp.FindAllAsync()) ?? null;
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }

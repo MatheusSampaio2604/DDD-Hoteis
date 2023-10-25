@@ -1,12 +1,20 @@
 ﻿@model Application.ViewModel.HomeViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar Novo";
+    ViewData["ActiveText"] = "Administração /Criação de Estabelecimento";
 }
 
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb");
+
+
+<section class="section_gap">
+    
+<div class="container">
 <h1 class="text-primary">Criar Novo(a)</h1>
 
-<h4 class="text-success">Home</h4>
+<h4 class="text-success">Estabelecimento</h4>
 <hr />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -67,8 +75,10 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+    <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
 </div>
+</div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

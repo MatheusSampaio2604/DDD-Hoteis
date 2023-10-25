@@ -3,9 +3,11 @@ using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace WebApi.Controllers
 {
@@ -21,18 +23,20 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpGet("ind")]
+        [HttpGet("GetAll")]
         // GET: TarifasController
         public async Task<ActionResult> Index()
         {
+            //Utils utils = new();
             var i = await _iTarifasApp.FindAllAsync();
             if (i.Count() > 0)
-                return Ok(true);
+                //return Ok(utils.DatatableToJson(i));
+                return Ok();
             else
                 return BadRequest();
         }
 
-        [HttpGet("det")]
+        [HttpGet("Details")]
         // GET: TarifasController/Details/5
         public async Task<ActionResult> Details(int id)
         {
@@ -44,7 +48,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Create
-        [HttpPost("create")]
+        [HttpPost("New")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TarifasViewModel tarifasViewModel)
         {
@@ -64,7 +68,7 @@ namespace WebApi.Controllers
 
         }
 
-        [HttpGet("edt")]
+        [HttpGet("Edit")]
         // GET: TarifasController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
@@ -76,7 +80,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Edit/5
-        [HttpPost("edit")]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, TarifasViewModel tarifasViewModel)
         {
@@ -99,7 +103,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Delete/5
-        [HttpPost("delete")]
+        [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Tarifas tarifas)
         {

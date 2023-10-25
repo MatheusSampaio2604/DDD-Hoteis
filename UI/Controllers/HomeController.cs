@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using UI.Models;
 
@@ -20,7 +21,7 @@ namespace UI.Controllers
             _logger = logger;
             _IAcomodacaoApp = iAcomodacaoApp;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var i = await _IAcomodacaoApp.FindAllAsync();
@@ -31,18 +32,63 @@ namespace UI.Controllers
 
             return View(iActive);
         }
-
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Contact(HomeViewModel model)
+        {
+            // Valide o modelo, se necessário
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
+            // Crie um objeto HttpClient para fazer a solicitação POST para o script PHP
+            using (HttpClient client = new HttpClient())
+            {
+                string phpScriptUrl = "https://localhost:5001/Home/contact_process.php";
+
+                // Crie os dados do formulário
+                var formData = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("name", model.Name),
+                new KeyValuePair<string, string>("email", model.Email),
+                new KeyValuePair<string, string>("subject", model.Subject),
+                new KeyValuePair<string, string>("message", model.Message)
+            };
+
+                // Envie a solicitação POST
+                var response = await client.PostAsync(phpScriptUrl, new FormUrlEncodedContent(formData));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // A solicitação foi bem-sucedida
+                    // Você pode redirecionar para uma página de sucesso, exibir uma mensagem ou fazer o que for apropriado
+                    return View("Success");
+                }
+                else
+                {
+                    // A solicitação falhou, você pode redirecionar para uma página de erro ou exibir uma mensagem de erro
+                    return View("Error");
+                }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Pet()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

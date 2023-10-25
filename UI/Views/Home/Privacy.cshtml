@@ -1,4 +1,15 @@
-﻿<div class="container mt-4">
+﻿@{
+    ViewData["Title"] = "Termos de Privacidade";
+    ViewData["ActiveText"] = "Privacidade";
+}
+<!--================Breadcrumb Area =================-->
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
+<!--================Breadcrumb Area =================-->
+
+<section class="container section_gap">
     <div class="row">
         <div class="col">
             <h1 class="mb-4">Política de Privacidade</h1>
@@ -56,4 +67,4 @@
 
         </div>
     </div>
-</div>
+</section>

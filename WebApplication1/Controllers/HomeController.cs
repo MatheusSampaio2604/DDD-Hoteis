@@ -23,7 +23,7 @@ namespace WebApi.Controllers
             _IAcomodacaoApp = iAcomodacaoApp;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> Index()
         {
             var i = await _IAcomodacaoApp.FindAllAsync();

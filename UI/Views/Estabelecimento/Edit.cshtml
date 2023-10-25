@@ -1,12 +1,17 @@
 ﻿@model Application.ViewModel.HomeViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
+    ViewData["ActiveText"] = "Administração - Edição";
 }
 
-<h1>Edit</h1>
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
 
-<h4>Home</h4>
+<section class="section_gap">
+    
+<div class="container">
+<h2>Editar @Model.Nome</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -53,6 +58,8 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+</div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

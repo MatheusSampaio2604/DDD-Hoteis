@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<Application.ViewModel.TarifasViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ADM - Tarifas";
+    ViewData["ActiveText"] = "Administração - Tarifas";
 }
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
+<section class="section_gap">
+<div class="container">
 
 <h1>Index</h1>
 
@@ -21,7 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
-            <th></th>
+            <th>Opções</th>
         </tr>
     </thead>
     <tbody>
@@ -38,11 +45,14 @@
                 @Html.DisplayFor(modelItem => item.Ativo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+     
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+</div>
+</section>

@@ -1,9 +1,16 @@
 ﻿@model Application.ViewModel.HomeViewModel
 
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
+    ViewData["ActiveText"] = "Administração - Detalhes";
 }
 
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
+<section class="section_gap">
+    
 <div class="container">
     <h1 class="display-4">Detalhes</h1>
 
@@ -36,3 +43,4 @@
         <a class="btn btn-secondary" asp-action="Index">Voltar para a Lista</a>
     </div>
 </div>
+</section>

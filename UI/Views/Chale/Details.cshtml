@@ -1,50 +1,43 @@
 ﻿@model Application.ViewModel.AcomodacaoViewModel
 
 @{
-    ViewData["Title"] = "Details";
+ViewData["Title"] = @Model.Nome;
+ViewData["ActiveText"] = "Detalhes";
 }
 
-<h1>Detalhes @Model.Nome</h1>
+<!--================Breadcrumb Area =================-->
 
-<div>
-    <h4>Acomodacao</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RotaImagem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RotaImagem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tarifas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tarifas.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Home)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Home.Id)
-        </dd>
-    </dl>
-</div>
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb");
+
+<!--================Breadcrumb Area =================-->
+<section class="section_gap">
+  <div class="container">
+
+    <section class="about_history_area section_gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            @{ if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
+            {
+            <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt=""> }
+            else
+            {
+            <img width="500" height="500" src="~/img/DevChale.png" alt="" />
+            }
+            }
+          </div>
+          <div class="col-md-6 d_flex align-items-center">
+            <div class="about_content ">
+              @Html.DisplayFor(model => model.Descricao)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div>
+      <p>Preço: </p>
+      <p>R$ @Html.DisplayFor(model => model.Tarifas.Valor) / dia</p>
+    </div>
+  </div>
+</section>

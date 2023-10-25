@@ -1,27 +1,20 @@
 ﻿@model IEnumerable<Application.ViewModel.AcomodacaoViewModel>
 
 @{
-    ViewData["Title"] = "Suítes";
+    ViewData["Title"] = "Nossas Suítes";
+    ViewData["ActiveText"] = "Suítes";
 }
 <!--================Breadcrumb Area =================-->
-<section class="breadcrumb_area">
-    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
-    <div class="container">
-        <div class="page-cover text-center">
-            <h2 class="page-cover-tittle">Suítes</h2>
-            <ol class="breadcrumb">
-                <li><a asp-controller="Home" asp-action="Index">Pagina Inicial</a></li>
-                <li class="active">Suítes</li>
-            </ol>
-        </div>
-    </div>
-</section>
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
 <!--================Breadcrumb Area =================-->
+
 <!--================ Accomodation Area  =================-->
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color" style="font-family: dancingscript-regular,dancing script,cursiv;">Nossas Suítes</h2>
             <h4>
                 Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico, lareira a lenha, Tv a cabo, DVD, frigobar e varanda com rede.
                 <br />
@@ -39,7 +32,7 @@
                                     <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
                                 else
                                 {
-                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" />
+                                    <img width="260" height="270" src="~/img/DevIndex.png" alt="" />
                                 }
                             }
                             <a href="#" class="btn theme_btn button_hover">Alugue</a>

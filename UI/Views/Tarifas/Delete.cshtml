@@ -1,9 +1,15 @@
 ﻿@model Application.ViewModel.TarifasViewModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "ADM - Remoção";
+    ViewData["ActiveText"] = "Administração - Remoção";
 }
 
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
+<section class="section_gap">
+<div class="container">
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
@@ -37,3 +43,5 @@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+</div>
+</section>

@@ -1,8 +1,16 @@
 ﻿@model Application.ViewModel.AcomodacaoViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ADM - Editar";
+    ViewData["ActiveText"] = "Administração - Editar";
 }
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
+<section class="section_gap">
+
+<div class="container">
 
 <h1 class="text-primary">Editar</h1>
 
@@ -66,9 +74,12 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+    <a class="btn btn-info mt-3" asp-action="Index">Voltar para a Lista</a>
 </div>
 
+</div>
+
+</section>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
