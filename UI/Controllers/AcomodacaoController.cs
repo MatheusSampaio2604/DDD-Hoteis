@@ -33,6 +33,7 @@ namespace UI.Controllers
 
 
         // GET: AplicacaoasController
+        [HttpGet("MostrarTudo")]
         public async Task<ActionResult> Index()
         {
             IEnumerable<AcomodacaoViewModel> item = await _IAcomodacaoApp.FindAllAsync();
@@ -41,6 +42,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Details/5
+        [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _IAcomodacaoApp.FindOneAsync(id);
@@ -48,6 +50,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Create
+        [HttpGet("Criar")]
         public async Task<ActionResult> Create()
         {
             var tarifas = await _ITarifasApp.FindAllAsync();
@@ -57,7 +60,7 @@ namespace UI.Controllers
         }
 
         // POST: AplicacaoasController/Create
-        [HttpPost]
+        [HttpPost("Criacao")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AcomodacaoViewModel acomodacaoViewModel)
         {
@@ -88,6 +91,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Edit/5
+        [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
             var tarifas = await _ITarifasApp.FindAllAsync();
@@ -97,7 +101,7 @@ namespace UI.Controllers
         }
 
         // POST: AplicacaoasController/Edit/5
-        [HttpPost]
+        [HttpPost("Edicao")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AcomodacaoViewModel acomodacaoViewModel)
         {
@@ -129,13 +133,14 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Delete/5
+        [HttpGet("Deletar")]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
 
         // POST: AplicacaoasController/Delete/5
-        [HttpPost]
+        [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Acomodacao acomodacao)
         {
