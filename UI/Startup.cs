@@ -28,6 +28,8 @@ namespace UI
             services.ResolveDependencies();
             services.AddRazorPages();
             services.AddAuthentication(Configuration);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +61,11 @@ namespace UI
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
+            var urlSiteNovo = "http://192.168.0.152:40";
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins(urlSiteNovo));
         }
     }
 }
