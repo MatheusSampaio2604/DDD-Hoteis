@@ -38,5 +38,28 @@ namespace Application.ViewModel
 #nullable disable
 
         public virtual ICollection<AcomodacaoViewModel> Acomodacao { get; set; }
+
+        #region formulario de contato
+#nullable enable
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        [DisplayName("Nome")]
+        public string? Name { get; set; }
+
+        [Required(ErrorMessage = "O e-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "Digite um endereço de e-mail válido.")]
+        [DisplayName("E-mail")]
+        public string? Email { get; set; }
+
+        [Required(ErrorMessage = "O assunto é obrigatório.")]
+        [DisplayName("Assunto")]
+        public string? Subject { get; set; }
+
+        [Required(ErrorMessage = "A mensagem é obrigatória.")]
+        [DisplayName("Mensagem")]
+        public string? Message { get; set; }
+#nullable disable
+        #endregion
+
     }
+
 }

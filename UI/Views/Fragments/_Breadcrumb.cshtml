@@ -1,0 +1,20 @@
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">@ViewData["Title"]</h2>
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Pagina Principal</a></li>
+                <li class="active">@ViewData["ActiveText"]</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+@* @{
+    ViewData["Title"] = "Criar Novo";
+    ViewData["ActiveText"] = "Administração - " + Model.Nome + " - Criação";
+}
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@*@await Html.PartialAsync("../Fragments/_Breadcrumb"); *@

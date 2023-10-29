@@ -1,0 +1,7 @@
+.gmap_iframe {
+    
+    height: 400px !important;
+    width: 1000px;
+    overflow: hidden;
+    background: none !important;
+}

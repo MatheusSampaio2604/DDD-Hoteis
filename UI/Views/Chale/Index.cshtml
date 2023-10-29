@@ -1,27 +1,19 @@
 ﻿@model IEnumerable<Application.ViewModel.AcomodacaoViewModel>
 
 @{
-    ViewData["Title"] = "Chalés";
+    ViewData["Title"] = "Nossos Chalés";
+    ViewData["ActiveText"] = "Chalés";
 }
 <!--================Breadcrumb Area =================-->
-<section class="breadcrumb_area">
-    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
-    <div class="container">
-        <div class="page-cover text-center">
-            <h2 class="page-cover-tittle">Chalés</h2>
-            <ol class="breadcrumb">
-                <li><a asp-controller="Home" asp-action="Index">Pagina Inicial</a></li>
-                <li class="active">Chalés</li>
-            </ol>
-        </div>
-    </div>
-</section>
+
+@* Renderiza o fragmento de breadCrumb no começo da pagina *@
+@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+
 <!--================Breadcrumb Area =================-->
 <!--================ Accomodation Area  =================-->
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color" style="font-family: dancingscript-regular,dancing script,cursiv;">Nossos Chalés</h2>
             <h4>
                 Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico, lareira, Tv a cabo, DVD, frigobar e varanda com rede.
                 <br />
@@ -34,14 +26,10 @@
                 <div class="col-lg-3 col-sm-6">
                     <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
                         <div class="hotel_img">
-                            @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
-                                {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt="">
+                            @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem)){
+                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""/>
                                 }
-                                else
-                                {
-                                    <img width="260" height="270" src="/img/TesteBC.png" alt="" />
-                                }
+                                else{ <img width="260" height="270" src="~/img/DevIndex.png"/> }
                             }
                             <a href="#" class="btn theme_btn button_hover">Alugue</a>
                         </div>

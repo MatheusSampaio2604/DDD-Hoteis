@@ -36,6 +36,7 @@ namespace UI.Controllers
 
 
         // GET: AplicacaoasController
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             IEnumerable<AcomodacaoViewModel> item = await _IAcomodacaoApp.FindAllAsync();
@@ -44,6 +45,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Details/5
+        [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _IAcomodacaoApp.FindOneAsync(id);
@@ -51,10 +53,12 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Create
+        [HttpGet]
         public async Task<ActionResult> Create()
         {
-            ViewBag.Tarifas = (await _ITarifasApp.FindAllAsync()) ?? null;
-            ViewBag.Home = (await _IHomeApp.FindAllAsync()) ?? null;
+            var tarifas = await _ITarifasApp.FindAllAsync();
+            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
+            ViewBag.Home = await _IHomeApp.FindAllAsync() ?? null;
             return View();
         }
 
@@ -100,9 +104,11 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Edit/5
+        [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Tarifas = (await _ITarifasApp.FindAllAsync()) ?? null;
+            var tarifas = await _ITarifasApp.FindAllAsync();
+            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
             ViewBag.Home = (await _IHomeApp.FindAllAsync()) ?? null;
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
@@ -118,15 +124,20 @@ namespace UI.Controllers
             }
 
             acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
-            //if (acomodacaoViewModel.Fotos is not null)
-            //{
-            //    await SalvarImagemProduto(acomodacaoViewModel);
-            //}
-            //else
-            //{
-            //    //var oldProduto = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
 
-            //    //acomodacaoViewModel.RotaImagem = oldProduto.RotaImagem ?? null;
+            // Verifique se o usuário deseja atualizar a imagem
+            if (acomodacaoViewModel.Fotos is not null)
+            {
+                await CriarComImagem(acomodacaoViewModel);
+            }
+            else
+            {
+                // O usuário não deseja atualizar a imagem, mantenha a imagem existente.
+                var acomodacaoExistente = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
+
+                // Mantenha a imagem existente, se houver.
+                acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem;
+            }
 
             
             var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
@@ -135,12 +146,13 @@ namespace UI.Controllers
             {
                 return View("Error");
             }
-            //}
 
             return RedirectToAction(nameof(Index));
         }
 
+
         // GET: AplicacaoasController/Delete/5
+        [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _IAcomodacaoApp.FindOneAsync(id));
@@ -167,25 +179,30 @@ namespace UI.Controllers
         {
             try
             {
-
                 var wwwroot = _Environment.WebRootPath;
+                var nomePasta = acomodacaoViewModel.Nome.Replace(" ", "_"); // Remova espaços no nome da acomodação
+                var pastaDestino = Path.Combine(wwwroot, "img", nomePasta);
+
+                // Verifique se a pasta de destino já existe. Se não, crie-a.
+                if (!Directory.Exists(pastaDestino))
+                {
+                    Directory.CreateDirectory(pastaDestino);
+                }
+
                 var tipoArquivo = Path.GetExtension(acomodacaoViewModel.Fotos.FileName);
-                var nomeArquivo = string.Concat(acomodacaoViewModel.Nome.ToString(), "_", acomodacaoViewModel.Fotos.FileName.ToUpper(), tipoArquivo);
-                var diretorioArquivoSalvar = Path.Combine(wwwroot, "img", nomeArquivo);
+                var nomeArquivo = string.Concat(acomodacaoViewModel.Fotos.FileName.ToUpper(), tipoArquivo);
+                var diretorioArquivoSalvar = Path.Combine(pastaDestino, nomeArquivo);
 
                 var stream = new FileStream(diretorioArquivoSalvar, FileMode.Create);
                 await acomodacaoViewModel.Fotos.CopyToAsync(stream);
 
-                acomodacaoViewModel.RotaImagem = $"https://localhost:5001/img/{nomeArquivo}";
-
+                acomodacaoViewModel.RotaImagem = $"https://localhost:5001/img/{nomePasta}/{nomeArquivo}";
 
                 await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
-
-
             }
             catch (Exception ex)
             {
-                return;
+                // Lide com erros apropriadamente, como registrar ou lançar uma exceção.
             }
         }
 

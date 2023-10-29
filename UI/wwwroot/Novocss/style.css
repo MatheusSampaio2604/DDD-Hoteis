@@ -109,9 +109,9 @@ button:focus {
   }
 }
 
-/*.section_gap {
-  padding: 120px 0;
-}*/
+.section_gap {
+  padding: 50px 0px 50px 0px;
+}
 
 .d_flex {
   display: -webkit-box;
@@ -143,7 +143,7 @@ button:focus {
 .section_title p {
   font-size: 14px;
   line-height: 30px;
-  color: #777777;
+  color: #989898;
   margin-bottom: 0px;
 }
 
@@ -500,7 +500,6 @@ button:focus {
 }
 
 .banner_area .bg-parallax {
-  /*background: url("../Novoimage/banner_bg.jpg") no-repeat scroll center 0/cover;*/
   background: url("../img/BannerMoria.webp") no-repeat scroll center 0/cover;
   opacity: 0.50;
 }
@@ -831,7 +830,7 @@ button:focus {
 
 .facilities_area .bg-parallax {
   background: url("../Novoimage/facilites_bg.jpg") no-repeat scroll center 0/cover;
-  opacity: 0.15;
+  opacity: 0.30;
 }
 
 .facilities_item {
@@ -841,11 +840,13 @@ button:focus {
   padding: 31px 40px 37px;
   color: #fff;
   margin-bottom: 30px;
+  height: 250px;
 }
 
 .facilities_item .sec_h4 {
   padding-bottom: 18px;
   color: #fff;
+  text-align: -webkit-center;
 }
 
 .facilities_item .sec_h4 i {
@@ -861,6 +862,7 @@ button:focus {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0px;
+  text-align: center;
 }
 
 /*=========== End facilities_area css =============*/
