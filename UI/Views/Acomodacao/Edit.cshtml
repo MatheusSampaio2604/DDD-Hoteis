@@ -21,9 +21,9 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group col-4">
                 <label class="form-label text-info">Fotos</label>
-                <div class="input-group">
+                <div class="input-group ">
                     <div class="custom-file mb-3">
                         <input type="file" name="Fotos" asp-for="Fotos" class="custom-file-input" multiple />
                         <label class="custom-file-label">Escolher arquivo(s)</label>
@@ -52,20 +52,26 @@
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="IdValor" class="form-label text-info">Valor: </label>
-                <select asp-for="IdValor" asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))" class="form-select bg-light text-dark"></select>
+                <label asp-for="IdValor" class="form-label text-info">Valor:</label>
+                <select asp-for="IdValor" asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))" class="form-select bg-light text-dark">
+                    <option selected disabled value="">Selecione</option>
+                </select>
                 <span asp-validation-for="IdValor" class="text-danger"></span>
-            </div>
+        </div>
+
             <div class="mb-3">
                 <label asp-for="IdHome" class="form-label text-info">Pertence a:</label>
-                <select asp-for="IdHome" class="form-select bg-light text-dark" asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))"></select>
+                <select asp-for="IdHome" class="form-select bg-light text-dark" asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))">
+                    <option selected disabled value="">Selecione</option>
+                </select>
                 <span asp-validation-for="IdHome" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label class="form-label text-info">@Html.DisplayNameFor(model => model.Ativo)</label>
-                <input type="checkbox" asp-for="Ativo" class="form-check-input" />
+            <div class="mb-3 form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" asp-for="Ativo" id="flexSwitchCheckAtivo" checked="@Model.Ativo" />
+                <label class="form-check-label" for="flexSwitchCheckAtivo">Pronto para Anunciar?</label>
                 <span asp-validation-for="Ativo" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
