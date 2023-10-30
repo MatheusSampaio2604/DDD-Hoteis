@@ -9,9 +9,10 @@ namespace Infra.Mapping
         public void Configure(EntityTypeBuilder<Acomodacao> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(p => p.Ativo).HasDefaultValue(false);
+            builder.Property(p => p.Ativo).HasDefaultValue(0);
             builder.HasOne(x => x.Tarifas).WithMany(x => x.Acomodacao).HasForeignKey(x => x.IdValor);
             builder.HasOne(x => x.Home).WithMany(x => x.Acomodacao).HasForeignKey(x => x.IdHome);
+
             builder.Property(x => x.Id).HasColumnName("Id");
             builder.Property(x => x.Nome).HasColumnName("Nome");
             builder.Property(x => x.Descricao).HasColumnName("Descricao");

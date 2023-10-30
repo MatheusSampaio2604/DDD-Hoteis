@@ -26,12 +26,7 @@ namespace UI
             services.ResolveDependencies();
             services.AddRazorPages();
             services.AddAuthentication(Configuration);
-<<<<<<< HEAD
 
-
-=======
-            
->>>>>>> dc7d62315bb6827d1e5335f93b9b76066f15dc3a
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
