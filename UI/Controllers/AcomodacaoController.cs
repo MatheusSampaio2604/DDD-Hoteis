@@ -120,10 +120,10 @@ namespace UI.Controllers
             else
             {
                 // O usuário não deseja atualizar a imagem, mantenha a imagem existente.
-                var acomodacaoExistente = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
+                //var acomodacaoExistente = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
 
                 // Mantenha a imagem existente, se houver.
-                acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem;
+                //acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem; 
             }
 
             var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
