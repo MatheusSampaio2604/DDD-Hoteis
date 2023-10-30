@@ -1,6 +1,9 @@
 ﻿using Application.Interfaces;
 using Application.ViewModel;
+using Domain.Interfaces;
 using Domain.Models;
+using Infra.Context;
+using Infra.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -70,9 +73,17 @@ namespace UI.Controllers
             }
 
             acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
-            if (acomodacaoViewModel.Fotos is not null)
+            //if (acomodacaoViewModel.Fotos is not null)
+            //{
+            //    await CriarComImagem(acomodacaoViewModel);
+            //}
+            //else
+            //
+            var exist = await _IAcomodacaoApp.FindAllAsync();
+            
+            if (exist.Any(x=>x.Nome == acomodacaoViewModel.Nome))
             {
-                await CriarComImagem(acomodacaoViewModel);
+                return Unauthorized("Já existe ");
             }
             else
             {
@@ -87,7 +98,9 @@ namespace UI.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return RedirectToAction(nameof(Index));
+                
+            //}
+            //return RedirectToAction(nameof(Index));
         }
 
         // GET: AplicacaoasController/Edit/5
@@ -126,6 +139,7 @@ namespace UI.Controllers
                 //acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem; 
             }
 
+            
             var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
 
             if (edit is null)
