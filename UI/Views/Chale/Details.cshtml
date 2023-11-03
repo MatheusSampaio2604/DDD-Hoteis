@@ -1,8 +1,8 @@
 ﻿@model Application.ViewModel.AcomodacaoViewModel
 
 @{
-ViewData["Title"] = @Model.Nome;
-ViewData["ActiveText"] = "Detalhes";
+  ViewData["Title"] = @Model.Nome;
+  ViewData["ActiveText"] = "Detalhes";
 }
 
 <!--================Breadcrumb Area =================-->
@@ -18,13 +18,15 @@ ViewData["ActiveText"] = "Detalhes";
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            @{ if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
-            {
-            <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt=""> }
-            else
-            {
-            <img width="500" height="500" src="~/img/DevChale.png" alt="" />
-            }
+            @{
+              if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
+              {
+                <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt="">
+              }
+              else
+              {
+                <img width="500" height="500" src="~/img/DevChale.png" alt="" />
+              }
             }
           </div>
           <div class="col-md-6 d_flex align-items-center">
@@ -38,6 +40,7 @@ ViewData["ActiveText"] = "Detalhes";
     <div>
       <p>Preço: </p>
       <p>R$ @Html.DisplayFor(model => model.Tarifas.Valor) / dia</p>
+      <a href="#" class="btn theme_btn button_hover">Alugue</a>
     </div>
   </div>
 </section>

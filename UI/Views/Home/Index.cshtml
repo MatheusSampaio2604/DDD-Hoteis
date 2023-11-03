@@ -8,12 +8,14 @@
 <!--================Banner Area =================-->
 <section class="banner_area">
     <div class="booking_table d_flex align-items-center">
-        <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+        <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+        </div>
         <div class="container">
             <div class="banner_content text-center">
                 <h6>LONGE DA VIDA MONÓTONA</h6>
                 <h2>RELAXE SUA MENTE</h2>
-                <p>Se você estiver procurando por virgens na web, poderá ficar muito confuso com a<br> diferença de preço. Você pode ver algumas de nossas acomodações por apenas R$ 500,00 cada...</p>
+                <p>Se você estiver procurando por virgens na web, poderá ficar muito confuso com a<br> diferença de
+                    preço. Você pode ver algumas de nossas acomodações por apenas R$ 500,00 cada...</p>
             </div>
         </div>
     </div>
@@ -24,23 +26,31 @@
     <div class="container">
         <div class="section_title text-center">
             <h2 class="title_color">Nossas Acomodações</h2>
-            <p>Todos vivemos numa época que pertence aos jovens de coração. Vida que está se tornando extremamente rápida, experimente relaxar conosco.</p>
+            <p>Todos vivemos numa época que pertence aos jovens de coração. Vida que está se tornando extremamente
+                rápida, experimente relaxar conosco.</p>
         </div>
         <div class="row mb_30 justify-content-center">
             @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
             {
+                    string linkController = string.Empty; string linkAction = "Details";
+                    if (item.Nome.Contains("CHALÉ"))
+                        linkController = "Chale";
+                    else if (item.Nome.Contains("SUÍTE"))
+                        linkController = "Suite";
                 <div class="col-lg-3 col-sm-6">
-                    <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
+                    <div class="accomodation_item text-center">
                         <div class="hotel_img">
-                            @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
+                            @{
+                                if (!string.IsNullOrWhiteSpace(item.RotaImagem))
                                 {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
+                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt="">
+                                }
                                 else
                                 {
                                     <img width="260" height="270" src="~/img/DevIndex.png" alt="LogoTemporario" />
                                 }
                             }
-                            <a href="#" class="btn theme_btn button_hover">Alugue</a>
+                            <a href="@Url.Action(linkAction, linkController, new { id = item.Id })" class="btn theme_btn button_hover">Detalhes</a>
                         </div>
                         <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
                         <h5>R$ @Html.DisplayFor(modelItem => item.Tarifas.Valor)<small>/noite</small></h5>
@@ -76,13 +86,15 @@
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-shirt"></i>Piscinas</h4>
-                    <p>Nossa Pousada conta com uma Piscina natural, uma piscina grande e uma Hidromassagem ao ar livre(Hidro está disponivel mediante agendamento em horario comercial).</p>
+                    <p>Nossa Pousada conta com uma Piscina natural, uma piscina grande e uma Hidromassagem ao ar
+                        livre(Hidro está disponivel mediante agendamento em horario comercial).</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-car"></i>Alugueis de passeios</h4>
-                    <p>Pela região estão espalhadas diversas equipes de passeios (Motos, Quadriciclos, 4x4 e muito mais).</p>
+                    <p>Pela região estão espalhadas diversas equipes de passeios (Motos, Quadriciclos, 4x4 e muito
+                        mais).</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -94,7 +106,8 @@
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-coffee-cup"></i>Bistro</h4>
-                    <p>A pousada dispõe de um Bistrô a noite que fica a disposição para nossos clientes, das 17:15hrs ate as 21:00hrs, com opções leves para a noite.</p>
+                    <p>A pousada dispõe de um Bistrô a noite que fica a disposição para nossos clientes, das 17:15hrs
+                        ate as 21:00hrs, com opções leves para a noite.</p>
                 </div>
             </div>
         </div>
@@ -108,8 +121,11 @@
             <div class="col-md-6 d_flex align-items-center">
                 <div class="about_content ">
                     <h2 class="title title_color">Sobre nós <br>Nossa História<br>Missão & Visão</h2>
-                    <p>o comportamento inadequado é frequentemente ridicularizado como “meninos serão meninos”, as mulheres enfrentam padrões de conduta mais elevados, especialmente no local de trabalho. É por isso que é crucial que, como mulheres, o nosso comportamento no trabalho seja irrepreensível. comportamento inadequado costuma ser motivo de risada.</p>
-                    
+                    <p>o comportamento inadequado é frequentemente ridicularizado como “meninos serão meninos”, as
+                        mulheres enfrentam padrões de conduta mais elevados, especialmente no local de trabalho. É por
+                        isso que é crucial que, como mulheres, o nosso comportamento no trabalho seja irrepreensível.
+                        comportamento inadequado costuma ser motivo de risada.</p>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -130,8 +146,11 @@
             <div class="media testimonial_item">
                 <img class="rounded-circle" src="Novoimage/testtimonial-1.jpg" alt="">
                 <div class="media-body">
-                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
-                    <a href="#"><h4 class="sec_h4">Patricia Plinia</h4></a>
+                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe
+                        Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
+                    <a href="#">
+                        <h4 class="sec_h4">Patricia Plinia</h4>
+                    </a>
                     <div class="star">
                         <a href="#"><i class="fa fa-star"></i></a>
                         <a href="#"><i class="fa fa-star"></i></a>
@@ -144,22 +163,11 @@
             <div class="media testimonial_item">
                 <img class="rounded-circle" src="Novoimage/testtimonial-1.jpg" alt="">
                 <div class="media-body">
-                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
-                    <a href="#"><h4 class="sec_h4">Craudinha Beiramar</h4></a>
-                    <div class="star">
-                        <a href="#"><i class="fa fa-star"></i></a>
-                        <a href="#"><i class="fa fa-star"></i></a>
-                        <a href="#"><i class="fa fa-star"></i></a>
-                        <a href="#"><i class="fa fa-star"></i></a>
-                        <a href="#"><i class="fa fa-star-half-o"></i></a>
-                    </div>
-                </div>
-            </div>
-                        <div class="media testimonial_item">
-                <img class="rounded-circle" src="Novoimage/testtimonial-1.jpg" alt="">
-                <div class="media-body">
-                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
-                    <a href="#"><h4 class="sec_h4">Teresinha de Jésus</h4></a>
+                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe
+                        Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
+                    <a href="#">
+                        <h4 class="sec_h4">Craudinha Beiramar</h4>
+                    </a>
                     <div class="star">
                         <a href="#"><i class="fa fa-star"></i></a>
                         <a href="#"><i class="fa fa-star"></i></a>
@@ -172,8 +180,28 @@
             <div class="media testimonial_item">
                 <img class="rounded-circle" src="Novoimage/testtimonial-1.jpg" alt="">
                 <div class="media-body">
-                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
-                    <a href="#"><h4 class="sec_h4">Marcela camilo</h4></a>
+                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe
+                        Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
+                    <a href="#">
+                        <h4 class="sec_h4">Teresinha de Jésus</h4>
+                    </a>
+                    <div class="star">
+                        <a href="#"><i class="fa fa-star"></i></a>
+                        <a href="#"><i class="fa fa-star"></i></a>
+                        <a href="#"><i class="fa fa-star"></i></a>
+                        <a href="#"><i class="fa fa-star"></i></a>
+                        <a href="#"><i class="fa fa-star-half-o"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="media testimonial_item">
+                <img class="rounded-circle" src="Novoimage/testtimonial-1.jpg" alt="">
+                <div class="media-body">
+                    <p>Como indigentes viajantes conscientes, devemos estar sempre preocupados com a nossa querida Mãe
+                        Terra. Se você pensar bem, você viaja pelo rosto dela, e Ela é a</p>
+                    <a href="#">
+                        <h4 class="sec_h4">Marcela camilo</h4>
+                    </a>
                     <div class="star">
                         <a href="#"><i class="fa fa-star"></i></a>
                         <a href="#"><i class="fa fa-star"></i></a>
@@ -205,8 +233,11 @@
                             <a href="#" class="button_hover tag_btn">Viagens</a>
                             <a href="#" class="button_hover tag_btn">Estilo de Vida</a>
                         </div>
-                        <a href="#"><h4 class="sec_h4">Publicidade de baixo custo</h4></a>
-                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.</p>
+                        <a href="#">
+                            <h4 class="sec_h4">Publicidade de baixo custo</h4>
+                        </a>
+                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.
+                        </p>
                         <h6 class="date title_color">19st Outubro,2023</h6>
                     </div>
                 </div>
@@ -221,8 +252,11 @@
                             <a href="#" class="button_hover tag_btn">Viagens</a>
                             <a href="#" class="button_hover tag_btn">Estilo de Vida</a>
                         </div>
-                        <a href="#"><h4 class="sec_h4">Publicidade de baixo custo</h4></a>
-                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.</p>
+                        <a href="#">
+                            <h4 class="sec_h4">Publicidade de baixo custo</h4>
+                        </a>
+                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.
+                        </p>
                         <h6 class="date title_color">19st Outubro,2023</h6>
                     </div>
                 </div>
@@ -237,8 +271,11 @@
                             <a href="#" class="button_hover tag_btn">Viagens</a>
                             <a href="#" class="button_hover tag_btn">Estilo de Vida</a>
                         </div>
-                        <a href="#"><h4 class="sec_h4">Publicidade de baixo custo</h4></a>
-                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.</p>
+                        <a href="#">
+                            <h4 class="sec_h4">Publicidade de baixo custo</h4>
+                        </a>
+                        <p>Acres of Diamonds… você leu a famosa história, ou pelo menos a contou a você. Um fazendeiro.
+                        </p>
                         <h6 class="date title_color">19st Outubro,2023</h6>
                     </div>
                 </div>
@@ -247,4 +284,3 @@
     </div>
 </section>
 @await Html.PartialAsync("../Home/BookLibrary")
-

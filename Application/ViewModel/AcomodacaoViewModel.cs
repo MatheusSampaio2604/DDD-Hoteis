@@ -9,7 +9,7 @@ namespace Application.ViewModel
 {
     public class AcomodacaoViewModel
     {
-        
+
         public int Id { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
@@ -31,11 +31,14 @@ namespace Application.ViewModel
 
 
         [DisplayName("Pertence a")]
-        [ForeignKey("Home")]
         public int? IdHome { get; set; }
 
         [DisplayName("Destino Imagem")]
         public string? RotaImagem { get; set; }
+
+        [DisplayName("Tipo de Acomodação")]
+        [Required(ErrorMessage = "Necessário!")]
+        public string? TipoAcomodacao { get; set; }
 
         public IFormFile? Fotos { get; set; }
 #nullable disable

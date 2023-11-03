@@ -34,6 +34,16 @@ namespace UI.Controllers
             _Environment = environment;
         }
 
+        public async Task<IEnumerable<TarifasViewModel>> GetActiveTarifasAsync()
+        {
+            var tarifas = await _ITarifasApp.FindAllAsync();
+            return tarifas.Where(t => t.Ativo).ToList();
+        }
+
+        public async Task<IEnumerable<HomeViewModel>> GetHomeAsync()
+        {
+            return await _IHomeApp.FindAllAsync();
+        }
 
         // GET: AplicacaoasController
         [HttpGet]
@@ -56,9 +66,8 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {
-            var tarifas = await _ITarifasApp.FindAllAsync();
-            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
-            ViewBag.Home = await _IHomeApp.FindAllAsync() ?? null;
+            ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+            ViewBag.Home = await GetHomeAsync() ?? null;
             return View();
         }
 
@@ -69,10 +78,23 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                ViewBag.Home = await GetHomeAsync() ?? null;
                 return View(acomodacaoViewModel);
             }
 
+            if (acomodacaoViewModel.Nome.Contains("chale", StringComparison.OrdinalIgnoreCase) ||
+                    acomodacaoViewModel.Nome.Contains("suite", StringComparison.OrdinalIgnoreCase))
+            {
+                ModelState.AddModelError("Nome", "O campo Nome não pode conter 'Chalé' ou 'Suíte'!");
+                ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                ViewBag.Home = await GetHomeAsync() ?? null;
+                return View(acomodacaoViewModel);
+            }
+
+            acomodacaoViewModel.Nome = acomodacaoViewModel.TipoAcomodacao + " " + acomodacaoViewModel.Nome;
             acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
+
             //if (acomodacaoViewModel.Fotos is not null)
             //{
             //    await CriarComImagem(acomodacaoViewModel);
@@ -80,17 +102,17 @@ namespace UI.Controllers
             //else
             //
             var exist = await _IAcomodacaoApp.FindAllAsync();
-            
-            if (exist.Any(x=>x.Nome == acomodacaoViewModel.Nome))
-            {
+
+            if (exist.Any(x => x.Nome == acomodacaoViewModel.Nome))
                 return Unauthorized("Já existe ");
-            }
             else
             {
                 var create = await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
 
                 if (create is null)
                 {
+                    ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                    ViewBag.Home = await GetHomeAsync() ?? null;
                     return View("Create", acomodacaoViewModel);
                 }
                 else
@@ -98,7 +120,7 @@ namespace UI.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-                
+
             //}
             //return RedirectToAction(nameof(Index));
         }
@@ -107,9 +129,8 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var tarifas = await _ITarifasApp.FindAllAsync();
-            ViewBag.Tarifas = tarifas.Where(t => t.Ativo == true).ToList() ?? null;
-            ViewBag.Home = (await _IHomeApp.FindAllAsync()) ?? null;
+            ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+            ViewBag.Home = await GetHomeAsync() ?? null;
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
 
@@ -118,10 +139,6 @@ namespace UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AcomodacaoViewModel acomodacaoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(acomodacaoViewModel);
-            }
 
             acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
 
@@ -130,20 +147,22 @@ namespace UI.Controllers
             {
                 await CriarComImagem(acomodacaoViewModel);
             }
- //           else
-   //         {
-                // O usuário não deseja atualizar a imagem, mantenha a imagem existente.
-                //var acomodacaoExistente = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
+            //           else
+            //         {
+            // O usuário não deseja atualizar a imagem, mantenha a imagem existente.
+            //var acomodacaoExistente = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
 
-                // Mantenha a imagem existente, se houver.
-//                acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem;
-//            }
+            // Mantenha a imagem existente, se houver.
+            //                acomodacaoViewModel.RotaImagem = acomodacaoExistente.RotaImagem;
+            //            }
 
-            
+
             var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
 
             if (edit is null)
             {
+                ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                ViewBag.Home = await GetHomeAsync() ?? null;
                 return View("Error");
             }
 
