@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
+    [Route("Admin/[controller]")]
     public class TarifasController : Controller
     {
         private readonly ITarifasApp _iTarifasApp;
@@ -17,27 +18,27 @@ namespace UI.Controllers
             _iTarifasApp = iTarifasApp;
         }
 
-        [HttpGet("Administrador/Tarifas")]
+        [HttpGet("")]
         public async Task<ActionResult> Index()
         {
             return View(await _iTarifasApp.FindAllAsync());
         }
 
-        [HttpGet("Administrador/Tarifas/Detalhes")]
+        [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _iTarifasApp.FindOneAsync(id);
             return View(details);
         }
 
-        [HttpGet("Administrador/Tarifas/Criar")]
+        [HttpGet("Criar")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: TarifasController/Create
-        [HttpPost]
+        [HttpPost("Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TarifasViewModel tarifasViewModel)
         {
@@ -58,14 +59,14 @@ namespace UI.Controllers
 
         }
 
-        [HttpGet("Administrador/Tarifas/Editar")]
+        [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
             return View(await _iTarifasApp.FindOneAsync(id));
         }
 
         // POST: TarifasController/Edit/5
-        [HttpPost]
+        [HttpPost("Editar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, TarifasViewModel tarifasViewModel)
         {
@@ -85,14 +86,14 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("Administrador/Tarifas/Remover")]
+        [HttpGet("Remover")]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _iTarifasApp.FindOneAsync(id));
         }
 
         // POST: TarifasController/Delete/5
-        [HttpPost]
+        [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Tarifas tarifas)
         {
@@ -104,6 +105,7 @@ namespace UI.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return View("Error");
             }
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
+    [Route("Admin/[controller]")]
     public class EstabelecimentoController : Controller
     {
         private readonly IHomeApp _IHomeApp;
@@ -15,26 +16,26 @@ namespace UI.Controllers
         {
             _IHomeApp = iHomeApp;
         }
-        // GET: EstabelecimentoController
+        [HttpGet("")]
         public async Task<ActionResult> Index()
         {
             return View(await _IHomeApp.FindAllAsync());
         }
 
-        // GET: EstabelecimentoController/Details/5
+        [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             return View(await _IHomeApp.FindOneAsync(id));
         }
 
-        // GET: EstabelecimentoController/Create
+        [HttpGet("Criar")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: EstabelecimentoController/Create
-        [HttpPost]
+        [HttpPost("Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(HomeViewModel homeViewModel)
         {
@@ -55,14 +56,14 @@ namespace UI.Controllers
 
         }
 
-        // GET: EstabelecimentoController/Edit/5
+        [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
             return View(await _IHomeApp.FindOneAsync(id));
         }
 
         // POST: EstabelecimentoController/Edit/5
-        [HttpPost]
+        [HttpPost("Editar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, HomeViewModel homeViewModel)
         {
@@ -82,14 +83,14 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: EstabelecimentoController/Delete/5
+        [HttpGet("Remover")]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _IHomeApp.FindOneAsync(id));
         }
 
         // POST: EstabelecimentoController/Delete/5
-        [HttpPost]
+        [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Home home)
         {

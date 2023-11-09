@@ -48,7 +48,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Create
-        [HttpPost("New")]
+        [HttpPost("Tarifas/Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TarifasViewModel tarifasViewModel)
         {
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Edit/5
-        [HttpPost("Edit")]
+        [HttpPost("Tarifas/Editar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, TarifasViewModel tarifasViewModel)
         {
@@ -103,7 +103,7 @@ namespace WebApi.Controllers
         }
 
         // POST: TarifasController/Delete/5
-        [HttpPost("Delete")]
+        [HttpPost("Tarifas/Remover")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Tarifas tarifas)
         {

@@ -10,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
+    [Route("Admin/[controller]")]
     public class AcomodacaoController : Controller
     {
         private readonly IAcomodacaoApp _IAcomodacaoApp;
@@ -46,7 +48,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController
-        [HttpGet]
+        [HttpGet("")]
         public async Task<ActionResult> Index()
         {
             IEnumerable<AcomodacaoViewModel> item = await _IAcomodacaoApp.FindAllAsync();
@@ -55,7 +57,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Details/5
-        [HttpGet]
+        [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _IAcomodacaoApp.FindOneAsync(id);
@@ -63,7 +65,7 @@ namespace UI.Controllers
         }
 
         // GET: AplicacaoasController/Create
-        [HttpGet]
+        [HttpGet("Criar")]
         public async Task<ActionResult> Create()
         {
             ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
@@ -72,7 +74,7 @@ namespace UI.Controllers
         }
 
         // POST: AplicacaoasController/Create
-        [HttpPost]
+        [HttpPost("Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AcomodacaoViewModel acomodacaoViewModel)
         {
@@ -125,8 +127,8 @@ namespace UI.Controllers
             //return RedirectToAction(nameof(Index));
         }
 
-        // GET: AplicacaoasController/Edit/5
-        [HttpGet]
+
+        [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
             ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
@@ -134,8 +136,8 @@ namespace UI.Controllers
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
 
-        // POST: AplicacaoasController/Edit/5
-        [HttpPost]
+
+        [HttpPost("Editar")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AcomodacaoViewModel acomodacaoViewModel)
         {
@@ -170,15 +172,13 @@ namespace UI.Controllers
         }
 
 
-        // GET: AplicacaoasController/Delete/5
-        [HttpGet]
+        [HttpGet("Remover")]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
 
-        // POST: AplicacaoasController/Delete/5
-        [HttpPost]
+        [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Acomodacao acomodacao)
         {
@@ -221,6 +221,7 @@ namespace UI.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 // Lide com erros apropriadamente, como registrar ou lançar uma exceção.
             }
         }

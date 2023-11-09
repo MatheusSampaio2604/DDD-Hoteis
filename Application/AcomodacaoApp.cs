@@ -35,7 +35,7 @@ namespace Application
             }
             catch (Exception ex)
             {
-              
+              Console.WriteLine(ex);
             }
             return new List<AcomodacaoViewModel>();
         }

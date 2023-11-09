@@ -9,16 +9,18 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
+    [Route("[controller]")]
     public class ChaleController : Controller
     {
         private readonly IAcomodacaoApp _IAcomodacaoApp;
-        
+
 
         public ChaleController(IAcomodacaoApp iAcomodacaoApp)
         {
             _IAcomodacaoApp = iAcomodacaoApp;
         }
 
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             string frase = "Chalé";
@@ -31,14 +33,15 @@ namespace UI.Controllers
             return View(obj);
         }
 
-        // GET: ChaleController/Details/5
+
+        [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _IAcomodacaoApp.FindOneAsync(id);
             return View(details);
         }
 
-        
-        
+
+
     }
 }

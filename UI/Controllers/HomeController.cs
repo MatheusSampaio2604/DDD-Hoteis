@@ -21,7 +21,7 @@ namespace UI.Controllers
             _logger = logger;
             _IAcomodacaoApp = iAcomodacaoApp;
         }
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var i = await _IAcomodacaoApp.FindAllAsync();
@@ -32,19 +32,19 @@ namespace UI.Controllers
 
             return View(iActive);
         }
-        [HttpGet]
+        [HttpGet("Privacidade")]
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("Contato")]
         public IActionResult Contact()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Contato")]
         public async Task<IActionResult> Contact(HomeViewModel model)
         {
             // Valide o modelo, se necessário
@@ -84,7 +84,7 @@ namespace UI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("PetFriendly")]
         public IActionResult Pet()
         {
             return View();
