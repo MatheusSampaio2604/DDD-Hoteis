@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult> Details(int id)
         {
             Utils utils = new Utils();
-
+//
             // Retorna a suíte
             return Ok(await _iAcomodacaoApp.FindOneAsync(id));
         }
