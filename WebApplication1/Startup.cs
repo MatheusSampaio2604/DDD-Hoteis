@@ -36,7 +36,7 @@ namespace WebApi
             services.ResolveDependencies();
             services.AddRazorPages();
             services.AddAuthentication(Configuration);
-
+            services.AddHttpClient();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

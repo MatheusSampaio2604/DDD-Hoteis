@@ -1,14 +1,18 @@
 ﻿using Application.Interfaces;
 using Application.ViewModel;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
-
 
 namespace WebApi.Controllers
 {
@@ -16,32 +20,42 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class SuiteController : ControllerBase
     {
-        private readonly IAcomodacaoApp _IAcomodacaoApp;
+        private readonly HttpClient _httpClient;
+        private readonly IAcomodacaoApp _iAcomodacaoApp;
 
-
-        public SuiteController(IAcomodacaoApp iAcomodacaoApp)
+        public SuiteController(HttpClient httpClient, IAcomodacaoApp iAcomodacaoApp)
         {
-            _IAcomodacaoApp = iAcomodacaoApp;
+            _httpClient = httpClient;
+            _iAcomodacaoApp = iAcomodacaoApp;
         }
+
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            string frase = "Suíte";
-            IEnumerable<AcomodacaoViewModel> obj = await _IAcomodacaoApp.FindAcomodacoesWithPhrase(frase);
+            Utils utils = new Utils();
 
-            var i = await _IAcomodacaoApp.FindAllAsync();
-            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
-
-
-            return Ok(obj);
+            return Ok(utils.ListToJson(await _iAcomodacaoApp.FindAllAsync()));
         }
+
+
 
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            var details = await _IAcomodacaoApp.FindOneAsync(id);
-            return Ok(details);
+            Utils utils = new Utils();
+
+            // Retorna a suíte
+            return Ok(await _iAcomodacaoApp.FindOneAsync(id));
         }
+
+
+
+
+
+
+
+
+
 
     }
 }
