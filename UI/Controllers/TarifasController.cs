@@ -17,21 +17,20 @@ namespace UI.Controllers
             _iTarifasApp = iTarifasApp;
         }
 
-
-        // GET: TarifasController
+        [HttpGet("Administrador/Tarifas")]
         public async Task<ActionResult> Index()
         {
             return View(await _iTarifasApp.FindAllAsync());
         }
 
-        // GET: TarifasController/Details/5
+        [HttpGet("Administrador/Tarifas/Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var details = await _iTarifasApp.FindOneAsync(id);
             return View(details);
         }
 
-        // GET: TarifasController/Create
+        [HttpGet("Administrador/Tarifas/Criar")]
         public ActionResult Create()
         {
             return View();
@@ -59,7 +58,7 @@ namespace UI.Controllers
 
         }
 
-        // GET: TarifasController/Edit/5
+        [HttpGet("Administrador/Tarifas/Editar")]
         public async Task<ActionResult> Edit(int id)
         {
             return View(await _iTarifasApp.FindOneAsync(id));
@@ -86,7 +85,7 @@ namespace UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: TarifasController/Delete/5
+        [HttpGet("Administrador/Tarifas/Remover")]
         public async Task<ActionResult> Delete(int id)
         {
             return View(await _iTarifasApp.FindOneAsync(id));
