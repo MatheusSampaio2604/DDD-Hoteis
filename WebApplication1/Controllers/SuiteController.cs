@@ -24,32 +24,34 @@ namespace WebApi.Controllers
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            Utils utils = new Utils();
+            var i = await _iAcomodacaoApp.FindAllAsync();
 
-            return Ok(utils.ListToJson(await _iAcomodacaoApp.FindAllAsync()));
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                MaxDepth = 64 
+            };
+
+            var json = JsonSerializer.Serialize(i, jsonOptions);
+
+            return Ok(json);
         }
-
-
 
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
             var result = await _iAcomodacaoApp.FindOneAsync(id);
 
-            // Configura as opções de serialização
             var jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                MaxDepth = 64 // Ajuste a profundidade conforme necessário
+                MaxDepth = 64,
             };
 
-            // Serializa o objeto para JSON
             var json = JsonSerializer.Serialize(result, jsonOptions);
-
-            // Retorna o JSON serializado
             return Ok(json);
         }
-
     }
 }
