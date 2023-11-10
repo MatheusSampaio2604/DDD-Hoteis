@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
@@ -28,10 +31,18 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Index()
         {
             var i = await _IAcomodacaoApp.FindAllAsync();
-            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;            
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                MaxDepth = 64
+            };
 
-            return Ok(iActive);
+            var json = JsonSerializer.Serialize(i, jsonOptions);
+
+            return Ok(json);
         }
+
         [HttpGet("Privacidade")]
         public IActionResult Privacy()
         {
