@@ -6,43 +6,45 @@
 }
 
 @* Renderiza o fragmento de breadCrumb no começo da pagina *@
-@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+@await Html.PartialAsync("../Fragments/_Breadcrumb");
 
 <section class="section_gap">
-<div class="container">
+    <div class="container">
 
-<h1 class="text-primary">Create</h1>
+        <h1 class="text-primary">Create</h1>
 
-<h4 class="text-success">Tarifas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Valor" class="form-label text-info">Valor</label>
-                <input asp-for="Valor" class="form-control bg-light text-dark" />
-                <span asp-validation-for="Valor" class="text-danger"></span>
+        <h4 class="text-success">Tarifas</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="Valor" class="form-label text-info">Valor</label>
+                        <input asp-for="Valor" class="form-control bg-light text-dark" />
+                        <span asp-validation-for="Valor" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Nome" class="form-label text-info">Nome</label>
+                        <input asp-for="Nome" class="form-control bg-light text-dark" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label asp-for="Nome" class="form-label text-info">Nome</label>
-                <input asp-for="Nome" class="form-control bg-light text-dark" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-success">Create</button>
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
+        </div>
+
     </div>
-</div>
-
-<div>
-    <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
-</div>
-
-</div>
 </section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,14 +1,14 @@
 ﻿@model Application.ViewModel.AcomodacaoViewModel
 
 @{
-    ViewData["Title"] = @Model.Nome;
-    ViewData["ActiveText"] = "Detalhes";
+  ViewData["Title"] = @Model.Nome;
+  ViewData["ActiveText"] = "Detalhes";
 }
 
 <!--================Breadcrumb Area =================-->
 
 @* Renderiza o fragmento de breadCrumb no começo da pagina *@
-@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+@await Html.PartialAsync("../Fragments/_Breadcrumb");
 
 <!--================Breadcrumb Area =================-->
 
@@ -19,13 +19,15 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            @{ if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
-            {
-            <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt=""> }
-            else
-            {
-            <img width="500" height="500" src="~/img/DevSuite.png" alt="" />
-            }
+            @{
+              if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
+              {
+                <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt="">
+              }
+              else
+              {
+                <img width="500" height="500" src="~/img/DevSuite.png" alt="" />
+              }
             }
           </div>
           <div class="col-md-6 d_flex align-items-center">

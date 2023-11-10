@@ -1,17 +1,9 @@
 ﻿using Application.Interfaces;
-using Application.ViewModel;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -42,20 +34,22 @@ namespace WebApi.Controllers
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            Utils utils = new Utils();
-//
-            // Retorna a suíte
-            return Ok(await _iAcomodacaoApp.FindOneAsync(id));
+            var result = await _iAcomodacaoApp.FindOneAsync(id);
+
+            // Configura as opções de serialização
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                MaxDepth = 64 // Ajuste a profundidade conforme necessário
+            };
+
+            // Serializa o objeto para JSON
+            var json = JsonSerializer.Serialize(result, jsonOptions);
+
+            // Retorna o JSON serializado
+            return Ok(json);
         }
-
-
-
-
-
-
-
-
-
 
     }
 }
