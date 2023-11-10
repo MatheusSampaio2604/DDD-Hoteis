@@ -218,7 +218,7 @@ namespace UI.Controllers
                 };
 
                 // Remova a acomodação do banco de dados.
-                _IAcomodacaoApp.Remove(acomodacaoModel.Id);
+                _IAcomodacaoApp.Remove(acomodacaoModel);
 
                 return RedirectToAction(nameof(Index));
             }
