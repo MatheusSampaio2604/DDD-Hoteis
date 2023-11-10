@@ -13,34 +13,38 @@
 <!--================Breadcrumb Area =================-->
 <section class="section_gap">
 
-<div class="container">
-    <h1 class="display-4">Detalhes</h1>
+    <div class="container">
+        <h1 class="display-4">Detalhes</h1>
 
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Acomodacao: <strong>@Model?.Nome</strong></h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.IdHome):</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Home.Nome)</dd>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Acomodacao: <strong>@Model?.Nome</strong></h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.IdHome):</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Home.Nome)</dd>
 
-                <dt class="col-sm-2">Descrição:</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Descricao)</dd>
+                    <dt class="col-sm-2">Descrição:</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Descricao)</dd>
 
-                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.IdValor):</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Tarifas.Valor, "{O: N2}")</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.IdValor):</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Tarifas.Valor, "{O: N2}")</dd>
 
-                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ativo):</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Ativo)</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ativo):</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Ativo)</dd>
+                    @if (Model.RotaImagem != null)
+                    {
+                        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.RotaImagem):</dt>
+                        <dd class="col-sm-10">@Html.DisplayFor(model => model.RotaImagem)</dd>
+                    }
+                </dl>
+            </div>
+        </div>
 
-            </dl>
+        <div class="mt-3">
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Deletar</a>
+            <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
         </div>
     </div>
-
-    <div class="mt-3">
-        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
-        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Deletar</a>
-        <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
-    </div>
-</div>
 </section>

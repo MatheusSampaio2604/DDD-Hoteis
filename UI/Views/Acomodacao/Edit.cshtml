@@ -24,16 +24,14 @@
                 <form asp-action="Edit" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="RotaImagem" />
                     <div class="form-group">
                         @if (Model.RotaImagem != null)
                         {
-                            foreach (var foto in Model.RotaImagem)
-                            {
-                                <div class="carousel">
-                                    <img src="@foto" class="img-thumbnail" alt="Imagem do Produto"
-                                        style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
-                                </div>
-                            }
+                            <div class="carousel">
+                                <img src="~/@Model.RotaImagem" class="img-thumbnail" alt="Imagem do Produto"
+                                    style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                            </div>
                         }
                         else
                         {
@@ -73,9 +71,8 @@
                         <label class="form-check-label" for="flexSwitchCheckAtivo">Pronto para Anunciar?</label>
                         <span asp-validation-for="Ativo" class="text-danger"></span>
                     </div>
-
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </form>
             </div>
@@ -88,8 +85,3 @@
     </div>
 
 </section>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

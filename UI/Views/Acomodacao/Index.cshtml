@@ -28,7 +28,7 @@
                         <div class="hotel_img">
                             @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
                                 {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
+                                    <img width="260" height="270" src="~/@item.RotaImagem" alt=""> }
                                 else
                                 {
                                     <img width="260" height="270" src="~/img/DevChale.png" alt="" />
