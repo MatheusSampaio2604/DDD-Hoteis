@@ -7,7 +7,7 @@
 <!--================Breadcrumb Area =================-->
 
 @* Renderiza o fragmento de breadCrumb no começo da pagina *@
-@await Html.PartialAsync("../Fragments/_Breadcrumb"); 
+@await Html.PartialAsync("../Fragments/_Breadcrumb");
 
 <!--================Breadcrumb Area =================-->
 
@@ -16,20 +16,26 @@
     <div class="container">
         <div class="section_title text-center">
             <h4>
-                Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico, lareira a lenha, Tv a cabo, DVD, frigobar e varanda com rede.
+                Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de
+                hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico,
+                lareira a lenha, Tv a cabo, DVD, frigobar e varanda com rede.
                 <br />
-                Face às constantes faltas de energia, disponibilizamos um gerador diesel com capacidade para atender toda a pousada.
+                Face às constantes faltas de energia, disponibilizamos um gerador diesel com capacidade para atender
+                toda a pousada.
             </h4>
         </div>
         <div class="row justify-content-center mb_30">
             @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
             {
                 <div class="col-lg-3 col-sm-6">
-                    <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
+                    <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'"
+                        class="accomodation_item text-center">
                         <div class="hotel_img">
-                            @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
+                            @{
+                                if (!string.IsNullOrWhiteSpace(item.RotaImagem))
                                 {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt=""> }
+                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt="">
+                                }
                                 else
                                 {
                                     <img width="260" height="270" src="~/img/DevIndex.png" alt="" />

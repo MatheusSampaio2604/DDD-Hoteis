@@ -61,7 +61,7 @@ namespace WebApi.Controllers
             //put a breakpoint here and check datatable
             return dataTable;
         }
-        public string ListToJsonm<T>(List<T> items, string [] excludedProperties)
+        public string ListToJson<T>(List<T> items, string[] excludedProperties)
         {
             var response = new List<Dictionary<string, object>>();
 
@@ -94,8 +94,8 @@ namespace WebApi.Controllers
                 { "column", columnName },
                 { "value", valueString }
             };
-                    if(!excludedProperties.Contains(columnName))
-                    elements.Add(element);
+                    if (!excludedProperties.Contains(columnName))
+                        elements.Add(element);
                 }
 
                 // Create the entry dictionary for the item
@@ -143,8 +143,8 @@ namespace WebApi.Controllers
                 { "column", columnName },
                 { "value", valueString }
             };
-                    
-                        elements.Add(element);
+
+                    elements.Add(element);
                 }
 
                 // Create the entry dictionary for the item
@@ -166,4 +166,4 @@ namespace WebApi.Controllers
 
     }
 
-    }
+}

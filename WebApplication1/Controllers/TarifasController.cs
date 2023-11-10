@@ -6,6 +6,9 @@ using System;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
@@ -29,22 +32,41 @@ namespace WebApi.Controllers
         {
             //Utils utils = new();
             var i = await _iTarifasApp.FindAllAsync();
-            if (i.Count() > 0)
-                //return Ok(utils.DatatableToJson(i));
-                return Ok();
-            else
-                return BadRequest();
+            // Configura as opções de serialização
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                MaxDepth = 64 // Ajuste a profundidade conforme necessário
+            };
+
+            // Serializa o objeto para JSON
+            var json = JsonSerializer.Serialize(i, jsonOptions);
+
+            // Retorna o JSON serializado
+            return Ok(json);
         }
+
 
         [HttpGet("Details")]
         // GET: TarifasController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var details = await _iTarifasApp.FindOneAsync(id);
-            if (details is not null)
-                return Ok(true);
-            else
-                return BadRequest();
+            var i = await _iTarifasApp.FindOneAsync(id);
+            // Configura as opções de serialização
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                MaxDepth = 64 // Ajuste a profundidade conforme necessário
+            };
+
+            // Serializa o objeto para JSON
+            var json = JsonSerializer.Serialize(i, jsonOptions);
+
+            // Retorna o JSON serializado
+            return Ok(json);
+
         }
 
         // POST: TarifasController/Create
