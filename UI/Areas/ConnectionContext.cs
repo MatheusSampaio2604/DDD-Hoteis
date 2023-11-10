@@ -10,11 +10,11 @@ namespace UI.Areas
     {
         public static IServiceCollection ContextConnections(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IdentityDataContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<IdentityDataContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
         }

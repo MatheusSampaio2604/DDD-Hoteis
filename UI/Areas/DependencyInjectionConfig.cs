@@ -8,6 +8,7 @@ using Infra.Context;
 using Infra.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using UI.Services;
 
 namespace UI.Areas
 {
@@ -16,6 +17,7 @@ namespace UI.Areas
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<DataContext>();
+            services.AddScoped<ImageService>();
             services.AddScoped<IAcomodacaoRepository, AcomodacaoRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<ITarifasRepository, TarifasRepository>();

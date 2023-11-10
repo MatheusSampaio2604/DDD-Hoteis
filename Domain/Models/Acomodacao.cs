@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,12 +23,14 @@ namespace Domain.Models
 
         public string? RotaImagem { get; set; }
 
+
         [NotMapped]
         public IFormFile? Fotos { get; set; }
-#nullable disable
 
-        public virtual Tarifas Tarifas { get; set; }
-        public virtual Home Home { get; set; }
+        public virtual Tarifas? Tarifas { get; set; }
+        public virtual Home? Home { get; set; }
+
+#nullable disable
 
     }
 }
