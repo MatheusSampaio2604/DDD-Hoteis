@@ -92,11 +92,17 @@ namespace Infra.Repository
 
         public void Remove(T entity)
         {
-            DbSet.Remove(entity);
-            context.SaveChanges();
-
-
-            // context.Set<T>().Remove(entity);
+            try
+            {
+                DbSet.Remove(entity);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao excluir entidade {typeof(T).Name}: {ex.Message}");
+                // Você pode lançar a exceção novamente ou tomar alguma outra ação adequada.
+            }
         }
+
     }
 }
