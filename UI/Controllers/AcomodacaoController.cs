@@ -184,16 +184,36 @@ namespace UI.Controllers
         [HttpGet("Remover")]
         public async Task<ActionResult> Delete(int id)
         {
-            return View(await _IAcomodacaoApp.FindOneAsync(id));
+            var acomodacao = await _IAcomodacaoApp.FindOneAsync(id);
+            if (acomodacao == null)
+            {
+                return NotFound(); // Ou uma View de erro específica para item não encontrado
+            }
+
+            return View(acomodacao);
         }
 
         [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Acomodacao acomodacaoViewModel)
+        public ActionResult Delete([Bind("Id")] Acomodacao acomodacao)
         {
             try
             {
-                // Obtenha o caminho do arquivo a ser removido.
+                _IAcomodacaoApp.Remove(acomodacao);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex + " . Erro ao excluir a acomodação.");
+                return View("Error");
+            }
+        }
+
+
+    }
+}
+
+/* // Obtenha o caminho do arquivo a ser removido.
                 var caminhoArquivo = Path.Combine(_Environment.WebRootPath, acomodacaoViewModel.RotaImagem);
 
                 // Verifique se o arquivo existe antes de tentar removê-lo.
@@ -215,18 +235,4 @@ namespace UI.Controllers
                     IdHome = acomodacaoViewModel.IdHome,
                     IdValor = acomodacaoViewModel.IdValor,
                     
-                };
-
-                // Remova a acomodação do banco de dados.
-                _IAcomodacaoApp.Remove(acomodacaoModel);
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return View("Error");
-            }
-        }
-
-    }
-}
+                };**/
