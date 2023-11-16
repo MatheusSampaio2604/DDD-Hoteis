@@ -15,7 +15,7 @@ namespace Application.Interfaces
         Task<TViewModel> FindOneAsync(int id);
         Task<TViewModel> FindNoTrackinOneAsync(int id);
         Task<IEnumerable<TViewModel>> FindAllAsync();
-        void Remove(TModel model);
+        Task<int> Remove(TModel model);
     }
 
     public interface IApp<TModel>
@@ -26,6 +26,6 @@ namespace Application.Interfaces
         Task<TModel> FindOneAsync(int id);
         Task<TModel> FindNoTrackinOneAsync(int id);
         Task<IEnumerable<TModel>> FindAllAsync();
-        void Remove(TModel model);
+        Task<int> Remove(TModel model);
     }
 }

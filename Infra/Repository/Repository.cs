@@ -1,9 +1,12 @@
-﻿using Domain.Interfaces;
+﻿using System.IO;
+using Domain.Interfaces;
 using Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -11,11 +14,13 @@ namespace Infra.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
+        private readonly DbContextOptions<DataContext> _OptionsBuilder;
         protected readonly DataContext context;
         protected readonly DbSet<T> DbSet;
 
         public Repository(DataContext dataContext)
         {
+            _OptionsBuilder = new DbContextOptions<DataContext>();
             context = dataContext;
             DbSet = context.Set<T>();
         }
@@ -57,51 +62,92 @@ namespace Infra.Repository
 
         public async Task<int> CreateAsync(T entity)
         {
-            await DbSet.AddAsync(entity);
-            return await SaveChangesAsync();
+            try
+            {
+                await DbSet.AddAsync(entity);
+                return await SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao adicionar o objeto.", ex);
+            }
         }
 
         public async Task<int> EditAsync(T entity)
         {
-            DbSet.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-            return await SaveChangesAsync();
+            try
+            {
+                DbSet.Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
+                return await SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao editar o objeto.", ex);
+            }
         }
 
         public async Task<T> FindOneAsync(int id)
         {
-            var obj = await DbSet.FindAsync(id);
-            if (context.Entry(obj).State == EntityState.Unchanged)
+            try
             {
-                context.Entry(obj).State = EntityState.Detached;
-                obj = await DbSet.FindAsync(id);
+                var obj = await DbSet.FindAsync(id);
+                if (context.Entry(obj).State == EntityState.Unchanged)
+                {
+                    context.Entry(obj).State = EntityState.Detached;
+                    obj = await DbSet.FindAsync(id);
+                }
+                return obj;
             }
-            return obj;
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao Encontrar o objeto.", ex);
+            }
         }
 
         public async Task<T> FindNoTrackinOneAsync(int id)
         {
-            return await DbSet.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<T>> FindAllAsync()
-        {
-            return await DbSet.ToListAsync();
-        }
-
-
-        public void Remove(T entity)
-        {
             try
             {
-                DbSet.Remove(entity);
-                context.SaveChanges();
+                using var data = new DataContext(_OptionsBuilder);
+                var items = await data.Set<T>().AsNoTracking().ToListAsync();
+
+                var item = items.FirstOrDefault(x => ((dynamic)x).Id == id);
+                return item;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao excluir entidade {typeof(T).Name}: {ex.Message}");
-                // Você pode lançar a exceção novamente ou tomar alguma outra ação adequada.
+                throw new Exception("Ocorreu um erro ao encontrar a entidade.", ex);
             }
+        }
+
+
+        public async Task<IEnumerable<T>> FindAllAsync()
+        {
+            try
+            {
+                return await DbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao Carregar a lista.", ex);
+            }
+        }
+
+
+        public async Task<int> Remove(T entity)
+        {
+            try
+            {
+                using var data = new DataContext(_OptionsBuilder);
+                data.Set<T>().Remove(entity);
+                return await data.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao remover a entidade.", ex);
+            }
+
         }
 
     }
