@@ -153,29 +153,36 @@ namespace UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AcomodacaoViewModel acomodacaoViewModel)
         {
-            acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
-
-            // Obtenha a acomodação existente do banco de dados.
-
-
-            // Verifique se há uma nova imagem sendo inserida.
-            if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Length > 0)
+            try
             {
-                var novosCaminhosImagens = await _imageService.SalvarImagensAsync(new List<IFormFile> { acomodacaoViewModel.Fotos }, acomodacaoViewModel.Nome);
+                acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
 
-                acomodacaoViewModel.RotaImagem = novosCaminhosImagens.FirstOrDefault();
+                if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Length > 0)
+                {
+                    var novosCaminhosImagens = await _imageService.SalvarImagensAsync(new List<IFormFile> { acomodacaoViewModel.Fotos }, acomodacaoViewModel.Nome);
+                    acomodacaoViewModel.RotaImagem = novosCaminhosImagens.FirstOrDefault();
+                }
+                else
+                {
+                    var oldItem = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
+                    acomodacaoViewModel.RotaImagem = oldItem.RotaImagem;
+                }
+                var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
+
+                if (edit is null)
+                {
+                    ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                    ViewBag.Home = await GetHomeAsync() ?? null;
+                    return View("Error");
+                }
+
+                return RedirectToAction(nameof(Index));
             }
-
-            var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
-
-            if (edit is null)
+            catch (Exception ex)
             {
-                ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
-                ViewBag.Home = await GetHomeAsync() ?? null;
-                return View("Error");
-            }
 
-            return RedirectToAction(nameof(Index));
+                throw new Exception($"Ocorreu um erro ao Editar a entidade. {ex.Message}");
+            }
         }
 
 
@@ -195,20 +202,19 @@ namespace UI.Controllers
 
         [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete([Bind("Id")] Acomodacao acomodacao)
+        public async Task<ActionResult> Delete([Bind("Id")] Acomodacao acomodacao)
         {
             try
             {
-                _IAcomodacaoApp.Remove(acomodacao);
+                await _IAcomodacaoApp.Remove(acomodacao);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex + " . Erro ao excluir a acomodação.");
+                Console.WriteLine($"Erro ao remover entidade: {ex.Message}");
                 return View("Error");
             }
         }
-
 
     }
 }

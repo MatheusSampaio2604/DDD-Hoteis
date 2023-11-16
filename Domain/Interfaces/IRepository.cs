@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Domain.Interfaces
@@ -18,7 +19,7 @@ namespace Domain.Interfaces
 
         Task<IEnumerable<T>> FindAllAsync();
 
-        void Remove(T entity);
+        Task<int> Remove(T entity);
 
 
 

@@ -110,9 +110,9 @@ namespace Application
         }
 
 
-        public void Remove(TModel model)
+        public async Task<int> Remove(TModel model)
         {
-            _repository.Remove(model);
+            return await _repository.Remove(model);
         }
 
 
@@ -209,9 +209,11 @@ namespace Application
         }
 
 
-        public void Remove(TModel model)
+        public async Task<int> Remove(TModel model)
         {
-            _repository.Remove(model);
+            return await _repository.Remove(model);
         }
+
+
     }
 }
