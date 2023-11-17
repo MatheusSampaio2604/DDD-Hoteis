@@ -161,20 +161,28 @@ namespace UI.Controllers
         {
             try
             {
-                
+
                 if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
                 {
                     var novosCaminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
-
-                    foreach (var item in novosCaminhosImagens)
+                    if (novosCaminhosImagens != null)
                     {
-                        ImagensViewModel uploadImagem = new()
+                       // var antigosCaminhosImagens = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(acomodacaoViewModel.Id);
+
+                        foreach (var novoCaminho in novosCaminhosImagens)
                         {
-                            // Id = ,
-                            Id_Acomodacao = acomodacaoViewModel.Id,
-                            RotaImagem = item,
-                        };
-                        var createUploadImagem = await _IImagensApp.EditAsync(uploadImagem);
+                            // Verifique se o novo caminho já existe nos caminhos antigos
+                            //if (!antigosCaminhosImagens.Contains(novoCaminho))
+                            //{
+                                ImagensViewModel uploadImagem = new()
+                                {
+                                    // Id = ,
+                                    Id_Acomodacao = acomodacaoViewModel.Id,
+                                    RotaImagem = novoCaminho,
+                                };
+                                var createUploadImagem = await _IImagensApp.EditAsync(uploadImagem);
+                            //}
+                        }
                     }
                 }
 

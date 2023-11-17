@@ -6,5 +6,6 @@ namespace Domain.Interfaces
     public interface IImagensRepository : IRepository<Imagens>
     {
         Task<IEnumerable<Imagens>> FindImageFromAcomodationID(int id);
+        //Task<Imagens> FindImageFromAcomodationID(int id);
     }
 }
