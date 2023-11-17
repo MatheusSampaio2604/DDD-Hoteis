@@ -32,9 +32,9 @@
                         class="accomodation_item text-center">
                         <div class="hotel_img">
                             @{
-                                if (!string.IsNullOrWhiteSpace(item.RotaImagem))
+                                if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
                                 {
-                                    <img width="260" height="270" src="@item.RotaImagem.FirstOrDefault()" alt="">
+                                    <img width="260" height="270" src="@item.ImagensID.FirstOrDefault()" alt="">
                                 }
                                 else
                                 {

@@ -20,10 +20,12 @@ namespace UI.Areas
             services.AddScoped<ImageService>();
             services.AddScoped<IAcomodacaoRepository, AcomodacaoRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
+            services.AddScoped<IImagensRepository, ImagensRepository>();
             services.AddScoped<ITarifasRepository, TarifasRepository>();
 
             services.AddScoped<IAcomodacaoApp, AcomodacaoApp>();
             services.AddScoped<IHomeApp, HomeApp>();
+            services.AddScoped<IImagensApp, ImagensApp>();
             services.AddScoped<ITarifasApp, TarifasApp>();
 
 

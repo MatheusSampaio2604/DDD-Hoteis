@@ -21,19 +21,25 @@ namespace UI.Controllers
     public class AcomodacaoController : Controller
     {
         private readonly IAcomodacaoApp _IAcomodacaoApp;
+        private readonly IImagensApp _IImagensApp;
         private readonly ITarifasApp _ITarifasApp;
         private readonly IHomeApp _IHomeApp;
+
+
         private readonly ImageService _imageService;
         private readonly IWebHostEnvironment _Environment;
 
         public AcomodacaoController(
             IAcomodacaoApp iAcomodacaoApp
+            , IImagensApp imagensApp
             , ITarifasApp iTarifasApp
             , IHomeApp iHomeApp
             , IWebHostEnvironment environment
-            , ImageService imageService)
+            , ImageService imageService
+            )
         {
             _IAcomodacaoApp = iAcomodacaoApp;
+            _IImagensApp = imagensApp;
             _ITarifasApp = iTarifasApp;
             _IHomeApp = iHomeApp;
             _Environment = environment;
@@ -107,25 +113,7 @@ namespace UI.Controllers
                 return Unauthorized("Já existe ");
             else
             {
-                // Use a função SalvarImagensAsync para obter a lista de caminhos.
-                var caminhosImagens = await _imageService.SalvarImagensAsync(new List<IFormFile> { acomodacaoViewModel.Fotos }, acomodacaoViewModel.Nome);
-
-                // Crie uma instância do modelo de domínio e atribua os valores.
-                var acomodacao = new AcomodacaoViewModel
-                {
-                    Nome = acomodacaoViewModel.Nome,
-                    Descricao = acomodacaoViewModel.Descricao,
-                    Ativo = acomodacaoViewModel.Ativo,
-                    IdValor = acomodacaoViewModel.IdValor,
-                    IdHome = acomodacaoViewModel.IdHome,
-                    // Adicione outras propriedades que você deseja salvar no banco de dados...
-                    Fotos = acomodacaoViewModel.Fotos,
-                    // Use o primeiro caminho da lista de caminhos.
-                    RotaImagem = caminhosImagens.FirstOrDefault(),
-                };
-
-                // Chame o método CreateAsync passando o modelo de domínio.
-                var create = await _IAcomodacaoApp.CreateAsync(acomodacao);
+                var create = await _IAcomodacaoApp.CreateAsync(acomodacaoViewModel);
 
                 if (create is null)
                 {
@@ -135,6 +123,24 @@ namespace UI.Controllers
                 }
                 else
                 {
+                    if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
+                    {
+                        var caminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
+
+                        if (caminhosImagens != null)
+                        {
+                            foreach (var item in caminhosImagens)
+                            {
+                                ImagensViewModel uploadImagem = new()
+                                {
+                                    Id_Acomodacao = create.Id,
+                                    Nome = create.Nome,
+                                    RotaImagem = item,
+                                };
+                                var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
+                            }
+                        }
+                    }
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -155,18 +161,23 @@ namespace UI.Controllers
         {
             try
             {
-                acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
+                
+                if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
+                {
+                    var novosCaminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
 
-                if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Length > 0)
-                {
-                    var novosCaminhosImagens = await _imageService.SalvarImagensAsync(new List<IFormFile> { acomodacaoViewModel.Fotos }, acomodacaoViewModel.Nome);
-                    acomodacaoViewModel.RotaImagem = novosCaminhosImagens.FirstOrDefault();
+                    foreach (var item in novosCaminhosImagens)
+                    {
+                        ImagensViewModel uploadImagem = new()
+                        {
+                            // Id = ,
+                            Id_Acomodacao = acomodacaoViewModel.Id,
+                            RotaImagem = item,
+                        };
+                        var createUploadImagem = await _IImagensApp.EditAsync(uploadImagem);
+                    }
                 }
-                else
-                {
-                    var oldItem = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
-                    acomodacaoViewModel.RotaImagem = oldItem.RotaImagem;
-                }
+
                 var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
 
                 if (edit is null)

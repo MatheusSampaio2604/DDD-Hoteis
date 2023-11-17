@@ -29,22 +29,25 @@ namespace Application.ViewModel
         [DisplayName("Valor")]
         public int? IdValor { get; set; }
 
-
         [DisplayName("Pertence a")]
         public int? IdHome { get; set; }
 
-        [DisplayName("Destino Imagem")]
-        public string? RotaImagem { get; set; }
+        // [DisplayName("Destino Imagem")]
+        // public string? RotaImagem { get; set; }
+
+        [DisplayName("Imagens")]
+        public  IEnumerable<string>? ImagensID {get;set;}
 
         [DisplayName("Tipo de Acomodação")]
         [Required(ErrorMessage = "Necessário!")]
         public string? TipoAcomodacao { get; set; }
-
-        public IFormFile? Fotos { get; set; }
+        
+        public List<IFormFile>? Fotos { get; set; }
 #nullable disable
 
         public virtual HomeViewModel Home { get; set; }
         public virtual TarifasViewModel Tarifas { get; set; }
+        public virtual IEnumerable<ImagensViewModel> Imagens { get; set; }
 
     }
 }

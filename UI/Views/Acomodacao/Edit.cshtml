@@ -24,14 +24,17 @@
                 <form asp-action="Edit" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     <input type="hidden" asp-for="Id" />
-                    <input type="hidden" asp-for="RotaImagem" />
+
                     <div class="form-group">
-                        @if (Model.RotaImagem != null)
+                        @if (Model.ImagensID.Count() > 0)
                         {
-                            <div class="carousel">
-                                <img src="~/@Model.RotaImagem" class="img-thumbnail" alt="Imagem do Produto"
-                                    style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
-                            </div>
+                            foreach (var i in Model.ImagensID)
+                            {
+                                <div class="carousel">
+                                    <img src="~/@i" class="img-thumbnail" alt="Imagem do Produto"
+                                        style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                                </div>
+                            }
                         }
                         else
                         {

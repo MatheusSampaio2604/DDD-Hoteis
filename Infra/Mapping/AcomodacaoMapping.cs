@@ -19,7 +19,7 @@ namespace Infra.Mapping
             builder.Property(x => x.Ativo).HasColumnName("Ativo");
             builder.Property(x => x.IdValor).HasColumnName("IdTarifas");
             builder.Property(x => x.IdHome).HasColumnName("IdHome");
-            builder.Property(x => x.RotaImagem).HasColumnName("Fotos");
+            //builder.Property(x => x.RotaImagem).HasColumnName("Fotos");
         }
     }
 }
