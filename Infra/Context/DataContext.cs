@@ -15,6 +15,7 @@ namespace Infra.Context
         public DbSet<Home> Home { get; set; }
         public DbSet<Acomodacao> Acomodacao { get; set; }
         public DbSet<Tarifas> Tarifas { get; set; }
+        public DbSet<Imagens> Imagens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

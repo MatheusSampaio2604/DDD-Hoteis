@@ -19,9 +19,12 @@
         <div class="row">
           <div class="col-md-6">
             @{
-              if (!string.IsNullOrWhiteSpace(Model.RotaImagem))
+              if (!string.IsNullOrWhiteSpace(Model.ImagensID.FirstOrDefault()))
               {
-                <img width="500" height="500" src="@Model.RotaImagem.FirstOrDefault()" alt="">
+                foreach (var i in Model.ImagensID)
+                {
+                  <img width="500" height="500" src="~/@i" alt="">
+                }
               }
               else
               {

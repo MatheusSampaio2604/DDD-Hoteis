@@ -26,9 +26,10 @@
                 <div class="col-lg-3 col-sm-6">
                     <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
                         <div class="hotel_img">
-                            @{ if (!string.IsNullOrWhiteSpace(item.RotaImagem))
+                            @{ if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
                                 {
-                                    <img width="260" height="270" src="~/@item.RotaImagem" alt=""> }
+                                    <img width="260" height="270" src="~/@item.ImagensID.FirstOrDefault()" alt=""> 
+                                }
                                 else
                                 {
                                     <img width="260" height="270" src="~/img/DevChale.png" alt="" />

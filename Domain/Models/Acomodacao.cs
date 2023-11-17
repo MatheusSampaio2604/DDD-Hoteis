@@ -21,14 +21,9 @@ namespace Domain.Models
 
         public int? IdHome { get; set; }
 
-        public string? RotaImagem { get; set; }
-
-
-        [NotMapped]
-        public IFormFile? Fotos { get; set; }
-
         public virtual Tarifas? Tarifas { get; set; }
         public virtual Home? Home { get; set; }
+        public virtual IEnumerable<Imagens>? Imagens { get; set; }
 
 #nullable disable
 
