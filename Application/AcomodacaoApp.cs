@@ -35,9 +35,28 @@ namespace Application
             }
             catch (Exception ex)
             {
-              Console.WriteLine(ex);
+                Console.WriteLine(ex);
             }
             return new List<AcomodacaoViewModel>();
+        }
+
+        public virtual async Task<AcomodacaoViewModel> FindNoTrackinOneAsync(int id)
+        {
+            try
+            {
+                var listAll = await _iAcomodacaoRepository.FindAllAsync();
+                Acomodacao models = listAll.Where(x => x.Id == id).FirstOrDefault();
+
+                AcomodacaoViewModel modelViews = _map.Map<Acomodacao, AcomodacaoViewModel>(models);
+
+                return modelViews;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
+
         }
 
     }

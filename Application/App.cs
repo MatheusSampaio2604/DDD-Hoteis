@@ -81,15 +81,15 @@ namespace Application
         }
 
 
-        public virtual async Task<TViewModel> FindNoTrackinOneAsync(int id)
-        {
-            TModel map = await _repository.FindNoTrackinOneAsync(id);
+        // public virtual async Task<TViewModel> FindNoTrackinOneAsync(int id)
+        // {
+        //     TModel map = await _repository.FindNoTrackinOneAsync(id);
+            
+        //     TViewModel mapper = _mapper.Map<TModel, TViewModel>(map);
 
-            TViewModel mapper = _mapper.Map<TModel, TViewModel>(map);
+        //     return mapper;
 
-            return mapper;
-
-        }
+        // }
 
 
         public virtual async Task<IEnumerable<TViewModel>> FindAllAsync()
@@ -180,19 +180,19 @@ namespace Application
         }
 
 
-        public virtual async Task<TModel> FindNoTrackinOneAsync(int id)
-        {
-            try
-            {
-                return await _repository.FindNoTrackinOneAsync(id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
+        // public virtual async Task<TModel> FindNoTrackinOneAsync(int id)
+        // {
+        //     try
+        //     {
+        //         return await _repository.FindNoTrackinOneAsync(id);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError(ex.Message);
+        //     }
 
-            return default;
-        }
+        //     return default;
+        // }
 
 
         public virtual async Task<IEnumerable<TModel>> FindAllAsync()

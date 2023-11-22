@@ -15,7 +15,7 @@ namespace Domain.Interfaces
 
         Task<T> FindOneAsync(int id);
 
-        Task<T> FindNoTrackinOneAsync(int id);
+        // Task<T> FindNoTrackinOneAsync(int id);
 
         Task<IEnumerable<T>> FindAllAsync();
 

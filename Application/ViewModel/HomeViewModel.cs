@@ -35,9 +35,18 @@ namespace Application.ViewModel
         [MaxLength(20000)]
         [DisplayName("Descrição 4")]
         public string? Descricao_4 { get; set; }
+        public virtual ICollection<AcomodacaoViewModel>? Acomodacao { get; set; }
 #nullable disable
 
-        public virtual ICollection<AcomodacaoViewModel> Acomodacao { get; set; }
+
+
+
+
+
+
+
+
+
 
         #region formulario de contato
 #nullable enable
