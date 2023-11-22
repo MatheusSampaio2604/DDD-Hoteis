@@ -20,16 +20,9 @@ namespace Infra.Repository
         {
             try
             {
-                var items = await DbSet.AsNoTracking().ToListAsync();
-                if (items.Any())
-                {
-                    var item = items.Where(x => ((dynamic)x).Id_Acomodacao == id);
-                    return item;
-                }
-                else
-                {
-                    return null;
-                }
+                var items = await DbSet.AsNoTracking().Where(x => x.Id_Acomodacao == id).ToListAsync();
+
+                return items;
             }
             catch (Exception ex)
             {

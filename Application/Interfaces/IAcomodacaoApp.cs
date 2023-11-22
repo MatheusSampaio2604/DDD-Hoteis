@@ -9,6 +9,7 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<AcomodacaoViewModel>> FindAcomodacoesWithPhrase(string phrase);
 
-        //Task<IEnumerable<Acomodacao>> FindAcomodacoesWithPhrase(string phrase);
+        Task<AcomodacaoViewModel> FindNoTrackinOneAsync(int id);
+
     }
 }

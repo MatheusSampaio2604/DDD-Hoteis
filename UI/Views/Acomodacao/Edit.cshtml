@@ -26,15 +26,24 @@
                     <input type="hidden" asp-for="Id" />
 
                     <div class="form-group">
-                        @if (Model.ImagensID.Count() > 0)
+                        @if (Model.Imagens.Any())
                         {
-                            foreach (var i in Model.ImagensID)
+                            foreach (var imagem in Model.Imagens)
                             {
-                                <div class="carousel">
-                                    <img src="~/@i" class="img-thumbnail" alt="Imagem do Produto"
-                                        style="max-width: 200px; max-height: 200px; margin-right: 10px;" />
+                                <h3>Excluir Imagem?</h3>
+                                <div class="imagem-item">
+
+                                    <img src="~/@imagem.RotaImagem" width="300" height="250" alt="Imagem"
+                                        class="img-thumbnail" />
+
+                                    <!-- Checkbox para selecionar a imagem para exclusão -->
+                                    <input type="checkbox" class="form-check-input" name="ImagensExcluir" value="@imagem.Id" />
+
+                                    <!-- Exibir a rota da imagem (opcional) -->
+                                    <label>@imagem.RotaImagem</label>
                                 </div>
                             }
+
                         }
                         else
                         {
@@ -88,3 +97,11 @@
     </div>
 
 </section>
+<script>
+    // Verificar se há uma mensagem de alerta
+    var mensagemAlerta = '@TempData["MensagemAlerta"]';
+    if (mensagemAlerta) {
+        // Exibir um alerta na tela
+        alert(mensagemAlerta);
+    }
+</script>

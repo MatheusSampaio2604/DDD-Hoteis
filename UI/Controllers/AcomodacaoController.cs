@@ -21,7 +21,7 @@ namespace UI.Controllers
     public class AcomodacaoController : Controller
     {
         private readonly IAcomodacaoApp _IAcomodacaoApp;
-        private readonly IImagensApp _IImagensApp;
+        // private readonly IImagensApp _IImagensApp;
         private readonly ITarifasApp _ITarifasApp;
         private readonly IHomeApp _IHomeApp;
 
@@ -31,7 +31,7 @@ namespace UI.Controllers
 
         public AcomodacaoController(
             IAcomodacaoApp iAcomodacaoApp
-            , IImagensApp imagensApp
+            // , IImagensApp imagensApp
             , ITarifasApp iTarifasApp
             , IHomeApp iHomeApp
             , IWebHostEnvironment environment
@@ -39,7 +39,7 @@ namespace UI.Controllers
             )
         {
             _IAcomodacaoApp = iAcomodacaoApp;
-            _IImagensApp = imagensApp;
+            // _IImagensApp = imagensApp;
             _ITarifasApp = iTarifasApp;
             _IHomeApp = iHomeApp;
             _Environment = environment;
@@ -70,7 +70,7 @@ namespace UI.Controllers
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            var details = await _IAcomodacaoApp.FindOneAsync(id);
+            AcomodacaoViewModel details = await _IAcomodacaoApp.FindOneAsync(id);
             return View(details);
         }
 
@@ -95,8 +95,7 @@ namespace UI.Controllers
                 return View(acomodacaoViewModel);
             }
 
-            if (acomodacaoViewModel.Nome.Contains("chale", StringComparison.OrdinalIgnoreCase) ||
-                acomodacaoViewModel.Nome.Contains("suite", StringComparison.OrdinalIgnoreCase))
+            if (acomodacaoViewModel.Nome.Contains("chale", StringComparison.OrdinalIgnoreCase) || acomodacaoViewModel.Nome.Contains("suite", StringComparison.OrdinalIgnoreCase))
             {
                 ModelState.AddModelError("Nome", "O campo Nome não pode conter 'Chalé' ou 'Suíte'!");
                 ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
@@ -119,7 +118,7 @@ namespace UI.Controllers
                 {
                     ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
                     ViewBag.Home = await GetHomeAsync() ?? null;
-                    return View("Create", acomodacaoViewModel);
+                    return View(acomodacaoViewModel);
                 }
                 else
                 {
@@ -137,7 +136,8 @@ namespace UI.Controllers
                                     Nome = create.Nome,
                                     RotaImagem = item,
                                 };
-                                var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
+                                //var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
+                                var insertImages = await _imageService.CreateAsync(uploadImagem);
                             }
                         }
                     }
@@ -149,9 +149,12 @@ namespace UI.Controllers
         [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
+            var edit = await _IAcomodacaoApp.FindOneAsync(id);
+
             ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
             ViewBag.Home = await GetHomeAsync() ?? null;
-            return View(await _IAcomodacaoApp.FindOneAsync(id));
+
+            return View(edit);
         }
 
 
@@ -161,31 +164,14 @@ namespace UI.Controllers
         {
             try
             {
+                acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
 
-                if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
-                {
-                    var novosCaminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
-                    if (novosCaminhosImagens != null)
-                    {
-                       // var antigosCaminhosImagens = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(acomodacaoViewModel.Id);
+                // var oldData = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
 
-                        foreach (var novoCaminho in novosCaminhosImagens)
-                        {
-                            // Verifique se o novo caminho já existe nos caminhos antigos
-                            //if (!antigosCaminhosImagens.Contains(novoCaminho))
-                            //{
-                                ImagensViewModel uploadImagem = new()
-                                {
-                                    // Id = ,
-                                    Id_Acomodacao = acomodacaoViewModel.Id,
-                                    RotaImagem = novoCaminho,
-                                };
-                                var createUploadImagem = await _IImagensApp.EditAsync(uploadImagem);
-                            //}
-                        }
-                    }
-                }
-
+                // if (oldData.IdValor != acomodacaoViewModel.IdValor ||
+                //     oldData.Ativo != acomodacaoViewModel.Ativo ||
+                //     oldData.Descricao != acomodacaoViewModel.Descricao)
+                //{
                 var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
 
                 if (edit is null)
@@ -194,13 +180,52 @@ namespace UI.Controllers
                     ViewBag.Home = await GetHomeAsync() ?? null;
                     return View("Error");
                 }
+                //}
+
+
+                if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
+                {
+                    var novosCaminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
+                    if (novosCaminhosImagens != null)
+                    {
+                        //var antigosCaminhosImagens = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(acomodacaoViewModel.Id);
+                        var antigosCaminhosImagens = await _imageService.FindImages(acomodacaoViewModel.Id);
+
+                        foreach (var novoCaminho in novosCaminhosImagens)
+                        {
+                            // Verifique se o novo caminho já existe nos caminhos antigos
+                            if (!antigosCaminhosImagens.Any(img => img.RotaImagem == novoCaminho))
+                            {
+                                ImagensViewModel uploadImagem = new()
+                                {
+                                    Id_Acomodacao = acomodacaoViewModel.Id,
+                                    RotaImagem = novoCaminho,
+                                    Nome = acomodacaoViewModel.Nome,
+                                };
+                                //var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
+                                var insertImages = await _imageService.CreateAsync(uploadImagem);
+                            }
+                            else if (antigosCaminhosImagens.Any(img => img.RotaImagem == novoCaminho))
+                            {
+                                TempData["MensagemAlerta"] = $"A imagem com o caminho já existe.";
+
+                                ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
+                                ViewBag.Home = await GetHomeAsync() ?? null;
+                                return View(acomodacaoViewModel);
+                            }
+
+                        }
+                    }
+                }
+
+                if (acomodacaoViewModel.ImagensExcluir != null)
+                    await _imageService.ExcluirImagensSelecionadas(acomodacaoViewModel.ImagensExcluir);
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-
-                throw new Exception($"Ocorreu um erro ao Editar a entidade. {ex.Message}");
+                throw new Exception("Ocorreu um erro ao Editar a entidade: " + ex.Message);
             }
         }
 
@@ -211,6 +236,7 @@ namespace UI.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var acomodacao = await _IAcomodacaoApp.FindOneAsync(id);
+
             if (acomodacao == null)
             {
                 return NotFound(); // Ou uma View de erro específica para item não encontrado

@@ -6,6 +6,7 @@ using Domain.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application
@@ -18,13 +19,21 @@ namespace Application
             _IImagensRepository = imagensRepository;
         }
 
-        public virtual async Task<ImagensViewModel> FindOneAsyncFindImageFromAcomodationID(int id)
+        public virtual async Task<List<ImagensViewModel>> FindOneAsyncFindImageFromAcomodationID(int id)
         {
-            Imagens map = (Imagens)await _IImagensRepository.FindImageFromAcomodationID(id);
+            //List<ImagensViewModel> viewModels = _mapper.Map<List<Imagens>, List<ImagensViewModel>>(images);
+            IEnumerable<Imagens> images = await _IImagensRepository.FindImageFromAcomodationID(id);
 
-            ImagensViewModel mapper = _mapper.Map<Imagens, ImagensViewModel>(map);
+            List<ImagensViewModel> imagesViewModels = images.Select(img => new ImagensViewModel
+            {
+                Id = img.Id,
+                Id_Acomodacao = img.Id_Acomodacao,
+                Nome = img.Nome,
+                RotaImagem = img.RotaImagem,
+            }).ToList(); // Convertendo para List<ImagensViewModel>
 
-            return mapper;
+            return imagesViewModels;
         }
+
     }
 }

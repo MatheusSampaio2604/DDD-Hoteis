@@ -20,8 +20,8 @@ namespace Domain.Models
         public string? Descricao_3 { get; set; }
 
         public string? Descricao_4 { get; set; }
+        public virtual ICollection<Acomodacao>? Acomodacao { get; set; }
 #nullable disable
 
-        public virtual ICollection<Acomodacao> Acomodacao { get; set; }
     }
 }
