@@ -44,9 +44,8 @@ namespace Application
         {
             try
             {
-                var listAll = await _iAcomodacaoRepository.FindAllAsync();
-                Acomodacao models = listAll.Where(x => x.Id == id).FirstOrDefault();
-
+                Acomodacao models = await _iAcomodacaoRepository.FindNoTrackinOneAsync(id)/*.Result*/;
+                
                 AcomodacaoViewModel modelViews = _map.Map<Acomodacao, AcomodacaoViewModel>(models);
 
                 return modelViews;

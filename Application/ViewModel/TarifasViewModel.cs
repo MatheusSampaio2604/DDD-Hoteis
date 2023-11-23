@@ -21,8 +21,8 @@ namespace Application.ViewModel
 
         [DisplayName("Ativo")]
         public bool Ativo { get; set; }
-
-        public virtual ICollection<AcomodacaoViewModel> AcomodacaoViewModel { get; set; }
-
+#nullable enable
+        public virtual ICollection<AcomodacaoViewModel>? AcomodacaoViewModel { get; set; }
+#nullable disable
     }
 }

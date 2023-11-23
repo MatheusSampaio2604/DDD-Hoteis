@@ -164,23 +164,15 @@ namespace UI.Controllers
         {
             try
             {
-                acomodacaoViewModel.Nome = acomodacaoViewModel.Nome.ToUpper();
+                var oldData = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
 
-                // var oldData = await _IAcomodacaoApp.FindNoTrackinOneAsync(acomodacaoViewModel.Id);
-
-                // if (oldData.IdValor != acomodacaoViewModel.IdValor ||
-                //     oldData.Ativo != acomodacaoViewModel.Ativo ||
-                //     oldData.Descricao != acomodacaoViewModel.Descricao)
-                //{
-                var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
-
-                if (edit is null)
+                if (oldData.IdHome != acomodacaoViewModel.IdHome ||
+                oldData.IdValor != acomodacaoViewModel.IdValor ||
+                    oldData.Ativo != acomodacaoViewModel.Ativo ||
+                    oldData.Descricao != acomodacaoViewModel.Descricao)
                 {
-                    ViewBag.Tarifas = await GetActiveTarifasAsync() ?? null;
-                    ViewBag.Home = await GetHomeAsync() ?? null;
-                    return View("Error");
+                    var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
                 }
-                //}
 
 
                 if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
@@ -232,58 +224,35 @@ namespace UI.Controllers
 
 
 
-        [HttpGet("Remover")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var acomodacao = await _IAcomodacaoApp.FindOneAsync(id);
+        // [HttpGet("Remover")]
+        // public async Task<ActionResult> Delete(int id)
+        // {
+        //     var acomodacao = await _IAcomodacaoApp.FindOneAsync(id);
 
-            if (acomodacao == null)
-            {
-                return NotFound(); // Ou uma View de erro específica para item não encontrado
-            }
+        //     if (acomodacao == null)
+        //     {
+        //         return NotFound(); // Ou uma View de erro específica para item não encontrado
+        //     }
 
-            return View(acomodacao);
-        }
+        //     return View(acomodacao);
+        // }
 
-        [HttpPost("Remover")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete([Bind("Id")] Acomodacao acomodacao)
-        {
-            try
-            {
-                await _IAcomodacaoApp.Remove(acomodacao);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao remover entidade: {ex.Message}");
-                return View("Error");
-            }
-        }
+        // [HttpPost("Remover")]
+        // [ValidateAntiForgeryToken]
+        // public async Task<ActionResult> Delete([Bind("Id")] Acomodacao acomodacao)
+        // {
+        //     try
+        //     {
+        //         await _IAcomodacaoApp.Remove(acomodacao);
+        //         return RedirectToAction("Index");
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine($"Erro ao remover entidade: {ex.Message}");
+        //         return View("Error");
+        //     }
+        // }
 
     }
 }
 
-/* // Obtenha o caminho do arquivo a ser removido.
-                var caminhoArquivo = Path.Combine(_Environment.WebRootPath, acomodacaoViewModel.RotaImagem);
-
-                // Verifique se o arquivo existe antes de tentar removê-lo.
-                if (System.IO.File.Exists(caminhoArquivo))
-                {
-                    // Remova o arquivo do sistema de arquivos.
-                    System.IO.File.Delete(caminhoArquivo);
-                }
-
-                // Converter ViewModel para Model
-                Acomodacao acomodacaoModel = new Acomodacao
-                {
-                
-                    Id = acomodacaoViewModel.Id,
-                    Nome = acomodacaoViewModel.Nome,
-                    Ativo = acomodacaoViewModel.Ativo,
-                    Descricao = acomodacaoViewModel.Descricao,
-                    RotaImagem = acomodacaoViewModel.RotaImagem,
-                    IdHome = acomodacaoViewModel.IdHome,
-                    IdValor = acomodacaoViewModel.IdValor,
-                    
-                };**/
