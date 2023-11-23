@@ -31,7 +31,6 @@ namespace UI.Controllers
 
         public AcomodacaoController(
             IAcomodacaoApp iAcomodacaoApp
-            // , IImagensApp imagensApp
             , ITarifasApp iTarifasApp
             , IHomeApp iHomeApp
             , IWebHostEnvironment environment
@@ -39,7 +38,6 @@ namespace UI.Controllers
             )
         {
             _IAcomodacaoApp = iAcomodacaoApp;
-            // _IImagensApp = imagensApp;
             _ITarifasApp = iTarifasApp;
             _IHomeApp = iHomeApp;
             _Environment = environment;
@@ -57,7 +55,6 @@ namespace UI.Controllers
             return await _IHomeApp.FindAllAsync();
         }
 
-        // GET: AplicacaoasController
         [HttpGet("")]
         public async Task<ActionResult> Index()
         {
@@ -66,7 +63,6 @@ namespace UI.Controllers
             return View(item);
         }
 
-        // GET: AplicacaoasController/Details/5
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
@@ -74,7 +70,6 @@ namespace UI.Controllers
             return View(details);
         }
 
-        // GET: AplicacaoasController/Create
         [HttpGet("Criar")]
         public async Task<ActionResult> Create()
         {
@@ -83,7 +78,6 @@ namespace UI.Controllers
             return View();
         }
 
-        // POST: AplicacaoasController/Create
         [HttpPost("Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AcomodacaoViewModel acomodacaoViewModel)
@@ -136,7 +130,6 @@ namespace UI.Controllers
                                     Nome = create.Nome,
                                     RotaImagem = item,
                                 };
-                                //var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
                                 var insertImages = await _imageService.CreateAsync(uploadImagem);
                             }
                         }
@@ -174,18 +167,15 @@ namespace UI.Controllers
                     var edit = await _IAcomodacaoApp.EditAsync(acomodacaoViewModel);
                 }
 
-
                 if (acomodacaoViewModel.Fotos != null && acomodacaoViewModel.Fotos.Count > 0)
                 {
                     var novosCaminhosImagens = await _imageService.SalvarImagensAsync(acomodacaoViewModel.Fotos, acomodacaoViewModel.Nome);
                     if (novosCaminhosImagens != null)
                     {
-                        //var antigosCaminhosImagens = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(acomodacaoViewModel.Id);
                         var antigosCaminhosImagens = await _imageService.FindImages(acomodacaoViewModel.Id);
 
                         foreach (var novoCaminho in novosCaminhosImagens)
                         {
-                            // Verifique se o novo caminho já existe nos caminhos antigos
                             if (!antigosCaminhosImagens.Any(img => img.RotaImagem == novoCaminho))
                             {
                                 ImagensViewModel uploadImagem = new()
@@ -194,7 +184,6 @@ namespace UI.Controllers
                                     RotaImagem = novoCaminho,
                                     Nome = acomodacaoViewModel.Nome,
                                 };
-                                //var createUploadImagem = await _IImagensApp.CreateAsync(uploadImagem);
                                 var insertImages = await _imageService.CreateAsync(uploadImagem);
                             }
                             else if (antigosCaminhosImagens.Any(img => img.RotaImagem == novoCaminho))
