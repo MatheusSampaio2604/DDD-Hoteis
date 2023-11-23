@@ -21,8 +21,9 @@ namespace Infra.Repository
         public async Task<Acomodacao> FindNoTrackinOneAsync(int id)
         {
             var o =  await DbSet.AsNoTracking()
-                              .Include(a => a.Imagens)
-                              .Include(a => a.Home)
+                               .Include(a => a.Home)
+                               .Include(a => a.Imagens)
+                               .Include(a => a.Tarifas)
                               .FirstOrDefaultAsync(x => x.Id == id);
         
             return o;

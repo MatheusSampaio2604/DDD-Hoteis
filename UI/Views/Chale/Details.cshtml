@@ -15,11 +15,11 @@
   <div class="container">
 
     <section class="about_history_area section_gap">
-      <div class="container">
+      
         <div class="row">
           <div class="col-md-6">
             @{
-              if (!string.IsNullOrWhiteSpace(Model.ImagensID.FirstOrDefault()))
+              if (Model.ImagensID.Any())
               {
                 foreach (var i in Model.ImagensID)
                 {
@@ -38,7 +38,6 @@
             </div>
           </div>
         </div>
-      </div>
     </section>
     <div>
       <p>Preço: </p>

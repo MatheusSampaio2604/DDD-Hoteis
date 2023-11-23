@@ -14,6 +14,9 @@ namespace Application.AutoMapper
                 dest => dest.ImagensID,
                 opt => opt.MapFrom(
                     src => src.Imagens.Where(x => x.Id_Acomodacao == src.Id).Select(x => x.RotaImagem).ToList()))
+            .ForPath(
+                dest => dest.Home.Acomodacao,
+                opt => opt.Ignore())
             .ReverseMap();
 
             CreateMap<Home, HomeViewModel>().ReverseMap();
@@ -21,8 +24,6 @@ namespace Application.AutoMapper
             CreateMap<Tarifas, TarifasViewModel>().ReverseMap();
 
             CreateMap<Imagens, ImagensViewModel>().ReverseMap();
-
-
 
         }
     }

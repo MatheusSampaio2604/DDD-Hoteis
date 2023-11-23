@@ -13,8 +13,8 @@ namespace Domain.Models
         public string Nome { get; set; }
 
         public bool Ativo { get; set; }
-
-        public virtual ICollection<Acomodacao> Acomodacao { get; set; }
-
+#nullable enable
+        public virtual ICollection<Acomodacao>? Acomodacao { get; set; }
+#nullable disable
     }
 }
