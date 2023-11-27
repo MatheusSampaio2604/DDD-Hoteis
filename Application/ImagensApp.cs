@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,6 @@ namespace Application
 
         public virtual async Task<List<ImagensViewModel>> FindOneAsyncFindImageFromAcomodationID(int id)
         {
-            //List<ImagensViewModel> viewModels = _mapper.Map<List<Imagens>, List<ImagensViewModel>>(images);
             IEnumerable<Imagens> images = await _IImagensRepository.FindImageFromAcomodationID(id);
 
             List<ImagensViewModel> imagesViewModels = images.Select(img => new ImagensViewModel
@@ -30,9 +30,37 @@ namespace Application
                 Id_Acomodacao = img.Id_Acomodacao,
                 Nome = img.Nome,
                 RotaImagem = img.RotaImagem,
-            }).ToList(); // Convertendo para List<ImagensViewModel>
+            }).ToList();
 
             return imagesViewModels;
+        }
+
+        public virtual async Task<int> CreateManyAsync(IEnumerable<ImagensViewModel> imagensViewModel)
+        {
+            try
+            {
+                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                return await _IImagensRepository.CreateManyAsync(imagens);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> RemoveManyAsync(IEnumerable<ImagensViewModel> imagensViewModel)
+        {
+            try
+            {
+                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                return await _IImagensRepository.RemoveManyAsync(imagens);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return 0; 
+            }
         }
 
     }

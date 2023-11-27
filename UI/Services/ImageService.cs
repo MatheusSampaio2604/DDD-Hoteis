@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Application.Interfaces;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 
 namespace UI.Services
 {
@@ -23,81 +24,186 @@ namespace UI.Services
             _IImagensApp = imagensApp;
         }
 
-        public async Task<List<string>> SalvarImagensAsync(List<IFormFile> imagens, string nomeAcomodacao)
+        public async Task<int> CreateManyAsync(IEnumerable<ImagensViewModel> uploadImagem)
         {
-            List<string> caminhosImagens = new();
+            int i = await _IImagensApp.CreateManyAsync(uploadImagem);
 
-            foreach (var imagem in imagens)
-            {
-                if (imagem == null || imagem.Length == 0)
-                {
-                    caminhosImagens = null;
-                    continue;
-                }
-
-                string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img", nomeAcomodacao.Replace(" ", "_"));
-                if (!Directory.Exists(uploadDir))
-                    Directory.CreateDirectory(uploadDir);
-
-                string fileName = Path.GetFileName(imagem.FileName);
-                string filePath = Path.Combine(uploadDir, fileName);
-
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await imagem.CopyToAsync(fileStream);
-                }
-
-                caminhosImagens.Add(Path.Combine("img", nomeAcomodacao.Replace(" ", "_"), fileName).Replace("\\", "//"));
-            }
-
-            return caminhosImagens;
-        }
-
-        public async Task<Imagens> CreateAsync(ImagensViewModel uploadImagem)
-        {
-            Imagens i = await _IImagensApp.CreateAsync(uploadImagem);
-
-            if (i != null)
+            if (i != 0)
                 return i;
             else
-                return null;
+                return 0;
         }
 
-        public async Task<List<ImagensViewModel>> FindImages(int id)
+        public async Task<List<ImagensViewModel>> FindImagesById(int id)
         {
             List<ImagensViewModel> img = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(id);
             return img;
         }
 
-        public async Task ExcluirImagensSelecionadas(List<int> imagensParaExcluir)
+        // public async Task<List<string>> AddImagesAsync(List<IFormFile> imagens, string nomeAcomodacao)
+        // {
+        //     List<string> caminhosImagens = new();
+
+        //     foreach (var imagem in imagens)
+        //     {
+        //         if (imagem == null || imagem.Length == 0)
+        //         {
+        //             caminhosImagens = null;
+        //             continue;
+        //         }
+
+        //         string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img", nomeAcomodacao.Replace(" ", "_"));
+        //         if (!Directory.Exists(uploadDir))
+        //             Directory.CreateDirectory(uploadDir);
+
+        //         string fileName = Path.GetFileName(imagem.FileName);
+        //         string filePath = Path.Combine(uploadDir, fileName);
+
+        //         if (File.Exists(filePath))
+        //         {
+        //             File.Delete(filePath);
+        //         }
+
+        //         using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //         {
+        //             await imagem.CopyToAsync(fileStream);
+        //         }
+
+        //         caminhosImagens.Add(Path.Combine("img", nomeAcomodacao.Replace(" ", "_"), fileName).Replace("\\", "//"));
+        //     }
+
+        //     return caminhosImagens;
+        // }
+
+
+        private static bool IsValidImage(IFormFile imagem)
         {
-            if (imagensParaExcluir != null && imagensParaExcluir.Any())
+            return imagem != null && imagem.Length > 0;
+        }
+
+        private string GetUploadDirectory(string nomeAcomodacao)
+        {
+            string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img", nomeAcomodacao.Replace(" ", "_"));
+
+            if (!Directory.Exists(uploadDir))
             {
-                foreach (var imagemId in imagensParaExcluir)
+                Directory.CreateDirectory(uploadDir);
+            }
+
+            return uploadDir;
+        }
+
+        private static string GetUniqueFileName(IFormFile imagem, string uploadDir)
+        {
+            string fileName = Path.GetFileName(imagem.FileName);
+            string filePath = Path.Combine(uploadDir, fileName);
+
+            int count = 1;
+            while (File.Exists(filePath))
+            {
+                fileName = $"{Path.GetFileNameWithoutExtension(imagem.FileName)}_{count}{Path.GetExtension(imagem.FileName)}";
+                filePath = Path.Combine(uploadDir, fileName);
+                count++;
+            }
+
+            return fileName;
+        }
+
+        private static string GetRelativeImagePath(string nomeAcomodacao, string fileName)
+        {
+            return Path.Combine("img", nomeAcomodacao.Replace(" ", "_"), fileName).Replace("\\", "//");
+        }
+
+        public async Task<List<string>> AddImagesAsync(List<IFormFile> imagens, string nomeAcomodacao)
+        {
+            List<string> caminhosImagens = new();
+
+            try
+            {
+                foreach (var imagem in imagens)
                 {
-                    var imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
-                    if (imagemParaExcluir != null)
+                    if (IsValidImage(imagem))
                     {
-                        var imagemExcluir = new Imagens
+                        string uploadDir = GetUploadDirectory(nomeAcomodacao);
+                        string fileName = GetUniqueFileName(imagem, uploadDir);
+                        string filePath = Path.Combine(uploadDir, fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
-                            Id = imagemParaExcluir.Id,
-                            Nome = imagemParaExcluir.Nome,
-                            Id_Acomodacao = imagemParaExcluir.Id_Acomodacao,
-                            RotaImagem = imagemParaExcluir.RotaImagem,
-                        };
+                            await imagem.CopyToAsync(fileStream);
+                        }
 
-                        string rota = _webHostEnvironment.WebRootPath + "//" + imagemExcluir.RotaImagem;
-                        if (File.Exists(rota))
-                            File.Delete(rota);
-
-                        await _IImagensApp.Remove(imagemExcluir);
+                        caminhosImagens.Add(GetRelativeImagePath(nomeAcomodacao, fileName));
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Trate a exceção de forma apropriada, como logar ou retornar informações ao cliente
+                Console.WriteLine($"Erro ao adicionar imagens: {ex.Message}");
+                caminhosImagens = null;
+            }
+
+            return caminhosImagens;
+        }
+
+        public async Task<bool> RemoveImagesByIDFromDB(List<int> imagensParaExcluir)
+        {
+            try
+            {
+                List<int> sucess = new();
+                if (imagensParaExcluir != null && imagensParaExcluir.Any())
+                {
+
+                    foreach (var imagemId in imagensParaExcluir)
+                    {
+                        var imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
+                        if (imagemParaExcluir != null)
+                        {
+                            var imagemExcluir = new Imagens
+                            {
+                                Id = imagemParaExcluir.Id,
+                                Nome = imagemParaExcluir.Nome,
+                                Id_Acomodacao = imagemParaExcluir.Id_Acomodacao,
+                                RotaImagem = imagemParaExcluir.RotaImagem,
+                            };
+
+                            sucess.Add(await _IImagensApp.Remove(imagemExcluir));
+                        }
+                        if (File.Exists(Path.Combine(_webHostEnvironment.WebRootPath,imagemParaExcluir.RotaImagem)))
+                        {
+                            File.Delete(Path.Combine(_webHostEnvironment.WebRootPath,imagemParaExcluir.RotaImagem));
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao remover diretório: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool RemoveDirectory(List<ImagensViewModel> listaExclusao)
+        {
+            try
+            {
+                if (listaExclusao.Any())
+                {
+                    var diretorioPai = Path.GetDirectoryName(Path.Combine(_webHostEnvironment.WebRootPath, listaExclusao.First().Nome.Replace(" ", "_")));
+
+                    foreach (var arquivo in Directory.EnumerateFiles(diretorioPai))
+                    { File.Delete(arquivo); }
+
+                    if (!Directory.EnumerateFiles(diretorioPai).Any()) Directory.Delete(diretorioPai);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao remover diretório: {ex.Message}");
+                return false;
             }
         }
     }

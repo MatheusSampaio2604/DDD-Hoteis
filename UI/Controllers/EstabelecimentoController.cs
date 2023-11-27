@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
-    [Route("Admin/[controller]")]
+    [Route("[controller]")]
     public class EstabelecimentoController : Controller
     {
         private readonly IHomeApp _IHomeApp;
