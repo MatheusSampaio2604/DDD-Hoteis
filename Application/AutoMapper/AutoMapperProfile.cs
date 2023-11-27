@@ -14,6 +14,10 @@ namespace Application.AutoMapper
                 dest => dest.ImagensID,
                 opt => opt.MapFrom(
                     src => src.Imagens.Where(x => x.Id_Acomodacao == src.Id).Select(x => x.RotaImagem).ToList()))
+            .ForMember(
+                dest => dest.Imagens,
+                opt => opt.MapFrom(
+                    src => src.Imagens))
             .ForPath(
                 dest => dest.Home.Acomodacao,
                 opt => opt.Ignore())

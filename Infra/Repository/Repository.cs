@@ -105,52 +105,6 @@ namespace Infra.Repository
             }
         }
 
-        // public async Task<T> FindNoTrackinOneAsync(int id)
-        // {
-        //     try
-        //     {
-        //         var items = await DbSet.AsNoTracking().FirtOrDefaultAsync(x => x.Id == id);
-
-        //         var item = items.Find(x => ((dynamic)x).Id == id);
-
-        //         return item;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new Exception("Ocorreu um erro ao encontrar a entidade.", ex);
-        //     }
-        // }
-
-        // public async Task<T> FindNoTrackinOneAsync(int id)
-        // {
-        //     try
-        //     {
-        //         // Obtém o tipo da entidade
-        //         Type entityType = typeof(T);
-
-        //         // Cria o parâmetro para a expressão (x => x.Id == id)
-        //         ParameterExpression parameter = Expression.Parameter(entityType, "x");
-
-        //         // Cria a expressão (x => x.Id)
-        //         Expression property = Expression.Property(parameter, "Id");
-
-        //         // Cria a expressão (x => x.Id == id)
-        //         BinaryExpression equality = Expression.Equal(property, Expression.Constant(id));
-
-        //         // Combina as expressões para criar a expressão final (x => x.Id == id)
-        //         Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(equality, parameter);
-
-        //         // Executa a consulta no DbSet utilizando a expressão criada
-        //         var item = await DbSet.AsNoTracking().FirstOrDefaultAsync(lambda);
-
-        //         return item;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new Exception("Ocorreu um erro ao encontrar a entidade.", ex);
-        //     }
-        // }
-
         public async Task<IEnumerable<T>> FindAllAsync()
         {
             try

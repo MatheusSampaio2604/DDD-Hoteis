@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
-    [Route("Admin/[controller]")]
+    [Route("[controller]")]
     public class TarifasController : Controller
     {
         private readonly ITarifasApp _iTarifasApp;

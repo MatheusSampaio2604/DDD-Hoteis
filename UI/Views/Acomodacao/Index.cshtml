@@ -11,37 +11,55 @@
 
 <!--================Breadcrumb Area =================-->
 
-<section class="section_gap">
-<div class="container">
+@if (Model.Any())
+{
+    <section class="section_gap">
+        <div class="container">
 
-<h1>Acomodação</h1>
+            <h1>Acomodação</h1>
 
-<p>
-    <a class="btn btn-info btn-sm" asp-action="Create">Criar Novo</a>
-</p>
-<div class="container">
-    <div class="row mb_30 justify-content-center">
-            @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
-            {
-                <div class="col-lg-3 col-sm-6">
-                    <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'" class="accomodation_item text-center">
-                        <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
-                        <div class="hotel_img">
-                            @{ if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
-                                {
-                                    <img width="260" height="270" src="~/@item.ImagensID.FirstOrDefault()" alt=""> 
-                                }
-                                else
-                                {
-                                    <img width="260" height="270" src="~/img/DevChale.png" alt="" />
-                                }
-                            }
+            <p>
+                <a class="btn btn-info btn-sm" asp-action="Create">Criar Novo</a>
+            </p>
+            <div class="container">
+                <div class="row mb_30 justify-content-center">
+                    @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
+                    {
+                        <div class="col-lg-3 col-sm-6">
+                            <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'"
+                                class="accomodation_item text-center">
+                                <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
+                                <div class="hotel_img">
+                                    @{
+                                        if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
+                                        {
+                                            <img width="260" height="270" src="~/@item.ImagensID.FirstOrDefault()" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img width="260" height="270" src="~/img/DevChale.png" alt="" />
+                                        }
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-            }
+            </div>
         </div>
-</div>
-</div>
 
-</section>
+    </section>
+}
+else
+{
+    <section class="section_gap text-center">
+        <div class="container">
+
+            <h1>Acomodações</h1>
+
+            <h1><strong>Não existem Acomodações no Banco de Dados</strong></h1>
+            <h2>Considere Adicionar Novos</h2>
+            <p><a class="btn btn-success btn-lg" asp-action="Create">Adicionar</a></p>
+        </div>
+    </section>
+}
