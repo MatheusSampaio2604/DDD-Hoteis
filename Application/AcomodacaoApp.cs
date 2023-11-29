@@ -45,6 +45,7 @@ namespace Application
             try
             {
                 Acomodacao models = await _iAcomodacaoRepository.FindNoTrackinOneAsync(id)/*.Result*/;
+                models.Home = null;
                 
                 AcomodacaoViewModel modelViews = _map.Map<Acomodacao, AcomodacaoViewModel>(models);
 

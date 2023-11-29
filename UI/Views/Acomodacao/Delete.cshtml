@@ -23,7 +23,7 @@
                 <div class="form-group">
                     @if (Model.ImagensID != null && Model.ImagensID.Any())
                     {
-                        foreach (var i in Model.ImagensID)
+                        foreach (string i in Model.ImagensID)
                         {
                             <img width="200" height="200" src="~/@i" alt="">
                         }

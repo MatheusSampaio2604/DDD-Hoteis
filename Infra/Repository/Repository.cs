@@ -91,7 +91,7 @@ namespace Infra.Repository
         {
             try
             {
-                var obj = await DbSet.FindAsync(id);
+                T obj = await DbSet.FindAsync(id);
                 if (context.Entry(obj).State == EntityState.Unchanged)
                 {
                     context.Entry(obj).State = EntityState.Detached;
@@ -122,7 +122,7 @@ namespace Infra.Repository
         {
             try
             {
-                using var data = new DataContext(_OptionsBuilder);
+                using DataContext data = new DataContext(_OptionsBuilder);
                 data.Set<T>().Remove(entity);
                 return await data.SaveChangesAsync();
             }

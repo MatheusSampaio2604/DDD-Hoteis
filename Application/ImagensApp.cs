@@ -39,7 +39,7 @@ namespace Application
         {
             try
             {
-                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                IEnumerable<Imagens> imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
                 return await _IImagensRepository.CreateManyAsync(imagens);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace Application
         {
             try
             {
-                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                IEnumerable<Imagens> imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
                 return await _IImagensRepository.RemoveManyAsync(imagens);
             }
             catch (Exception ex)

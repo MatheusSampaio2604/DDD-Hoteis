@@ -26,8 +26,8 @@ namespace UI.Controllers
             string frase = "Chalé";
             IEnumerable<AcomodacaoViewModel> obj = await _IAcomodacaoApp.FindAcomodacoesWithPhrase(frase);
 
-            var i = await _IAcomodacaoApp.FindAllAsync();
-            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
+            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
+            IEnumerable<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
             ViewBag.Acomodacoes = iActive ?? null;
 
             return View(obj);
@@ -37,7 +37,7 @@ namespace UI.Controllers
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            var details = await _IAcomodacaoApp.FindOneAsync(id);
+            AcomodacaoViewModel details = await _IAcomodacaoApp.FindOneAsync(id);
             return View(details);
         }
 
