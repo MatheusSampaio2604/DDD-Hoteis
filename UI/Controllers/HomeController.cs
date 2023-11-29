@@ -24,8 +24,8 @@ namespace UI.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var i = await _IAcomodacaoApp.FindAllAsync();
-            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
+            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
+            IEnumerable<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
 
 
             ViewBag.Acomodacoes = iActive ?? null;

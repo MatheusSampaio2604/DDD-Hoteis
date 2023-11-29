@@ -54,16 +54,16 @@
                         <label asp-for="Fotos" class="form-label text-info">Fotos</label>
                         <input class="form-control bg-light" type="file" name="Fotos" asp-for="Fotos" multiple />
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label asp-for="Nome" class="form-label text-info"></label>
-                        <input asp-for="Nome" class="form-control bg-light text-dark" readonly />
+                        <textarea asp-for="Nome" class="form-control bg-light text-dark" readonly></textarea>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label asp-for="Descricao" class="form-label text-info"></label>
                         <textarea asp-for="Descricao" class="form-control bg-light text-dark" rows="4"></textarea>
                         <span asp-validation-for="Descricao" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label asp-for="IdValor" class="form-label text-info"></label>
                         <select asp-for="IdValor" class="form-select bg-light text-dark"
                             asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))">
@@ -71,19 +71,19 @@
                         <span asp-validation-for="IdValor" class="text-danger"></span>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label asp-for="IdHome" class="form-label text-info"></label>
                         <select asp-for="IdHome" class="form-select bg-light text-dark"
                             asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))"></select>
                         <span asp-validation-for="IdHome" class="text-danger"></span>
                     </div>
-                    <div class="mb-3 form-check form-switch">
+                    <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" asp-for="Ativo"
                             id="flexSwitchCheckAtivo" checked="@Model.Ativo" />
                         <label class="form-check-label" for="flexSwitchCheckAtivo">Pronto para Anunciar?</label>
                         <span asp-validation-for="Ativo" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="">
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </form>

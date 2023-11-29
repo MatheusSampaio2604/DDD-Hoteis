@@ -289,13 +289,12 @@ namespace UI.Controllers
 
                 int removeFromBD = await RemoveAcomodacao(removeData);
 
-                if (removeFromBD is not 0) return View("Error");
+                if (removeFromBD is 0) return View("Error");
 
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine($"Erro ao remover entidade: {ex.Message}");
                 return View("Error");
             }
         }

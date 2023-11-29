@@ -21,7 +21,7 @@
             @{
               if (Model.ImagensID.Any())
               {
-                foreach (var i in Model.ImagensID)
+                foreach (string i in Model.ImagensID)
                 {
                   <img width="500" height="500" src="~/@i" alt="">
                 }
