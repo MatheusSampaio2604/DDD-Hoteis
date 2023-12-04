@@ -18,9 +18,9 @@ namespace Application.AutoMapper
                 dest => dest.Imagens,
                 opt => opt.MapFrom(
                     src => src.Imagens))
-            .ForPath(
-                dest => dest.Home.Acomodacao,
-                opt => opt.Ignore())
+            // .ForPath(
+            //     dest => dest.Home.Acomodacao,
+            //     opt => opt.Ignore())
             .ReverseMap();
 
             CreateMap<Home, HomeViewModel>().ReverseMap();

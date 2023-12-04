@@ -20,88 +20,111 @@
         <h4 class="text-success">Acomodação: @Model.Nome</h4>
         <hr />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <form asp-action="Edit" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     <input type="hidden" asp-for="Id" />
+                    <div class="col-md-6">
+                        <div class="form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" asp-for="Ativo"
+                                id="flexSwitchCheckAtivo" checked="@Model.Ativo" />
+                            <label class="form-check-label" for="flexSwitchCheckAtivo">Pronto para Anunciar?</label>
+                            <span asp-validation-for="Ativo" class="text-danger"></span>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         @if (Model.Imagens.Any())
                         {
-                            foreach (var imagem in Model.Imagens)
-                            {
-                                <h3>Excluir Imagem?</h3>
-                                <div class="imagem-item">
+                            <div class="imagem-item border rounded p-3 mb-3">
+                                <h3 class="text-info">Excluir Imagem?</h3>
+                                <div class="d-flex flex-wrap">
+                                    @foreach (var imagem in Model.Imagens)
+                                    {
+                                        <div class="m-2 image-container">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="ImagensExcluir"
+                                                    value="@imagem.Id" />
+                                                <label class="form-check-label">Selecionar</label>
+                                            </div>
+                                            <img class="img-thumbnail image-fit" src="~/@imagem.RotaImagem" alt="Imagem" />
 
-                                    <img src="~/@imagem.RotaImagem" width="300" height="250" alt="Imagem"
-                                        class="img-thumbnail" />
-
-                                    <!-- Checkbox para selecionar a imagem para exclusão -->
-                                    <input type="checkbox" class="form-check-input" name="ImagensExcluir" value="@imagem.Id" />
-
-                                    <!-- Exibir a rota da imagem (opcional) -->
-                                    <label>@imagem.RotaImagem</label>
+                                        </div>
+                                    }
                                 </div>
-                            }
-
+                            </div>
                         }
                         else
                         {
-                            <label>Ainda não há fotos para @Model.Nome</label>
+                            <label class="text-muted">Ainda não há fotos para @Model.Nome</label>
                         }
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Fotos" class="form-label text-info">Fotos</label>
-                        <input class="form-control bg-light" type="file" name="Fotos" asp-for="Fotos" multiple />
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Nome" class="form-label text-info"></label>
-                        <input asp-for="Nome" class="form-control bg-light text-dark" readonly />
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Descricao" class="form-label text-info"></label>
-                        <textarea asp-for="Descricao" class="form-control bg-light text-dark" rows="4"></textarea>
-                        <span asp-validation-for="Descricao" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="IdValor" class="form-label text-info"></label>
-                        <select asp-for="IdValor" class="form-select bg-light text-dark"
-                            asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))">
-                        </select>
-                        <span asp-validation-for="IdValor" class="text-danger"></span>
-                    </div>
 
-                    <div class="mb-3">
-                        <label asp-for="IdHome" class="form-label text-info"></label>
-                        <select asp-for="IdHome" class="form-select bg-light text-dark"
-                            asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))"></select>
-                        <span asp-validation-for="IdHome" class="text-danger"></span>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Fotos" class="form-label text-info">Fotos</label>
+                            <input class="form-control bg-light" type="file" name="Fotos" asp-for="Fotos" multiple />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="form-label text-info">Nome</label>
+                            <input asp-for="Nome" class="form-control bg-light text-dark" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Descricao" class="form-label text-info"
+                                for="descricaoTextarea">Descrição</label>
+                            <textarea asp-for="Descricao" id="descricaoTextarea" class="form-control bg-light text-dark"
+                                rows="4" placeholder="Insira uma descrição detalhada"></textarea>
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IdValor" class="form-label text-info" for="IdValor">Selecione um
+                                Valor</label>
+                            <select asp-for="IdValor" class="form-select bg-light text-dark" id="IdValor"
+                                asp-items="@(new SelectList(ViewBag.Tarifas, "Id", "Valor"))"
+                                aria-describedby="valorDescription">
+                                <option selected disabled value="">Selecione</option>
+                            </select>
+                            <small id="valorDescription" class="form-text text-muted">
+                                Escolha um valor associado a esta opção.
+                            </small>
+                            <span asp-validation-for="IdValor" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IdHome" class="form-label text-info" for="IdHome">Selecione uma
+                                Home</label>
+                            <select asp-for="IdHome" class="form-select bg-light text-dark" id="IdHome"
+                                asp-items="@(new SelectList(ViewBag.Home, "Id", "Nome"))"
+                                aria-describedby="homeDescription">
+                                <option selected disabled value="">Selecione</option>
+                            </select>
+                            <small id="homeDescription" class="form-text text-muted">
+                                Escolha o estabelecimento associado a esta opção.
+                            </small>
+                            <span asp-validation-for="IdHome" class="text-danger"></span>
+                        </div>
+
+
                     </div>
-                    <div class="mb-3 form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" asp-for="Ativo"
-                            id="flexSwitchCheckAtivo" checked="@Model.Ativo" />
-                        <label class="form-check-label" for="flexSwitchCheckAtivo">Pronto para Anunciar?</label>
-                        <span asp-validation-for="Ativo" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
+                    <div>
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
+                    <div>
+                        <a class="btn btn-info" asp-action="Index">Voltar para a Lista</a>
+                    </div>
                 </form>
+                
+               
             </div>
         </div>
-
-        <div>
-            <a class="btn btn-info mt-3" asp-action="Index">Voltar para a Lista</a>
-        </div>
-
     </div>
 
 </section>
 <script>
-    // Verificar se há uma mensagem de alerta
+
     var mensagemAlerta = '@TempData["MensagemAlerta"]';
     if (mensagemAlerta) {
-        // Exibir um alerta na tela
         alert(mensagemAlerta);
     }
 </script>
