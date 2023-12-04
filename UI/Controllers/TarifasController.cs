@@ -3,7 +3,6 @@ using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace UI.Controllers
@@ -27,7 +26,7 @@ namespace UI.Controllers
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            var details = await _iTarifasApp.FindOneAsync(id);
+            TarifasViewModel details = await _iTarifasApp.FindOneAsync(id);
             return View(details);
         }
 
@@ -49,7 +48,7 @@ namespace UI.Controllers
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-            var create = await _iTarifasApp.CreateAsync(tarifasViewModel);
+            Tarifas create = await _iTarifasApp.CreateAsync(tarifasViewModel);
 
             if (create is null)
             {
@@ -77,7 +76,7 @@ namespace UI.Controllers
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-            var edit = await _iTarifasApp.EditAsync(tarifasViewModel);
+            TarifasViewModel edit = await _iTarifasApp.EditAsync(tarifasViewModel);
 
             if (edit is null)
             {

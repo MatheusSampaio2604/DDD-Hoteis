@@ -1,15 +1,13 @@
+using Application.Interfaces;
+using Application.ViewModel;
+using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.IO;
-using System.Threading.Tasks;
-using Domain.Models;
-using Application.ViewModel;
 using System.Collections.Generic;
-using Application.Interfaces;
+using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace UI.Services
 {
@@ -120,7 +118,7 @@ namespace UI.Services
 
             try
             {
-                foreach (var imagem in imagens)
+                foreach (IFormFile imagem in imagens)
                 {
                     if (IsValidImage(imagem))
                     {
@@ -128,7 +126,7 @@ namespace UI.Services
                         string fileName = GetUniqueFileName(imagem, uploadDir);
                         string filePath = Path.Combine(uploadDir, fileName);
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await imagem.CopyToAsync(fileStream);
                         }
@@ -155,12 +153,12 @@ namespace UI.Services
                 if (imagensParaExcluir != null && imagensParaExcluir.Any())
                 {
 
-                    foreach (var imagemId in imagensParaExcluir)
+                    foreach (int imagemId in imagensParaExcluir)
                     {
-                        var imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
+                        ImagensViewModel imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
                         if (imagemParaExcluir != null)
                         {
-                            var imagemExcluir = new Imagens
+                            Imagens imagemExcluir = new Imagens
                             {
                                 Id = imagemParaExcluir.Id,
                                 Nome = imagemParaExcluir.Nome,
@@ -170,9 +168,9 @@ namespace UI.Services
 
                             sucess.Add(await _IImagensApp.Remove(imagemExcluir));
                         }
-                        if (File.Exists(Path.Combine(_webHostEnvironment.WebRootPath,imagemParaExcluir.RotaImagem)))
+                        if (File.Exists(Path.Combine(_webHostEnvironment.WebRootPath, imagemParaExcluir.RotaImagem)))
                         {
-                            File.Delete(Path.Combine(_webHostEnvironment.WebRootPath,imagemParaExcluir.RotaImagem));
+                            File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, imagemParaExcluir.RotaImagem));
                         }
                     }
                 }
@@ -191,9 +189,9 @@ namespace UI.Services
             {
                 if (listaExclusao.Any())
                 {
-                    var diretorioPai = Path.GetDirectoryName(Path.Combine(_webHostEnvironment.WebRootPath, listaExclusao.First().Nome.Replace(" ", "_")));
+                    string diretorioPai = Path.GetDirectoryName(Path.Combine(_webHostEnvironment.WebRootPath, listaExclusao.First().Nome.Replace(" ", "_")));
 
-                    foreach (var arquivo in Directory.EnumerateFiles(diretorioPai))
+                    foreach (string arquivo in Directory.EnumerateFiles(diretorioPai))
                     { File.Delete(arquivo); }
 
                     if (!Directory.EnumerateFiles(diretorioPai).Any()) Directory.Delete(diretorioPai);

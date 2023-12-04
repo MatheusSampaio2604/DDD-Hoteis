@@ -2,11 +2,7 @@
 using Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -30,15 +26,15 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var i = await _IAcomodacaoApp.FindAllAsync();
-            var jsonOptions = new JsonSerializerOptions
+            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 MaxDepth = 64
             };
 
-            var json = JsonSerializer.Serialize(i, jsonOptions);
+            string json = JsonSerializer.Serialize(i, jsonOptions);
 
             return Ok(json);
         }

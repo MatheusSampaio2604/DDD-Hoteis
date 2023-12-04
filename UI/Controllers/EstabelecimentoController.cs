@@ -46,7 +46,7 @@ namespace UI.Controllers
 
             homeViewModel.Nome = homeViewModel.Nome.ToUpper();
 
-            var create = await _IHomeApp.CreateAsync(homeViewModel);
+            Home create = await _IHomeApp.CreateAsync(homeViewModel);
 
             if (create is null)
             {
@@ -74,7 +74,7 @@ namespace UI.Controllers
 
             homeViewModel.Nome = homeViewModel.Nome.ToUpper();
 
-            var edit = await _IHomeApp.EditAsync(homeViewModel);
+            HomeViewModel edit = await _IHomeApp.EditAsync(homeViewModel);
 
             if (edit is null)
             {

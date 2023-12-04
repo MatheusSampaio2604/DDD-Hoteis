@@ -3,9 +3,6 @@ using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Data;
-using System.Globalization;
-using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -31,9 +28,9 @@ namespace WebApi.Controllers
         public async Task<ActionResult> Index()
         {
             //Utils utils = new();
-            var i = await _iTarifasApp.FindAllAsync();
+            System.Collections.Generic.IEnumerable<TarifasViewModel> i = await _iTarifasApp.FindAllAsync();
             // Configura as opções de serialização
-            var jsonOptions = new JsonSerializerOptions
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -41,7 +38,7 @@ namespace WebApi.Controllers
             };
 
             // Serializa o objeto para JSON
-            var json = JsonSerializer.Serialize(i, jsonOptions);
+            string json = JsonSerializer.Serialize(i, jsonOptions);
 
             // Retorna o JSON serializado
             return Ok(json);
@@ -52,9 +49,9 @@ namespace WebApi.Controllers
         // GET: TarifasController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var i = await _iTarifasApp.FindOneAsync(id);
+            TarifasViewModel i = await _iTarifasApp.FindOneAsync(id);
             // Configura as opções de serialização
-            var jsonOptions = new JsonSerializerOptions
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -62,7 +59,7 @@ namespace WebApi.Controllers
             };
 
             // Serializa o objeto para JSON
-            var json = JsonSerializer.Serialize(i, jsonOptions);
+            string json = JsonSerializer.Serialize(i, jsonOptions);
 
             // Retorna o JSON serializado
             return Ok(json);
@@ -81,7 +78,7 @@ namespace WebApi.Controllers
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-            var create = await _iTarifasApp.CreateAsync(tarifasViewModel);
+            Tarifas create = await _iTarifasApp.CreateAsync(tarifasViewModel);
 
             if (create is null)
                 return BadRequest();
@@ -94,7 +91,7 @@ namespace WebApi.Controllers
         // GET: TarifasController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var i = await _iTarifasApp.FindOneAsync(id);
+            TarifasViewModel i = await _iTarifasApp.FindOneAsync(id);
             if (i is not null)
                 return Ok(true);
             else
@@ -113,7 +110,7 @@ namespace WebApi.Controllers
 
             tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-            var edit = await _iTarifasApp.EditAsync(tarifasViewModel);
+            TarifasViewModel edit = await _iTarifasApp.EditAsync(tarifasViewModel);
 
             if (edit is null)
             {

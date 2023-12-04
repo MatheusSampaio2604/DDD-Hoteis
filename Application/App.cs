@@ -32,7 +32,7 @@ namespace Application
 
             {
 
-                var map = _mapper.Map<TViewModel, TModel>(viewModel);
+                TModel map = _mapper.Map<TViewModel, TModel>(viewModel);
 
                 await _repository.CreateAsync(map);
 
@@ -57,7 +57,7 @@ namespace Application
         {
             try
             {
-                var map = _mapper.Map<TViewModel, TModel>(entity);
+                TModel map = _mapper.Map<TViewModel, TModel>(entity);
 
                 await _repository.EditAsync(map);
 
@@ -84,7 +84,7 @@ namespace Application
         // public virtual async Task<TViewModel> FindNoTrackinOneAsync(int id)
         // {
         //     TModel map = await _repository.FindNoTrackinOneAsync(id);
-            
+
         //     TViewModel mapper = _mapper.Map<TModel, TViewModel>(map);
 
         //     return mapper;

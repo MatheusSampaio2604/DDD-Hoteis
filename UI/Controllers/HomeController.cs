@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using UI.Models;
 
@@ -24,8 +23,8 @@ namespace UI.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var i = await _IAcomodacaoApp.FindAllAsync();
-            var iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
+            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
+            List<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
 
 
             ViewBag.Acomodacoes = iActive ?? null;

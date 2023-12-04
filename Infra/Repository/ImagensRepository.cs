@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Domain.Models;
 using Infra.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infra.Repository
 {
@@ -20,7 +20,7 @@ namespace Infra.Repository
         {
             try
             {
-                var items = await DbSet.AsNoTracking().Where(x => x.Id_Acomodacao == id).ToListAsync();
+                List<Imagens> items = await DbSet.AsNoTracking().Where(x => x.Id_Acomodacao == id).ToListAsync();
 
                 return items;
             }
@@ -39,13 +39,13 @@ namespace Infra.Repository
             }
             catch (DbUpdateException ex)
             {
-                var errorMessages = ex.Entries
+                List<string> errorMessages = ex.Entries
                     .Where(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified)
                     .Select(entry => $"{entry.Entity.GetType().Name}: {string.Join(", ", entry.CurrentValues.Properties.Select(prop => $"{prop.Name}='{entry.CurrentValues[prop]}''"))}")
                     .ToList();
 
-                var fullErrorMessage = string.Join("; ", errorMessages);
-                var exceptionMessage = $"Ocorreu um erro ao adicionar objetos. Detalhes: {fullErrorMessage}";
+                string fullErrorMessage = string.Join("; ", errorMessages);
+                string exceptionMessage = $"Ocorreu um erro ao adicionar objetos. Detalhes: {fullErrorMessage}";
 
                 throw new Exception(exceptionMessage, ex);
             }
@@ -60,13 +60,13 @@ namespace Infra.Repository
             }
             catch (DbUpdateException ex)
             {
-                var errorMessages = ex.Entries
+                List<string> errorMessages = ex.Entries
                     .Where(entry => entry.State == EntityState.Added || entry.State == EntityState.Modified)
                     .Select(entry => $"{entry.Entity.GetType().Name}: {string.Join(", ", entry.CurrentValues.Properties.Select(prop => $"{prop.Name}='{entry.CurrentValues[prop]}''"))}")
                     .ToList();
 
-                var fullErrorMessage = string.Join("; ", errorMessages);
-                var exceptionMessage = $"Ocorreu um erro ao Remover objetos. Detalhes: {fullErrorMessage}";
+                string fullErrorMessage = string.Join("; ", errorMessages);
+                string exceptionMessage = $"Ocorreu um erro ao Remover objetos. Detalhes: {fullErrorMessage}";
 
                 throw new Exception(exceptionMessage, ex);
             }

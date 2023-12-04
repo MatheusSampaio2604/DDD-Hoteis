@@ -3,9 +3,6 @@ using Application.Interfaces.Services.Request;
 using Application.Interfaces.Services.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -15,7 +12,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IIdentityService _identityService;
+        private readonly IIdentityService _identityService;
 
         public UserController(IIdentityService identityService) =>
             _identityService = identityService;
@@ -26,7 +23,7 @@ namespace WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var resultado = await _identityService.CadastrarUsuario(usuarioCadastro);
+            UsuarioCadastroResponse resultado = await _identityService.CadastrarUsuario(usuarioCadastro);
             if (resultado.Sucesso)
                 return Ok(resultado);
             else if (resultado.Erros.Count > 0)
@@ -41,7 +38,7 @@ namespace WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var resultado = await _identityService.Login(usuarioLogin);
+            UsuarioLoginResponse resultado = await _identityService.Login(usuarioLogin);
             if (resultado.Sucesso)
                 return Ok(resultado);
 

@@ -1,12 +1,9 @@
-﻿using System.IO;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -91,7 +88,7 @@ namespace Infra.Repository
         {
             try
             {
-                var obj = await DbSet.FindAsync(id);
+                T obj = await DbSet.FindAsync(id);
                 if (context.Entry(obj).State == EntityState.Unchanged)
                 {
                     context.Entry(obj).State = EntityState.Detached;
@@ -122,7 +119,7 @@ namespace Infra.Repository
         {
             try
             {
-                using var data = new DataContext(_OptionsBuilder);
+                using DataContext data = new DataContext(_OptionsBuilder);
                 data.Set<T>().Remove(entity);
                 return await data.SaveChangesAsync();
             }

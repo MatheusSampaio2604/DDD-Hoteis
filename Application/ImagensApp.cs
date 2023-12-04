@@ -5,7 +5,6 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,7 +38,7 @@ namespace Application
         {
             try
             {
-                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                IEnumerable<Imagens> imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
                 return await _IImagensRepository.CreateManyAsync(imagens);
             }
             catch (Exception ex)
@@ -53,13 +52,13 @@ namespace Application
         {
             try
             {
-                var imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
+                IEnumerable<Imagens> imagens = _mapper.Map<IEnumerable<ImagensViewModel>, IEnumerable<Imagens>>(imagensViewModel);
                 return await _IImagensRepository.RemoveManyAsync(imagens);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return 0; 
+                return 0;
             }
         }
 

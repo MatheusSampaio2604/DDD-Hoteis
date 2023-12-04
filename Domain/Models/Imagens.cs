@@ -6,7 +6,7 @@ namespace Domain.Models
     public class Imagens
     {
         public int Id { get; set; }
-        
+
 #nullable enable
         public int? Id_Acomodacao { get; set; }
         public string? Nome { get; set; }

@@ -24,16 +24,16 @@ namespace WebApi.Controllers
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            var i = await _iAcomodacaoApp.FindAllAsync();
+            System.Collections.Generic.IEnumerable<Application.ViewModel.AcomodacaoViewModel> i = await _iAcomodacaoApp.FindAllAsync();
 
-            var jsonOptions = new JsonSerializerOptions
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                MaxDepth = 64 
+                MaxDepth = 64
             };
 
-            var json = JsonSerializer.Serialize(i, jsonOptions);
+            string json = JsonSerializer.Serialize(i, jsonOptions);
 
             return Ok(json);
         }
@@ -41,16 +41,16 @@ namespace WebApi.Controllers
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            var result = await _iAcomodacaoApp.FindOneAsync(id);
+            Application.ViewModel.AcomodacaoViewModel result = await _iAcomodacaoApp.FindOneAsync(id);
 
-            var jsonOptions = new JsonSerializerOptions
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 MaxDepth = 64,
             };
 
-            var json = JsonSerializer.Serialize(result, jsonOptions);
+            string json = JsonSerializer.Serialize(result, jsonOptions);
             return Ok(json);
         }
     }

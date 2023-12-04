@@ -15,7 +15,7 @@ namespace Infra.Mapping
             builder.Property(x => x.Nome).HasColumnName("Nome");
             builder.Property(x => x.Id_Acomodacao).HasColumnName("IdAcomodacao");
             builder.Property(x => x.RotaImagem).HasColumnName("CaminhoImagem");
-            
+
         }
     }
 }

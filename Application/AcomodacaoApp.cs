@@ -6,7 +6,6 @@ using Domain.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application
@@ -45,7 +44,7 @@ namespace Application
             try
             {
                 Acomodacao models = await _iAcomodacaoRepository.FindNoTrackinOneAsync(id)/*.Result*/;
-                
+
                 AcomodacaoViewModel modelViews = _map.Map<Acomodacao, AcomodacaoViewModel>(models);
 
                 return modelViews;

@@ -14,7 +14,7 @@ namespace Infra.Mapping
             builder.Property(x => x.Nome).HasColumnName("Nome");
             builder.Property(x => x.Ativo).HasColumnName("Ativo");
             builder.Property(x => x.Valor).HasColumnName("Valor").HasPrecision(18, 2);
-            
+
         }
     }
 }

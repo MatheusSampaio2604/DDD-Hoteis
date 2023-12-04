@@ -8,8 +8,8 @@ namespace UI.Areas
     {
         public static IServiceCollection AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new AutoMapperProfile()); });
-            var mapper = mappingConfig.CreateMapper();
+            MapperConfiguration mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new AutoMapperProfile()); });
+            IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
             return services;
         }
