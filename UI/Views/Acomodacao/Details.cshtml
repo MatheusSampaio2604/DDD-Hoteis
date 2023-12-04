@@ -24,9 +24,9 @@
                     <div class="img">
                         @if (Model.ImagensID.Count() > 0)
                         {
-                            foreach (string i in Model.ImagensID)
+                            foreach (string img in Model.ImagensID)
                             {
-                                <img width="500" height="500" src="~/@i" alt="">
+                                <img width="500" height="500" src="~/@img" alt="">
                             }
                         }
                         else

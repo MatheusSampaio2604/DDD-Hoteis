@@ -1,4 +1,6 @@
-﻿<section class="hotel_booking_area">
+﻿@model Application.ViewModel.BookingViewModel
+
+<section class="hotel_booking_area">
     <br />
     <br />
     <div class="container">
@@ -7,58 +9,64 @@
                 <h2>Pesquise<br />Conosco</h2>
             </div>
             <div class="col-md-9">
-                <div class="boking_table">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="book_tabel_item">
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker11'>
-                                        <input type='text' class="form-control" placeholder="Data Entrada" />
-                                        <span class="input-group-addon">
+                <form asp-action="SendBookingInfo" method="post">
+                    <div class="boking_table">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="form-group">
+                                        <div class="input-group date">
+                                            <input type="date" class="form-control" placeholder="Data Entrada"
+                                                asp-for="Entrada" />
+                                            @* <span class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </span>
+                                            </span> *@
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" placeholder="Data Saída" />
-                                        <span class="input-group-addon">
+                                    <div class="form-group">
+                                        <div class="input-group date">
+                                            <input type="date" class="form-control" placeholder="Data Saída"
+                                                asp-for="Saida" />
+                                            @* <span class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </span>
+                                            </span> *@
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="book_tabel_item">
-                                <div class="input-group">
-                                    <select class="wide">
-                                        <option data-display="Pessoas">Selecione</option>
-                                        <option value="1">1 Pessoa</option>
-                                        <option value="2">2 Pessoas</option>
-                                    </select>
-                                </div>
-                                <div class="input-group">
-                                    <select class="wide">
-                                        <option data-display="Pet's">Selecione</option>
-                                        <option value="1">Sim</option>
-                                        <option value="0">Não</option>
-                                    </select>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <select asp-for="Acomodacao" class="wide">
+                                            <option value="" selected disabled data-display="Acomodação desejada">
+                                                Selecione</option>
+                                            @foreach (var acomodacao in ViewBag.Acomodacoes)
+                                            {
+                                                <option value="@acomodacao.Nome">@acomodacao.Nome</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <select asp-for="Pet" class="wide">
+                                            <option value="" data-display="Pet's">Selecione</option>
+                                            <option value="Sim">Sim</option>
+                                            <option value="Não">Não</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="book_tabel_item">
-                                <div class="input-group">
-                                    <select class="wide" asp-items="@(new SelectList(ViewBag.Acomodacoes, "Id", "Nome"))">
-                                        <option selected disabled data-display="Acomodação desejada">Selecione</option>
-                                    </select>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <input asp-for="Email" type="text" class="form-control"
+                                            placeholder="Digite um e-mail" />
+                                    </div>
+                                    <button type="submit" class="book_now_btn button_hover">Enviar Reserva</button>
                                 </div>
-                                <a class="book_now_btn button_hover" href="#">Entrar em Contato</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -175,9 +175,9 @@ button:focus {
   font-size: 14px;
   line-height: 30px;
   text-transform: uppercase;
-  color: #fff;
+  color: #000;
   font-weight: 600;
-  background: #f3c300;
+  background: #48d648;
   padding: 5px 30px;
 }
 
@@ -223,7 +223,7 @@ button:focus {
   -ms-transform: translateX(-100%);
   transform: translateX(-100%);
   z-index: -1;
-  background: #f8b100;
+  background: #2d502d;
   -webkit-transition: all 0.3s linear;
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
@@ -254,7 +254,7 @@ button:focus {
 .book_now_btn {
   width: 100%;
   display: block;
-  background: #f3c300;
+  background: #48d648;
   color: #222222;
   text-transform: uppercase;
   font-size: 14px;
@@ -358,7 +358,7 @@ button:focus {
 
 .navbar .menu_nav .nav-item:hover .nav-link,
 .navbar .menu_nav .nav-item.active .nav-link {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .navbar .menu_nav .nav-item.submenu {
@@ -445,7 +445,7 @@ button:focus {
 
 .navbar .menu_nav .nav-item.submenu ul .nav-item:hover .nav-link {
   background: #f0f0f0;
-  color: #52c5fd;
+  color: #48d648;
 }
 
 @media (min-width: 992px) {
@@ -803,7 +803,7 @@ button:focus {
 .accomodation_item h5 {
   font-size: 24px;
   line-height: 28px;
-  color: #52c5fd;
+  color: #48d648;
   font-weight: 600;
   margin-bottom: 0px;
 }
@@ -859,7 +859,7 @@ button:focus {
 }
 
 .facilities_item .sec_h4 i {
-  color: #f3c300;
+  color: #48d648;
   font-size: 24px;
   line-height: 38px;
   display: inline-block;
@@ -963,7 +963,7 @@ button:focus {
 }
 
 .testimonial_slider .testimonial_item .sec_h4:hover {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .testimonial_slider .testimonial_item .star a {
@@ -988,7 +988,7 @@ button:focus {
 }
 
 .testimonial_slider .owl-dots .owl-dot.active {
-  background: #f3c300;
+  background: #48d648;
 }
 
 /*---------------------------------------------------- */
@@ -1021,7 +1021,7 @@ button:focus {
 }
 
 .single-recent-blog-post .details .sec_h4:hover {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .single-recent-blog-post .date {
@@ -1048,7 +1048,7 @@ button:focus {
 }
 
 .tags .tag_btn:before {
-  background: #f3c300;
+  background: #48d648;
 }
 
 .tags .tag_btn+.tag_btn {
@@ -1141,7 +1141,7 @@ button:focus {
 }
 
 .blog_info .post_tag a:hover {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .blog_info .blog_meta li a {
@@ -1162,7 +1162,7 @@ button:focus {
 }
 
 .blog_info .blog_meta li a:hover {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .blog_post img {
@@ -1184,7 +1184,7 @@ button:focus {
 }
 
 .blog_details h2:hover {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .blog_details p {
@@ -1299,7 +1299,7 @@ button:focus {
 }
 
 .blog_right_sidebar .author_widget .social_icon a:hover {
-  color: #52c5fd;
+  color: #887613;
 }
 
 .blog_right_sidebar .popular_post_widget .post_item .media-body {
@@ -1362,7 +1362,7 @@ button:focus {
 }
 
 .blog_right_sidebar .post_category_widget .cat-list li:hover a {
-  color: #52c5fd;
+  color: #48d648;
 }
 
 .blog_right_sidebar .newsletter_widget {
@@ -1451,7 +1451,7 @@ button:focus {
 }
 
 .blog_right_sidebar .tag_cloud_widget ul li a:hover {
-  background: #f3c300;
+  background: #2d502d;
   color: #fff;
 }
 
@@ -1880,7 +1880,7 @@ button:focus {
   top: 0;
   font-size: 20px;
   line-height: 24px;
-  color: #f3c300;
+  color: #48d648;
   font-weight: 600;
 }
 
@@ -3530,7 +3530,7 @@ h6 {
 }
 
 .single-footer-widget ul li a:hover {
-  color: #f3c300;
+  color: #48d648;
 }
 
 .single-footer-widget .instafeed {
@@ -3634,8 +3634,10 @@ h6 {
 }
 
 .footer-bottom .footer-social a:hover {
-  color: #f3c300;
+  color: #2d502d;
 }
+
+/*----------Acomodação-View------------ */
 
 .image-container {
   width: 300px;
@@ -3662,7 +3664,5 @@ h6 {
   z-index: 1;
 }
 
-/*---------------------------------------------------- */
 
-
-/*_______________________________________________________*/
+/*____________end_Acomodacao_View________________*/
