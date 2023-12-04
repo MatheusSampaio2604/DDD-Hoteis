@@ -20,11 +20,7 @@ namespace Infra.Repository
 
         public async Task<Acomodacao> FindNoTrackinOneAsync(int id)
         {
-<<<<<<< HEAD
             Acomodacao o = await DbSet.AsNoTracking()
-=======
-            Acomodacao o =  await DbSet.AsNoTracking()
->>>>>>> fc19d229c883c2ee1f8833f566af6425c7684dd7
                                .Include(a => a.Home)
                                .Include(a => a.Imagens)
                                .Include(a => a.Tarifas)

@@ -126,11 +126,8 @@ namespace UI.Services
                         string fileName = GetUniqueFileName(imagem, uploadDir);
                         string filePath = Path.Combine(uploadDir, fileName);
 
-<<<<<<< HEAD
                         using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-=======
-                        using (FileStream  fileStream = new FileStream(filePath, FileMode.Create))
->>>>>>> fc19d229c883c2ee1f8833f566af6425c7684dd7
+
                         {
                             await imagem.CopyToAsync(fileStream);
                         }
@@ -159,17 +156,13 @@ namespace UI.Services
 
                     foreach (int imagemId in imagensParaExcluir)
                     {
-<<<<<<< HEAD
+
                         ImagensViewModel imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
                         if (imagemParaExcluir != null)
                         {
-                            Imagens imagemExcluir = new Imagens
-=======
-                        ImagensViewModel  imagemParaExcluir = await _IImagensApp.FindOneAsync(imagemId);
-                        if (imagemParaExcluir != null)
-                        {
+
+                      
                             Imagens imagemExcluir = new()
->>>>>>> fc19d229c883c2ee1f8833f566af6425c7684dd7
                             {
                                 Id = imagemParaExcluir.Id,
                                 Nome = imagemParaExcluir.Nome,

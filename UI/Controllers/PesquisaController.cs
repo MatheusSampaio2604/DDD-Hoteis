@@ -17,7 +17,7 @@ namespace UI.Controllers
             try
             {
                 // Configurar as informações do servidor de e-mail do Gmail
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+                SmtpClient smtpClient = new("smtp.gmail.com")
                 {
                     Port = 587,
                     Credentials = new NetworkCredential("email", "senha"),
@@ -32,7 +32,7 @@ namespace UI.Controllers
                            $"Acomodação: {model.Acomodacao}";
 
                 // Configurar a mensagem de e-mail
-                MailMessage message = new MailMessage("remetente", "destinatario")
+                MailMessage message = new("remetente", "destinatario")
                 {
                     Subject = "Pedido de Orçamento",
                     Body = body,

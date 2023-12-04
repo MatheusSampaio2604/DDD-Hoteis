@@ -17,7 +17,7 @@
                                     <div class="form-group">
                                         <div class="input-group date">
                                             <input type="date" class="form-control" placeholder="Data Entrada"
-                                                asp-for="Entrada" />
+                                                   asp-for="Entrada" />
                                             @* <span class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                             </span> *@
@@ -26,7 +26,7 @@
                                     <div class="form-group">
                                         <div class="input-group date">
                                             <input type="date" class="form-control" placeholder="Data Saída"
-                                                asp-for="Saida" />
+                                                   asp-for="Saida" />
                                             @* <span class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                             </span> *@
@@ -39,8 +39,9 @@
                                     <div class="input-group">
                                         <select asp-for="Acomodacao" class="wide">
                                             <option value="" selected disabled data-display="Acomodação desejada">
-                                                Selecione</option>
-                                            @foreach (var acomodacao in ViewBag.Acomodacoes)
+                                                Selecione
+                                            </option>
+                                            @foreach (dynamic acomodacao in ViewBag.Acomodacoes)
                                             {
                                                 <option value="@acomodacao.Nome">@acomodacao.Nome</option>
                                             }
@@ -59,7 +60,7 @@
                                 <div class="book_tabel_item">
                                     <div class="input-group">
                                         <input asp-for="Email" type="text" class="form-control"
-                                            placeholder="Digite um e-mail" />
+                                               placeholder="Digite um e-mail" />
                                     </div>
                                     <button type="submit" class="book_now_btn button_hover">Enviar Reserva</button>
                                 </div>
