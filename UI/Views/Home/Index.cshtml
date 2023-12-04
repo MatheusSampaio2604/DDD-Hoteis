@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Pagina Inicial";
+    var bookingModel = new Application.ViewModel.BookingViewModel();
 }
 
 <!--================Banner Area =================-->
@@ -12,10 +13,13 @@
         </div>
         <div class="container">
             <div class="banner_content text-center">
-                <h6>LONGE DA VIDA MONÓTONA</h6>
-                <h2>RELAXE SUA MENTE</h2>
-                <p>Se você estiver procurando por virgens na web, poderá ficar muito confuso com a<br> diferença de
-                    preço. Você pode ver algumas de nossas acomodações por apenas R$ 500,00 cada...</p>
+                <h6>SAIA DA SUA ZONA DE ESTRESSE DIÁRIO,</h6>
+                <h2>VENHA RELAXAR NAS MONTANHAS DA SERRA DA MANTIQUEIRA</h2>
+                <p>
+                    Se você estiver em busca de descanso e relaxamento, nos temos as opções certas, <br />
+                    Nossas acomodações possuem tudo o que é necessario para relaxar em casal, <br />
+                    Nossa Pousada tem como foco, Casais Romântico...
+                </p>
             </div>
         </div>
     </div>
@@ -26,17 +30,19 @@
     <div class="container">
         <div class="section_title text-center">
             <h2 class="title_color">Nossas Acomodações</h2>
-            <p>Todos vivemos numa época que pertence aos jovens de coração. Vida que está se tornando extremamente
-                rápida, experimente relaxar conosco.</p>
+            <p>Todas as nossas acomodações são privativas, com uma vista excepcional para a mata, nossos chalés possuem
+                uma faixa de 5 metros de distância entre eles, Nossas Suítes possuem vista parcial para a cachoeira do
+                Escorrega, que é um dos principais pontos de visita da região.
+            </p>
         </div>
         <div class="row mb_30 justify-content-center">
             @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
             {
-                    string linkController = string.Empty; string linkAction = "Details";
-                    if (item.Nome.Contains("CHALÉ"))
-                        linkController = "Chale";
-                    else if (item.Nome.Contains("SUÍTE"))
-                        linkController = "Suite";
+                string linkController = string.Empty; string linkAction = "Details";
+                if (item.Nome.Contains("CHALÉ"))
+                    linkController = "Chale";
+                else if (item.Nome.Contains("SUÍTE"))
+                    linkController = "Suite";
                 <div class="col-lg-3 col-sm-6">
                     <div class="accomodation_item text-center">
                         <div class="hotel_img">
@@ -50,7 +56,8 @@
                                     <img width="260" height="270" src="~/img/DevIndex.png" alt="LogoTemporario" />
                                 }
                             }
-                            <a href="@Url.Action(linkAction, linkController, new { id = item.Id })" class="btn theme_btn button_hover">Detalhes</a>
+                            <a href="@Url.Action(linkAction, linkController, new { id = item.Id })"
+                                class="btn theme_btn button_hover">Detalhes</a>
                         </div>
                         <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
                         <h5>R$ @Html.DisplayFor(modelItem => item.Tarifas.Valor)<small>/noite</small></h5>
@@ -283,4 +290,4 @@
         </div>
     </div>
 </section>
-@await Html.PartialAsync("../Home/BookLibrary")
+@await Html.PartialAsync("../Home/BookLibrary", bookingModel)

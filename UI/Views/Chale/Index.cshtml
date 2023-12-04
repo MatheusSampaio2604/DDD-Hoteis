@@ -11,44 +11,75 @@
 
 <!--================Breadcrumb Area =================-->
 <!--================ Accomodation Area  =================-->
-<section class="accomodation_area section_gap">
-    <div class="container">
-        <div class="section_title text-center">
-            <h4>
-                Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de
-                hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico,
-                lareira, Tv a cabo, DVD, frigobar e varanda com rede.
-                <br />
-                Face às constantes faltas de energia, disponibilizamos um gerador diesel com capacidade para atender
-                toda a pousada.
-            </h4>
-        </div>
-        <div class="row justify-content-center mb_30">
-            @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
-            {
-                <div class="col-lg-3 col-sm-6">
-                    <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'"
-                        class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            @{
-                                if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
-                                {
-                                    <img width="260" height="270" src="@item.ImagensID.FirstOrDefault()" alt="" />
+@if (Model.Any())
+{
+    <section class="accomodation_area section_gap">
+        <div class="container">
+            <div class="section_title text-center">
+                <h4>
+                    Nossas unidades são dotadas de aquecedores externos a gás para os chuveiros e banheiras de
+                    hidromassagem, secadores de cabelos, cofres para guarda de valores e pequenos objetos, lençol térmico,
+                    lareira, Tv a cabo, DVD, frigobar e varanda com rede.
+                    <br />
+                    Face às constantes faltas de energia, disponibilizamos um gerador diesel com capacidade para atender
+                    toda a pousada.
+                </h4>
+            </div>
+            <div class="row justify-content-center mb_30">
+                @foreach (var item in Model.OrderBy(index => index.Nome).ToList())
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <div onclick="location.href='@Url.Action("Details", new { id = item.Id })'"
+                            class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(item.ImagensID.FirstOrDefault()))
+                                    {
+                                        <img width="260" height="270" src="@item.ImagensID.FirstOrDefault()" alt="" />
+                                    }
+                                    else
+                                    {
+                                        <img width="260" height="270" src="~/img/DevIndex.png" />
+                                    }
                                 }
-                                else
-                                {
-                                    <img width="260" height="270" src="~/img/DevIndex.png" />
-                                }
-                            }
-                            <a href="#" class="btn theme_btn button_hover">Alugue</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn theme_btn button_hover">Detalhes</a>
+                            </div>
+                            <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
+                            <h5>R$ @Html.DisplayFor(modelItem => item.Tarifas.Valor)<small>/noite</small></h5>
                         </div>
-                        <h4 class="sec_h4">@Html.DisplayFor(modelItem => item.Nome)</h4>
-                        <h5>R$ @Html.DisplayFor(modelItem => item.Tarifas.Valor)<small>/noite</small></h5>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+else
+{
+    <section class="accomodation_area section_gap">
+        <div class="container">
+            <div class="section_title text-center">
+                <h4>
+                    Ainda estamos em desenvolvimento nesta guia,
+                </h4>
+                <h4>
+                    Logo mais traremos informações sobre nossos Chalés.
+                </h4>
+                <h4>
+                    Entre em contato Conosco para informações sobre acomodações!
+                </h4>
+                @* <a style="text-color: rgb(30, 70, 40);text-decoration: underline;" class="" asp-area=""
+            asp-controller="Home" asp-action="Contact">
+            <h4></h4>
+            </a> *@
+                <form action="/Contato">
+                    <button class="btn" style="background-color: rgb(45, 80, 45); color: white;" type="submit">Formas de
+                        Contato</button>
+                </form>
+
+            </div>
+        </div>
+
+    </section>
+}
 <!--================ Accomodation Area  =================-->
 @await Html.PartialAsync("../Home/BookLibrary")
