@@ -17,7 +17,7 @@ namespace UI.Controllers
             try
             {
                 // Configurar as informações do servidor de e-mail do Gmail
-                var smtpClient = new SmtpClient("smtp.gmail.com")
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
                     Credentials = new NetworkCredential("email", "senha"),
@@ -25,14 +25,14 @@ namespace UI.Controllers
                 };
 
                 // Construir o corpo do e-mail com base nas informações fornecidas
-                var body = $"Solicitação de Orçamento:\n\n" +
+                string body = $"Solicitação de Orçamento:\n\n" +
                            $"Data de Entrada: {model.Entrada}\n" +
                            $"Data de Saída: {model.Saida}\n" +
                            $"Pets: {(model.Pet == "Sim" ? "Sim" : "Não")}\n" +
                            $"Acomodação: {model.Acomodacao}";
 
                 // Configurar a mensagem de e-mail
-                var message = new MailMessage("remetente", "destinatario")
+                MailMessage message = new MailMessage("remetente", "destinatario")
                 {
                     Subject = "Pedido de Orçamento",
                     Body = body,
@@ -44,7 +44,7 @@ namespace UI.Controllers
 
                 return RedirectToAction("Index", "Home"); // Redirecionar para a página inicial após o envio bem-sucedido
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Trate exceções aqui, você pode querer logá-las ou fornecer uma mensagem de erro ao usuário
                 return RedirectToAction("Error", "Home");
