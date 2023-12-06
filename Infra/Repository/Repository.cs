@@ -1,12 +1,9 @@
-﻿using System.IO;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 

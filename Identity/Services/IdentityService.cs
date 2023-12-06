@@ -38,7 +38,7 @@ namespace Identity.Services
                 EmailConfirmed = true,
             };
 
-            var result = await _UserManager.CreateAsync(identityUser, usuarioCadastro.Senha);
+            IdentityResult result = await _UserManager.CreateAsync(identityUser, usuarioCadastro.Senha);
             if (result.Succeeded)
                 await _UserManager.SetLockoutEnabledAsync(identityUser, false);
 
@@ -51,11 +51,11 @@ namespace Identity.Services
 
         public async Task<UsuarioLoginResponse> Login(UsuarioLoginRequest usuarioLogin)
         {
-            var result = await _SignInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
+            SignInResult result = await _SignInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
             if (result.Succeeded)
                 return await GerarToken(usuarioLogin.Email);
 
-            var usuarioLoginResponse = new UsuarioLoginResponse(result.Succeeded);
+            UsuarioLoginResponse usuarioLoginResponse = new UsuarioLoginResponse(result.Succeeded);
             if (!result.Succeeded)
             {
                 if (result.IsLockedOut)
@@ -72,10 +72,10 @@ namespace Identity.Services
 
         private async Task<UsuarioLoginResponse> GerarToken(string email)
         {
-            var user = await _UserManager.FindByEmailAsync(email);
-            var tokenClaims = await ObterClaims(user);
+            IdentityUser user = await _UserManager.FindByEmailAsync(email);
+            IList<Claim> tokenClaims = await ObterClaims(user);
 
-            var dataExpiracao = DateTime.Now.AddSeconds(_JwtOptions.Expiration);
+            DateTime dataExpiracao = DateTime.Now.AddSeconds(_JwtOptions.Expiration);
 
             JwtSecurityToken jwt = new
             (
@@ -99,8 +99,8 @@ namespace Identity.Services
 
         private async Task<IList<Claim>> ObterClaims(IdentityUser user)
         {
-            var claims = await _UserManager.GetClaimsAsync(user);
-            var roles = await _UserManager.GetRolesAsync(user);
+            IList<Claim> claims = await _UserManager.GetClaimsAsync(user);
+            IList<string> roles = await _UserManager.GetRolesAsync(user);
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
@@ -108,7 +108,7 @@ namespace Identity.Services
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, DateTime.Now.ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()));
 
-            foreach (var role in roles)
+            foreach (string role in roles)
                 claims.Add(new Claim("role", role));
 
             return claims;

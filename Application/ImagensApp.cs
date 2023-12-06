@@ -5,7 +5,6 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,7 +58,7 @@ namespace Application
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return 0; 
+                return 0;
             }
         }
 

@@ -5,8 +5,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 
 namespace WebApi.Utils
 {
@@ -15,14 +13,14 @@ namespace WebApi.Utils
     {
         public string DatatableToJson(DataTable dt)
         {
-            var response = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> response = new List<Dictionary<string, object>>();
 
             foreach (DataRow row in dt.Rows)
             {
-                var elements = new List<Dictionary<string, object>>();
+                List<Dictionary<string, object>> elements = new List<Dictionary<string, object>>();
                 foreach (DataColumn column in dt.Columns)
                 {
-                    var element = new Dictionary<string, object>
+                    Dictionary<string, object> element = new Dictionary<string, object>
                     {
                         { "column", column.ColumnName },
                         { "value", row[column].ToString().Replace(',','.') }
@@ -30,7 +28,7 @@ namespace WebApi.Utils
                     elements.Add(element);
                 }
 
-                var entry = new Dictionary<string, object>
+                Dictionary<string, object> entry = new Dictionary<string, object>
                 {
                     { "elements", elements }
                 };
@@ -86,7 +84,7 @@ namespace WebApi.Utils
 
                     dtTurno.ForEach(x =>
                     {
-                        var k = dt.NewRow();
+                        DataRow k = dt.NewRow();
                         k[0] = x;
                         k[1] = x;
                         lstRowTurno.Add(k);
@@ -108,7 +106,7 @@ namespace WebApi.Utils
 
                     dtHandle.AcceptChanges();
 
-                    foreach (var column in dtHandle.Columns.Cast<DataColumn>().ToArray())
+                    foreach (DataColumn column in dtHandle.Columns.Cast<DataColumn>().ToArray())
                     {
                         if (dtHandle.AsEnumerable().All(dr => dr.IsNull(column)))
                             dtHandle.Columns.Remove(column);
@@ -122,7 +120,7 @@ namespace WebApi.Utils
 
                         rowTotal[col.ColumnName] = dtHandle.AsEnumerable().Sum(x => { Decimal.TryParse(x[col.ColumnName].ToString(), out decimal result); return result; });
 
-                        for (var i = 0; i < dtTurno.Count; i++)
+                        for (int i = 0; i < dtTurno.Count; i++)
                         {
                             lstRowTurno[i][col.ColumnName] = dtHandle.AsEnumerable().Where(x => x["Turno"].ToString() == dtTurno[i].ToString()).Sum(x => { Decimal.TryParse(x[col.ColumnName].ToString(), out decimal result); return result; });
                         }
@@ -130,7 +128,7 @@ namespace WebApi.Utils
 
                     rowTotal[0] = "Total Dia:";
 
-                    foreach (var row1 in lstRowTurno)
+                    foreach (DataRow row1 in lstRowTurno)
                     {
                         if (row1.ItemArray[0].ToString() != "")
                             dt.Rows.Add(row1);
@@ -144,7 +142,7 @@ namespace WebApi.Utils
                 }
                 return new DataTable();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return dt;
             }
@@ -227,11 +225,11 @@ namespace WebApi.Utils
 
             dtHandle = dataTable.Copy();
 
-            var columnsToRemove = dtHandle.Columns.Cast<DataColumn>()
+            List<DataColumn> columnsToRemove = dtHandle.Columns.Cast<DataColumn>()
                         .Where(column => dtHandle.AsEnumerable().Any(row => string.IsNullOrEmpty(row[column].ToString())))
                         .ToList();
 
-            foreach (var column in columnsToRemove)
+            foreach (DataColumn column in columnsToRemove)
             {
                 dtHandle.Columns.Remove(column);
             }
@@ -330,19 +328,19 @@ namespace WebApi.Utils
             foreach (PropertyInfo prop in Props)
             {
                 // Get the display name of the property
-                var displayName = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true)
+                string displayName = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true)
                     .OfType<DisplayNameAttribute>()
                     .FirstOrDefault()?.DisplayName;
 
                 // Use the display name if available, otherwise use the property name
-                var columnName = string.IsNullOrWhiteSpace(displayName) ? prop.Name : displayName;
+                string columnName = string.IsNullOrWhiteSpace(displayName) ? prop.Name : displayName;
 
                 // Setting column names as Property names or display names
                 dataTable.Columns.Add(columnName);
             }
             foreach (T item in items)
             {
-                var values = new object[Props.Length];
+                object[] values = new object[Props.Length];
                 for (int i = 0; i < Props.Length; i++)
                 {
                     //inserting property values to datatable rows
@@ -360,12 +358,12 @@ namespace WebApi.Utils
 
             dtHandle = dataTable.Copy();
 
-            var jsonData = new Dictionary<string, object>();
-            var seriesData = new List<Dictionary<string, object>>();
+            Dictionary<string, object> jsonData = new Dictionary<string, object>();
+            List<Dictionary<string, object>> seriesData = new List<Dictionary<string, object>>();
 
             foreach (DataColumn column in dtHandle.Columns)
             {
-                var series = new Dictionary<string, object>
+                Dictionary<string, object> series = new Dictionary<string, object>
                 {
                     ["name"] = column.ColumnName,
                     ["data"] = dtHandle.AsEnumerable()

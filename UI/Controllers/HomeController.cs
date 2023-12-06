@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using UI.Models;
 
@@ -26,7 +25,6 @@ namespace UI.Controllers
         {
             IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
             IEnumerable<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
-
 
             ViewBag.Acomodacoes = iActive ?? null;
 

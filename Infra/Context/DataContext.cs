@@ -2,7 +2,6 @@
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Reflection;
 
 namespace Infra.Context
 {
@@ -23,7 +22,7 @@ namespace Infra.Context
 
 
 
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(k => k.GetForeignKeys()))
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableForeignKey relationship in modelBuilder.Model.GetEntityTypes().SelectMany(k => k.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
             }
@@ -38,7 +37,7 @@ namespace Infra.Context
         {
             return "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Hotelaria;Integrated Security=True";
         }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(GetStringConectionConfig());

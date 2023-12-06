@@ -3,7 +3,6 @@ using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace UI.Controllers

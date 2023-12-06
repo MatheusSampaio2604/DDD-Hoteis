@@ -24,7 +24,7 @@ namespace Application.Interfaces
         Task<TModel> CreateAsync(TModel viewModel);
         Task<TModel> EditAsync(TModel viewModel);
         Task<TModel> FindOneAsync(int id);
-       // Task<TModel> FindNoTrackinOneAsync(int id);
+        // Task<TModel> FindNoTrackinOneAsync(int id);
         Task<IEnumerable<TModel>> FindAllAsync();
         Task<int> Remove(TModel model);
     }

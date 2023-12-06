@@ -1,8 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +25,7 @@ namespace UI.Controllers
             IEnumerable<AcomodacaoViewModel> obj = await _IAcomodacaoApp.FindAcomodacoesWithPhrase(frase);
 
             IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
+
             IEnumerable<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
             ViewBag.Acomodacoes = iActive ?? null;
 

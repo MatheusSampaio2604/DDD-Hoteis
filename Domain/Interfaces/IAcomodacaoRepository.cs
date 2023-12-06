@@ -6,8 +6,8 @@ namespace Domain.Interfaces
 {
     public interface IAcomodacaoRepository : IRepository<Acomodacao>
     {
-       Task<IEnumerable<Acomodacao>> FindAcomodacoesWithPhrase(string phrase);
+        Task<IEnumerable<Acomodacao>> FindAcomodacoesWithPhrase(string phrase);
 
-       Task<Acomodacao> FindNoTrackinOneAsync(int id);
+        Task<Acomodacao> FindNoTrackinOneAsync(int id);
     }
 }

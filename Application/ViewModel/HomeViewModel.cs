@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,8 +11,7 @@ namespace Application.ViewModel
         [DisplayName("Nome do Estabelecimento")]
         public string Nome { get; set; }
 
-        //[DisplayName("Fotos")]
-        //public IFormFile? Fotos { get; set; }
+
 
 #nullable enable
         [MaxLength(20000)]
@@ -48,26 +46,26 @@ namespace Application.ViewModel
 
 
 
-//         #region formulario de contato
-// #nullable enable
-//         [Required(ErrorMessage = "O nome é obrigatório.")]
-//         [DisplayName("Nome")]
-//         public string? Name { get; set; }
+        //         #region formulario de contato
+        // #nullable enable
+        //         [Required(ErrorMessage = "O nome é obrigatório.")]
+        //         [DisplayName("Nome")]
+        //         public string? Name { get; set; }
 
-//         [Required(ErrorMessage = "O e-mail é obrigatório.")]
-//         [EmailAddress(ErrorMessage = "Digite um endereço de e-mail válido.")]
-//         [DisplayName("E-mail")]
-//         public string? Email { get; set; }
+        //         [Required(ErrorMessage = "O e-mail é obrigatório.")]
+        //         [EmailAddress(ErrorMessage = "Digite um endereço de e-mail válido.")]
+        //         [DisplayName("E-mail")]
+        //         public string? Email { get; set; }
 
-//         [Required(ErrorMessage = "O assunto é obrigatório.")]
-//         [DisplayName("Assunto")]
-//         public string? Subject { get; set; }
+        //         [Required(ErrorMessage = "O assunto é obrigatório.")]
+        //         [DisplayName("Assunto")]
+        //         public string? Subject { get; set; }
 
-//         [Required(ErrorMessage = "A mensagem é obrigatória.")]
-//         [DisplayName("Mensagem")]
-//         public string? Message { get; set; }
-// #nullable disable
-//         #endregion
+        //         [Required(ErrorMessage = "A mensagem é obrigatória.")]
+        //         [DisplayName("Mensagem")]
+        //         public string? Message { get; set; }
+        // #nullable disable
+        //         #endregion
 
     }
 

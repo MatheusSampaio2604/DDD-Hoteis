@@ -60,7 +60,7 @@ namespace UI
             });
 
 
-            var urlSiteNovo = "http://192.168.0.152:40";
+            string urlSiteNovo = "http://192.168.0.152:40";
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins(urlSiteNovo));
         }

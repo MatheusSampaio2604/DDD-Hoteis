@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Application.ViewModel;
+﻿using Application.ViewModel;
 using AutoMapper;
 using Domain.Models;
+using System.Linq;
 
 namespace Application.AutoMapper
 {
