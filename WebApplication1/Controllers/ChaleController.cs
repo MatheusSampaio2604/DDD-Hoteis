@@ -11,12 +11,12 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SuiteController : ControllerBase
+    public class ChaleController : ControllerBase
     {
         private readonly HttpClient _httpClient;
         private readonly IAcomodacaoApp _iAcomodacaoApp;
 
-        public SuiteController(HttpClient httpClient, IAcomodacaoApp iAcomodacaoApp)
+        public ChaleController(HttpClient httpClient, IAcomodacaoApp iAcomodacaoApp)
         {
             _httpClient = httpClient;
             _iAcomodacaoApp = iAcomodacaoApp;
@@ -27,11 +27,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Suíte")));
+                return Ok(new JsonResult(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Chalé")));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Unauthorized();
+                return Unauthorized(ex);
             }
         }
 

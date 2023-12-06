@@ -24,55 +24,28 @@ namespace UI.Services
 
         public async Task<int> CreateManyAsync(IEnumerable<ImagensViewModel> uploadImagem)
         {
-            int i = await _IImagensApp.CreateManyAsync(uploadImagem);
-
-            if (i != 0)
-                return i;
-            else
+            try
+            {
+                return await _IImagensApp.CreateManyAsync(uploadImagem);
+            }
+            catch (Exception)
+            {
                 return 0;
+            }
+
         }
 
         public async Task<List<ImagensViewModel>> FindImagesById(int id)
         {
-            List<ImagensViewModel> img = await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(id);
-            return img;
+            try
+            {
+                return await _IImagensApp.FindOneAsyncFindImageFromAcomodationID(id);
+            }
+            catch (Exception)
+            {
+                return new();
+            }
         }
-
-        // public async Task<List<string>> AddImagesAsync(List<IFormFile> imagens, string nomeAcomodacao)
-        // {
-        //     List<string> caminhosImagens = new();
-
-        //     foreach (var imagem in imagens)
-        //     {
-        //         if (imagem == null || imagem.Length == 0)
-        //         {
-        //             caminhosImagens = null;
-        //             continue;
-        //         }
-
-        //         string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img", nomeAcomodacao.Replace(" ", "_"));
-        //         if (!Directory.Exists(uploadDir))
-        //             Directory.CreateDirectory(uploadDir);
-
-        //         string fileName = Path.GetFileName(imagem.FileName);
-        //         string filePath = Path.Combine(uploadDir, fileName);
-
-        //         if (File.Exists(filePath))
-        //         {
-        //             File.Delete(filePath);
-        //         }
-
-        //         using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //         {
-        //             await imagem.CopyToAsync(fileStream);
-        //         }
-
-        //         caminhosImagens.Add(Path.Combine("img", nomeAcomodacao.Replace(" ", "_"), fileName).Replace("\\", "//"));
-        //     }
-
-        //     return caminhosImagens;
-        // }
-
 
         private static bool IsValidImage(IFormFile imagem)
         {
@@ -161,7 +134,7 @@ namespace UI.Services
                         if (imagemParaExcluir != null)
                         {
 
-                      
+
                             Imagens imagemExcluir = new()
                             {
                                 Id = imagemParaExcluir.Id,

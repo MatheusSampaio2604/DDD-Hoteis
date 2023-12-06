@@ -3,6 +3,8 @@ using Application.ViewModel;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -22,52 +24,40 @@ namespace WebApi.Controllers
             _iTarifasApp = iTarifasApp;
         }
 
-
         [HttpGet("GetAll")]
-        // GET: TarifasController
         public async Task<ActionResult> Index()
         {
-            //Utils utils = new();
-            System.Collections.Generic.IEnumerable<TarifasViewModel> i = await _iTarifasApp.FindAllAsync();
-            // Configura as opções de serialização
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+            try
             {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                MaxDepth = 64 // Ajuste a profundidade conforme necessário
-            };
-
-            // Serializa o objeto para JSON
-            string json = JsonSerializer.Serialize(i, jsonOptions);
-
-            // Retorna o JSON serializado
-            return Ok(json);
+                return Ok(new JsonResult(await _iTarifasApp.FindAllAsync()));
+            }
+            catch (Exception)
+            {
+                return NotFound("Não foi encontrado Valores");
+            }
         }
-
 
         [HttpGet("Details")]
-        // GET: TarifasController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            TarifasViewModel i = await _iTarifasApp.FindOneAsync(id);
-            // Configura as opções de serialização
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+            try
             {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                MaxDepth = 64 // Ajuste a profundidade conforme necessário
-            };
-
-            // Serializa o objeto para JSON
-            string json = JsonSerializer.Serialize(i, jsonOptions);
-
-            // Retorna o JSON serializado
-            return Ok(json);
+                return Ok(new JsonResult(await _iTarifasApp.FindOneAsync(id)));
+            }
+            catch (Exception)
+            {
+                return NotFound("Não foi encontrado Valores");
+            }
 
         }
 
-        // POST: TarifasController/Create
-        [HttpPost("Tarifas/Criar")]
+        [HttpGet("Criar")]
+        public IActionResult Create()
+        {
+            return Ok();
+        }
+
+        [HttpPost("Criar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TarifasViewModel tarifasViewModel)
         {
@@ -76,29 +66,31 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
 
-            tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
+            try
+            {
+                tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-            Tarifas create = await _iTarifasApp.CreateAsync(tarifasViewModel);
-
-            if (create is null)
-                return BadRequest();
-            else
-                return Ok(true);
-
+                return Ok(new JsonResult(await _iTarifasApp.CreateAsync(tarifasViewModel)));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Não foi possivel completar a sua solicitação. \nTente novamente!");
+            }
         }
 
         [HttpGet("Edit")]
-        // GET: TarifasController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            TarifasViewModel i = await _iTarifasApp.FindOneAsync(id);
-            if (i is not null)
-                return Ok(true);
-            else
-                return BadRequest();
+            try
+            {
+                return Ok(new JsonResult(await _iTarifasApp.FindOneAsync(id)));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Não foi possivel completar a sua solicitação. \nTente novamente!");
+            }
         }
 
-        // POST: TarifasController/Edit/5
         [HttpPost("Tarifas/Editar")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, TarifasViewModel tarifasViewModel)
@@ -108,34 +100,43 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
 
-            tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
-
-            TarifasViewModel edit = await _iTarifasApp.EditAsync(tarifasViewModel);
-
-            if (edit is null)
+            try
             {
-                return BadRequest();
-            }
-            else
-                return Ok(true);
+                tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
+                return Ok(new JsonResult(await _iTarifasApp.EditAsync(tarifasViewModel)));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Não foi possivel completar a sua solicitação. \nTente novamente!");
+            }
         }
 
-        // POST: TarifasController/Delete/5
-        [HttpPost("Tarifas/Remover")]
+        [HttpGet("Remover")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                return Ok(new JsonResult(_iTarifasApp.FindOneAsync(id)));
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+        }
+
+
+        [HttpPost("Remover")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Tarifas tarifas)
         {
             try
             {
-                _iTarifasApp.Remove(tarifas);
-
-                return Ok(true);
+                return Ok(new JsonResult(_iTarifasApp.Remove(tarifas)));
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return BadRequest("Error");
+                return BadRequest(ex);
             }
         }
     }

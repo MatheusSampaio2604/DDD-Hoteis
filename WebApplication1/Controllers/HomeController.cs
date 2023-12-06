@@ -2,6 +2,7 @@
 using Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -26,17 +27,14 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+            try
             {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                MaxDepth = 64
-            };
-
-            string json = JsonSerializer.Serialize(i, jsonOptions);
-
-            return Ok(json);
+                return Ok(new JsonResult(await _IAcomodacaoApp.FindAllAsync()));
+            }
+            catch (Exception)
+            {
+                return NotFound("Não foi encontrado Valores");
+            }
         }
 
         [HttpGet("Privacidade")]
