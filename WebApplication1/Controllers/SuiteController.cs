@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Suíte")));
+                return Ok(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Suíte"));
             }
             catch (Exception)
             {
@@ -40,7 +40,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iAcomodacaoApp.FindOneAsync(id)));
+                return Ok(await _iAcomodacaoApp.FindOneAsync(id));
             }
             catch (Exception)
             {

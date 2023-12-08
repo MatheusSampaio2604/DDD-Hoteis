@@ -20,13 +20,27 @@ namespace UI.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult> Index()
         {
-            return Ok(new JsonResult(await _IHomeApp.FindAllAsync()));
+            try
+            {
+                return Ok(await _IHomeApp.FindAllAsync());
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         [HttpGet("Detalhes")]
         public async Task<ActionResult> Details(int id)
         {
-            return Ok(new JsonResult(await _IHomeApp.FindOneAsync(id)));
+            try
+            {
+                return Ok(await _IHomeApp.FindOneAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         [HttpGet("Criar")]
@@ -41,25 +55,34 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new JsonResult(homeViewModel));
+                return Ok(homeViewModel);
             }
-
-            homeViewModel.Nome = homeViewModel.Nome.ToUpper();
-
-            Home create = await _IHomeApp.CreateAsync(homeViewModel);
-
-            if (create is null)
+            try
             {
-                return Ok(new JsonResult("Error"));
+                homeViewModel.Nome = homeViewModel.Nome.ToUpper();
+
+                return Ok(await _IHomeApp.CreateAsync(homeViewModel));
             }
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                return Unauthorized(ex);
+            }
+
+
 
         }
 
         [HttpGet("Editar")]
         public async Task<ActionResult> Edit(int id)
         {
-            return Ok(new JsonResult(await _IHomeApp.FindOneAsync(id)));
+            try
+            {
+                return Ok(await _IHomeApp.FindOneAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         // POST: EstabelecimentoController/Edit/5
@@ -69,24 +92,26 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new JsonResult(homeViewModel));
+                return Ok(homeViewModel);
             }
 
-            homeViewModel.Nome = homeViewModel.Nome.ToUpper();
-
-            HomeViewModel edit = await _IHomeApp.EditAsync(homeViewModel);
-
-            if (edit is null)
+            try
             {
-                return Ok(new JsonResult("Error"));
+                homeViewModel.Nome = homeViewModel.Nome.ToUpper();
+
+                return Ok(await _IHomeApp.EditAsync(homeViewModel));
             }
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                return Unauthorized(ex);
+            };
+
         }
 
         [HttpGet("Remover")]
         public async Task<ActionResult> Delete(int id)
         {
-            return Ok(new JsonResult(await _IHomeApp.FindOneAsync(id)));
+            return Ok(await _IHomeApp.FindOneAsync(id));
         }
 
         // POST: EstabelecimentoController/Delete/5
@@ -96,13 +121,11 @@ namespace UI.Controllers
         {
             try
             {
-                _IHomeApp.Remove(home);
-
-                return RedirectToAction(nameof(Index));
+                return Ok(_IHomeApp.Remove(home));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Ok(new JsonResult("Error"));
+                return Unauthorized(ex);
             }
         }
     }
