@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -27,7 +28,17 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Chalé")));
+                Utils utils = new();
+                return Ok(await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Chalé"));
+                // var i = await _iAcomodacaoApp.FindAcomodacoesWithPhrase("Chalé");
+                // var jsonOptions = new JsonSerializerOptions
+                // {
+                //     ReferenceHandler = ReferenceHandler.Preserve,
+                // };
+
+                // var jsonString = JsonSerializer.Serialize(i, jsonOptions);
+
+                // return Ok(jsonString);
             }
             catch (Exception ex)
             {
@@ -40,7 +51,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iAcomodacaoApp.FindOneAsync(id)));
+                return Ok(await _iAcomodacaoApp.FindOneAsync(id));
             }
             catch (Exception)
             {

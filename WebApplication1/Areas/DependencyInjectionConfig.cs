@@ -8,6 +8,7 @@ using Infra.Context;
 using Infra.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using WebApi.Services;
 
 namespace WebApi.Areas
 {
@@ -16,12 +17,15 @@ namespace WebApi.Areas
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<DataContext>();
+            services.AddScoped<ImageService>();
             services.AddScoped<IAcomodacaoRepository, AcomodacaoRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
+            services.AddScoped<IImagensRepository, ImagensRepository>();
             services.AddScoped<ITarifasRepository, TarifasRepository>();
 
             services.AddScoped<IAcomodacaoApp, AcomodacaoApp>();
             services.AddScoped<IHomeApp, HomeApp>();
+            services.AddScoped<IImagensApp, ImagensApp>();
             services.AddScoped<ITarifasApp, TarifasApp>();
 
 

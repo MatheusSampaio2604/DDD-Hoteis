@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iTarifasApp.FindAllAsync()));
+                return Ok(await _iTarifasApp.FindAllAsync());
             }
             catch (Exception)
             {
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iTarifasApp.FindOneAsync(id)));
+                return Ok(await _iTarifasApp.FindOneAsync(id));
             }
             catch (Exception)
             {
@@ -70,7 +70,7 @@ namespace WebApi.Controllers
             {
                 tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-                return Ok(new JsonResult(await _iTarifasApp.CreateAsync(tarifasViewModel)));
+                return Ok(await _iTarifasApp.CreateAsync(tarifasViewModel));
             }
             catch (Exception)
             {
@@ -83,7 +83,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _iTarifasApp.FindOneAsync(id)));
+                return Ok(await _iTarifasApp.FindOneAsync(id));
             }
             catch (Exception)
             {
@@ -104,7 +104,7 @@ namespace WebApi.Controllers
             {
                 tarifasViewModel.Nome = tarifasViewModel.Nome.ToUpper();
 
-                return Ok(new JsonResult(await _iTarifasApp.EditAsync(tarifasViewModel)));
+                return Ok(await _iTarifasApp.EditAsync(tarifasViewModel));
             }
             catch (Exception)
             {
@@ -117,7 +117,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(_iTarifasApp.FindOneAsync(id)));
+                return Ok(_iTarifasApp.FindOneAsync(id));
             }
             catch (Exception)
             {
@@ -132,7 +132,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(_iTarifasApp.Remove(tarifas)));
+                return Ok(_iTarifasApp.Remove(tarifas));
             }
             catch (Exception ex)
             {

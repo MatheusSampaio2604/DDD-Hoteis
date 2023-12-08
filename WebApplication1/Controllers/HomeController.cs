@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(new JsonResult(await _IAcomodacaoApp.FindAllAsync()));
+                return Ok(await _IAcomodacaoApp.FindAllAsync());
             }
             catch (Exception)
             {
