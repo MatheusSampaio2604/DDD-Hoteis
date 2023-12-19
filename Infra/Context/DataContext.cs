@@ -40,7 +40,7 @@ namespace Infra.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetStringConectionConfig());
+            //optionsBuilder.UseSqlServer(GetStringConectionConfig());
             optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.EnableDetailedErrors();
         }

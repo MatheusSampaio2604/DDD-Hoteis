@@ -19,23 +19,14 @@ namespace UI.Controllers
         }
         [HttpGet("")]
         public async Task<IActionResult> Index()
-        {
-            string frase = "Suíte";
-            IEnumerable<AcomodacaoViewModel> obj = await _IAcomodacaoApp.FindAcomodacoesWithPhrase(frase);
-
-            IEnumerable<AcomodacaoViewModel> i = await _IAcomodacaoApp.FindAllAsync();
-
-            IEnumerable<AcomodacaoViewModel> iActive = i.Where(a => a.Ativo == true).ToList() ?? null;
-            ViewBag.Acomodacoes = iActive ?? null;
-
-            return View(obj);
+        {            
+            return View(await _IAcomodacaoApp.FindAcomodacoesWithPhrase("Suíte"));
         }
 
         [HttpGet("Details")]
         public async Task<ActionResult> Details(int id)
         {
-            AcomodacaoViewModel details = await _IAcomodacaoApp.FindOneAsync(id);
-            return View(details);
+            return View(await _IAcomodacaoApp.FindOneAsync(id));
         }
 
 

@@ -15,33 +15,35 @@
   <div class="container">
 
     <section class="about_history_area section_gap">
-      
-        <div class="row">
-          <div class="col-md-6">
-            @{
-              if (Model.ImagensID.Any())
-              {
-                foreach (string i in Model.ImagensID)
-                {
-                  <img width="500" height="500" src="~/@i" alt="">
-                }
-              }
-              else
-              {
-                <img width="500" height="500" src="~/img/DevChale.png" alt="" />
-              }
+      <div class="row">
+        <div class="col-md-6">
+          @{
+            var defaultImagePath = "img/DevChale.png";
+            var images = Model.ImagensID.Any() ? Model.ImagensID : new List<string> { defaultImagePath };
+          }
+
+          <div class="image-section">
+            @foreach (var imagePath in images)
+            {
+              <div class="img mb-4">
+                <img class="img-fluid" src="~/@imagePath" alt="">
+              </div>
             }
           </div>
-          <div class="col-md-6 d_flex align-items-center">
-            <div class="about_content ">
-              @Html.DisplayFor(model => model.Descricao)
-            </div>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center">
+          <div class="about_content">
+            <p>@Html.DisplayFor(model => model.Descricao)</p>
+            <p>R$ @Html.DisplayFor(model => model.Tarifas.Valor) / dia</p>
           </div>
         </div>
+      </div>
+
+
     </section>
     <div>
-      <p>Preço: </p>
-      <p>R$ @Html.DisplayFor(model => model.Tarifas.Valor) / dia</p>
+
       <a href="#" class="btn theme_btn button_hover">Alugue</a>
     </div>
   </div>

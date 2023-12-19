@@ -10,6 +10,7 @@
             </div>
             <div class="col-md-9">
                 <form asp-action="SendBookingInfo" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     <div class="boking_table">
                         <div class="row">
                             <div class="col-md-4">
@@ -17,19 +18,13 @@
                                     <div class="form-group">
                                         <div class="input-group date">
                                             <input type="date" class="form-control" placeholder="Data Entrada"
-                                                   asp-for="Entrada" />
-                                            @* <span class="input-group-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span> *@
+                                                asp-for="Entrada" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group date">
                                             <input type="date" class="form-control" placeholder="Data Saída"
-                                                   asp-for="Saida" />
-                                            @* <span class="input-group-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span> *@
+                                                asp-for="Saida" />
                                         </div>
                                     </div>
                                 </div>
@@ -46,21 +41,25 @@
                                                 <option value="@acomodacao.Nome">@acomodacao.Nome</option>
                                             }
                                         </select>
+                                        <span asp-validation-for="Acomodacao" class="text-danger"></span>
                                     </div>
                                     <div class="input-group">
                                         <select asp-for="Pet" class="wide">
-                                            <option value="" data-display="Pet's">Selecione</option>
+                                            <option data-display="Pet's" selected disabled>Selecione</option>
                                             <option value="Sim">Sim</option>
                                             <option value="Não">Não</option>
                                         </select>
+                                        <span asp-validation-for="Pet" class="text-danger"></span>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
                                     <div class="input-group">
-                                        <input asp-for="Email" type="text" class="form-control"
-                                               placeholder="Digite um e-mail" />
+                                        <input asp-for="Email" type="email" class="form-control"
+                                            placeholder="Digite um e-mail" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <button type="submit" class="book_now_btn button_hover">Enviar Reserva</button>
                                 </div>

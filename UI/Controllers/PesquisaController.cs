@@ -16,6 +16,8 @@ namespace UI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return View("Index", "Home");
+
                 // Configurar as informações do servidor de e-mail do Gmail
                 SmtpClient smtpClient = new("smtp.gmail.com")
                 {
