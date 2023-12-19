@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.Http;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
